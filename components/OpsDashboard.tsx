@@ -253,9 +253,17 @@ export function OpsDashboard() {
 
   function onPatchGeneralTask(id: string, patch: Partial<GeneralTask>) {
     commitLocal((project) => {
-      const generalTasks = project.generalTasks.map((t) =>
-        t.id === id ? { ...t, ...patch } : t,
-      );
+      const generalTasks = project.generalTasks.map((t) => {
+        if (t.id !== id) return t;
+        const next: GeneralTask = { ...t, ...patch };
+        if (patch.githubFieldValues) {
+          next.githubFieldValues = {
+            ...(t.githubFieldValues ?? {}),
+            ...patch.githubFieldValues,
+          };
+        }
+        return next;
+      });
       const people = [...(project.people ?? [])];
       for (const login of patch.assignees ?? []) {
         if (!people.some((p) => p.login === login)) people.push({ login });

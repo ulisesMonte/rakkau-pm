@@ -1,4 +1,5 @@
 import type { GeneralTask, ProjectDocument, ProjectItem } from "@/lib/types";
+import { applyItemFieldValuesToGeneralTask } from "@/lib/github/generalTaskFields";
 
 const RAKKAU_ID_LINE = /^rakkau-task-id:\s*(.+)\s*$/im;
 
@@ -239,14 +240,7 @@ export function rebuildProjectHierarchyFromGitHub(
     gt.githubContentNodeId = item.contentNodeId ?? gt.githubContentNodeId;
     gt.issueNumber = item.number ?? gt.issueNumber;
     gt.url = item.url ?? gt.url;
-    const itemStatus = item.fieldValues.Status;
-    if (typeof itemStatus === "string" && itemStatus.trim()) {
-      gt.Status = itemStatus.trim();
-    }
-    if (item.fieldValues.Blocked) gt.Blocked = item.fieldValues.Blocked;
-    if (item.fieldValues.BlockedReason) {
-      gt.BlockedReason = item.fieldValues.BlockedReason;
-    }
+    Object.assign(gt, applyItemFieldValuesToGeneralTask(gt, item.fieldValues));
     if (gt.githubContentNodeId) generalByContent.set(gt.githubContentNodeId, gt);
   }
 
@@ -287,13 +281,7 @@ export function ensureGeneralTasksForSubtasks(
       gt.githubProjectItemNodeId = parentRow.nodeId;
       gt.issueNumber = parentRow.number;
       gt.url = parentRow.url;
-      const fv = parentRow.fieldValues;
-      if (typeof fv.Status === "string") gt.Status = fv.Status;
-      if (typeof fv.Blocked === "string") gt.Blocked = fv.Blocked;
-      if (typeof fv.BlockedReason === "string") gt.BlockedReason = fv.BlockedReason;
-      if (typeof fv.Sprint === "string") gt.Sprint = fv.Sprint;
-      if (typeof fv.Quarter === "string") gt.Quarter = fv.Quarter;
-      if (typeof fv.DueDate === "string") gt.DueDate = fv.DueDate;
+      gt = applyItemFieldValuesToGeneralTask(gt, parentRow.fieldValues);
     }
     next.generalTasks.push(gt);
     byContent.set(parentContentId, gt);

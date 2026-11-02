@@ -65,6 +65,8 @@ export interface GeneralTask {
   githubContentNodeId?: string | null;
   issueNumber?: number | null;
   url?: string | null;
+  /** Columnas GitHub custom (p. ej. Track / Journey) no mapeadas a props top-level. */
+  githubFieldValues?: ItemFieldValues;
 }
 
 export type QuarterKey = "Q1" | "Q2" | "Q3" | "Q4";

@@ -946,6 +946,7 @@ function projectItemFromGeneralTask(task: GeneralTask): ProjectItem | null {
     url: task.url ?? null,
     contentType: task.issueNumber != null ? "Issue" : "DraftIssue",
     fieldValues: {
+      ...(task.githubFieldValues ?? {}),
       Task: [task.id],
       Status: task.Status,
       HasDependency: task.HasDependency,

@@ -49,6 +49,20 @@ export function githubTableColumns(project: ProjectDocument): ProjectField[] {
   );
 }
 
+/** Campos con editor fijo arriba en EditPanel — no repetir en «Campos del proyecto». */
+const EDIT_PANEL_DEDICATED_CANONICAL = new Set<string>(
+  Object.values(CANONICAL_FIELDS),
+);
+
+/** Solo columnas custom + no duplicar canónicos ya editables arriba en el panel. */
+export function githubEditPanelCustomColumns(
+  project: ProjectDocument,
+): ProjectField[] {
+  return githubEditableColumns(project).filter(
+    (f) => !EDIT_PANEL_DEDICATED_CANONICAL.has(f.name),
+  );
+}
+
 /** Campos editables en panel / push (los de GitHub que aceptan mutación). */
 export function githubEditableColumns(project: ProjectDocument): ProjectField[] {
   return githubTableColumns(project).filter(
@@ -86,6 +100,6 @@ export function columnFieldValue(
     case CANONICAL_FIELDS.DueDate:
       return task.DueDate;
     default:
-      return undefined;
+      return task.githubFieldValues?.[field.name];
   }
 }

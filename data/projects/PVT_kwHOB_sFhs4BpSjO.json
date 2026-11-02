@@ -4,18 +4,24 @@
   "title": "CIAM Ops Hybrid Test",
   "owner": "ulisesMonte",
   "url": "https://github.com/users/ulisesMonte/projects/3",
-  "pulledAt": "2026-11-02T20:14:23.432Z",
+  "pulledAt": "2026-11-02T20:53:07.342Z",
   "dirty": true,
+  "fieldsSchemaVersion": 1,
+  "tasksSchemaVersion": 1,
   "fields": [
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhnu14k",
       "name": "Title",
-      "dataType": "TITLE"
+      "dataType": "TITLE",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhnu14o",
       "name": "Assignees",
-      "dataType": "ASSIGNEES"
+      "dataType": "ASSIGNEES",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTSSF_lAHOB_sFhs4BpSjOzhnu14w",
@@ -46,57 +52,79 @@
           "color": "GREEN",
           "description": ""
         }
-      ]
+      ],
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhnu144",
       "name": "Labels",
-      "dataType": "LABELS"
+      "dataType": "LABELS",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhnu15A",
       "name": "Linked pull requests",
-      "dataType": "LINKED_PULL_REQUESTS"
+      "dataType": "LINKED_PULL_REQUESTS",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhnu15I",
       "name": "Milestone",
-      "dataType": "MILESTONE"
+      "dataType": "MILESTONE",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhnu15Q",
       "name": "Repository",
-      "dataType": "REPOSITORY"
+      "dataType": "REPOSITORY",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhnu15g",
       "name": "Reviewers",
-      "dataType": "REVIEWERS"
+      "dataType": "REVIEWERS",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhnu15o",
       "name": "Parent issue",
-      "dataType": "PARENT_ISSUE"
+      "dataType": "PARENT_ISSUE",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhnu15w",
       "name": "Sub-issues progress",
-      "dataType": "SUB_ISSUES_PROGRESS"
+      "dataType": "SUB_ISSUES_PROGRESS",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhnu154",
       "name": "Created",
-      "dataType": "CREATED"
+      "dataType": "CREATED",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhnu16A",
       "name": "Updated",
-      "dataType": "UPDATED"
+      "dataType": "UPDATED",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhnu16M",
       "name": "Closed",
-      "dataType": "CLOSED"
+      "dataType": "CLOSED",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTSSF_lAHOB_sFhs4BpSjOzhnu2TM",
@@ -115,7 +143,9 @@
           "color": "GRAY",
           "description": ""
         }
-      ]
+      ],
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTSSF_lAHOB_sFhs4BpSjOzhoSLj4",
@@ -134,12 +164,18 @@
           "color": "GREEN",
           "description": ""
         }
-      ]
+      ],
+      "pendingCreate": false,
+      "canonicalKey": "Blocked",
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhoSLkc",
       "name": "BlockedReason",
-      "dataType": "TEXT"
+      "dataType": "TEXT",
+      "pendingCreate": false,
+      "canonicalKey": "BlockedReason",
+      "origin": "github"
     },
     {
       "id": "PVTSSF_lAHOB_sFhs4BpSjOzhoSLkw",
@@ -158,17 +194,26 @@
           "color": "GREEN",
           "description": ""
         }
-      ]
+      ],
+      "pendingCreate": false,
+      "canonicalKey": "HasDependency",
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhoSLl0",
       "name": "DependsOn",
-      "dataType": "TEXT"
+      "dataType": "TEXT",
+      "pendingCreate": false,
+      "canonicalKey": "DependsOn",
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhoSLm4",
       "name": "Sprint",
-      "dataType": "TEXT"
+      "dataType": "TEXT",
+      "pendingCreate": false,
+      "canonicalKey": "Sprint",
+      "origin": "github"
     },
     {
       "id": "PVTSSF_lAHOB_sFhs4BpSjOzhoSLoA",
@@ -199,15 +244,76 @@
           "color": "ORANGE",
           "description": ""
         }
-      ]
+      ],
+      "pendingCreate": false,
+      "canonicalKey": "Quarter",
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpSjOzhoSLoQ",
       "name": "DueDate",
-      "dataType": "DATE"
+      "dataType": "DATE",
+      "pendingCreate": false,
+      "canonicalKey": "DueDate",
+      "origin": "github"
+    },
+    {
+      "id": "local_task_1793652819332",
+      "name": "Task",
+      "dataType": "TEXT",
+      "pendingCreate": true
     }
   ],
-  "generalTasks": [],
+  "generalTasks": [
+    {
+      "id": "TEST-1111",
+      "title": "TEST-1111",
+      "Status": "Bloqueado",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "Sí",
+      "BlockedReason": "Esta bloqueado por u requetimento del cliente",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpSjOzhFfdwI",
+      "githubContentNodeId": "I_kwDOVa-rbs8AAAABb8QpnQ",
+      "issueNumber": 10,
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/10"
+    },
+    {
+      "id": "TEST-2222",
+      "title": "TEST-2222",
+      "Status": "Todo",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpSjOzhFfd6E",
+      "githubContentNodeId": "DI_lAHOB_sFhs4BpSjOzgLktWE",
+      "issueNumber": null,
+      "url": null
+    },
+    {
+      "id": "TEST-20000",
+      "title": "test2000",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q2",
+      "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpSjOzhFgUng",
+      "githubContentNodeId": "I_kwDOVa-rbs8AAAABb85iNQ",
+      "issueNumber": 12,
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/12"
+    }
+  ],
   "items": [
     {
       "nodeId": "PVTI_lAHOB_sFhs4BpSjOzhFfvfQ",
@@ -228,6 +334,32 @@
       },
       "parentTaskId": "TEST-1111",
       "parentIssueContentId": "I_kwDOVa-rbs8AAAABb8QpnQ",
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lAHOB_sFhs4BpSjOzhFgUoY",
+      "contentNodeId": "I_kwDOVa-rbs8AAAABb85jVA",
+      "number": 13,
+      "title": "testttttttttttt",
+      "state": "OPEN",
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/13",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "testttttttttttt",
+        "Status": "Todo",
+        "Blocked": "No",
+        "HasDependency": "No",
+        "Task": [
+          "TEST-20000"
+        ],
+        "DependsOn": "",
+        "BlockedReason": "",
+        "Assignees": []
+      },
+      "parentTaskId": "TEST-20000",
+      "parentIssueContentId": "I_kwDOVa-rbs8AAAABb85iNQ",
       "assignees": [],
       "blockedBy": [],
       "blocks": []

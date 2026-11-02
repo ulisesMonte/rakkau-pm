@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import type { FieldDataType, GeneralTask, ProjectDocument, ProjectField, ProjectItem } from "@/lib/types";
 import { CANONICAL_FIELDS } from "@/lib/types";
+import { canonicalKeyForFieldName } from "@/lib/github/projectFieldsSchema";
 import {
   generalTaskMatches,
   isQueryEmpty,
@@ -22,6 +23,7 @@ import {
 import {
   columnFieldValue,
   githubEditableColumns,
+  githubEditPanelCustomColumns,
   githubTableColumns,
 } from "@/lib/githubTableColumns";
 import { RakkauConfirmDialog } from "./RakkauConfirmDialog";
@@ -542,7 +544,7 @@ export function HierarchyTable({
   const sprints = sprintNames(project);
   const people = peopleLogins(project);
   const ghColumns = githubTableColumns(project);
-  const editableGhColumns = githubEditableColumns(project);
+  const editableGhColumns = githubEditPanelCustomColumns(project);
 
   const [genId, setGenId] = useState("");
   const [genTitle, setGenTitle] = useState("");
@@ -1643,11 +1645,36 @@ function EditPanel({
                 <span>Campos del proyecto</span>
               </div>
               {customFields.map((cf) => {
-                const current = item ? (item.fieldValues[cf.name] ?? "") : "";
-                const currentStr = Array.isArray(current) ? current[0] ?? "" : String(current);
+                const raw = columnFieldValue(cf, { task, item });
+                const currentStr = Array.isArray(raw)
+                  ? raw[0] ?? ""
+                  : String(raw ?? "");
 
                 function setCustom(val: string) {
-                  if (item) patchFields({ [cf.name]: val });
+                  const canonical =
+                    cf.canonicalKey ?? canonicalKeyForFieldName(cf.name);
+                  const stored = val || undefined;
+
+                  if (item) {
+                    if (canonical && Object.values(CANONICAL_FIELDS).includes(canonical)) {
+                      patchFields({ [canonical]: stored } as Partial<ProjectItem["fieldValues"]>);
+                    } else {
+                      patchFields({ [cf.name]: stored });
+                    }
+                    return;
+                  }
+                  if (task) {
+                    if (canonical && Object.values(CANONICAL_FIELDS).includes(canonical)) {
+                      patchTask({ [canonical]: stored } as Partial<GeneralTask>);
+                      return;
+                    }
+                    onPatchGeneralTask(task.id, {
+                      githubFieldValues: {
+                        ...(task.githubFieldValues ?? {}),
+                        [cf.name]: stored,
+                      },
+                    });
+                  }
                 }
 
                 if (cf.dataType === "SINGLE_SELECT") {

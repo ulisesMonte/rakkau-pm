@@ -96,6 +96,30 @@ describe("projectTasksSchema", () => {
     expect(merged.tasksSchemaVersion).toBe(PROJECT_TASKS_SCHEMA_VERSION);
   });
 
+  it("mergeTasksAfterPush keeps local githubFieldValues (Track / Journey)", () => {
+    const remote = baseDoc();
+    remote.generalTasks = [
+      {
+        id: "TEST-1111",
+        title: "TEST-1111",
+        githubProjectItemNodeId: "PVTI_p",
+        githubContentNodeId: "I_parent",
+        issueNumber: 10,
+        url: null,
+        githubFieldValues: { "Track / Journey": "Platform" },
+      },
+    ];
+    const pushed = structuredClone(remote);
+    pushed.generalTasks[0].githubFieldValues = {
+      "Track / Journey": "Identity",
+    };
+
+    const merged = mergeTasksAfterPush(pushed, remote);
+    expect(merged.generalTasks[0].githubFieldValues?.["Track / Journey"]).toBe(
+      "Identity",
+    );
+  });
+
   it("normalize creates parent when only subtask on board", () => {
     const flat: ProjectItem[] = [
       {

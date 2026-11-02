@@ -11,6 +11,10 @@ import type {
 } from "@/lib/types";
 import { asStringList, firstTaskId } from "@/lib/fieldValueCoerce";
 import {
+  applyItemFieldValuesToGeneralTask,
+  mergeGeneralTaskGithubFieldValues,
+} from "@/lib/github/generalTaskFields";
+import {
   defaultGeneralTaskFields,
   parseRakkauTaskIdFromBody,
 } from "@/lib/github/issueHierarchy";
@@ -173,6 +177,7 @@ export function mapGitHubProjectItems(
 }
 
 function mergeGeneralTaskPlanning(remote: GeneralTask, local: GeneralTask): GeneralTask {
+  const githubFieldValues = mergeGeneralTaskGithubFieldValues(remote, local);
   return {
     ...remote,
     title: local.title?.trim() ? local.title : remote.title,
@@ -187,6 +192,7 @@ function mergeGeneralTaskPlanning(remote: GeneralTask, local: GeneralTask): Gene
     DueDate: local.DueDate ?? remote.DueDate,
     assignees: local.assignees?.length ? local.assignees : remote.assignees,
     id: local.id || remote.id,
+    ...(githubFieldValues ? { githubFieldValues } : {}),
   };
 }
 
@@ -255,22 +261,12 @@ export function mergeTasksAfterPush(
   });
 }
 
+/** @deprecated Prefer applyItemFieldValuesToGeneralTask from generalTaskFields */
 export function applyFieldValuesToGeneralTask(
   gt: GeneralTask,
   fv: ItemFieldValues,
 ): GeneralTask {
-  const next = { ...gt };
-  if (typeof fv.Status === "string") next.Status = fv.Status;
-  if (typeof fv.HasDependency === "string") next.HasDependency = fv.HasDependency;
-  if (typeof fv.DependsOn === "string") next.DependsOn = fv.DependsOn;
-  if (typeof fv.Blocked === "string") next.Blocked = fv.Blocked;
-  if (typeof fv.BlockedReason === "string") next.BlockedReason = fv.BlockedReason;
-  if (typeof fv.Sprint === "string") next.Sprint = fv.Sprint;
-  if (typeof fv.Quarter === "string") next.Quarter = fv.Quarter;
-  if (typeof fv.DueDate === "string") next.DueDate = fv.DueDate;
-  const a = asStringList(fv.Assignees);
-  if (a.length) next.assignees = a;
-  return next;
+  return applyItemFieldValuesToGeneralTask(gt, fv);
 }
 
 export function synthesizeGeneralTaskFromBoardRow(
