@@ -205,8 +205,8 @@ export function subtaskMatches(
   q: TaskFilterQuery,
 ): boolean {
   if (q.type === "tarea") return false;
-  if (q.is === "open" && !isOpenState(item.state)) return false;
-  if (q.is === "closed" && isOpenState(item.state)) return false;
+  if (q.is === "open" && !isActiveTaskStatus(item.fieldValues.Status, item.state)) return false;
+  if (q.is === "closed" && isActiveTaskStatus(item.fieldValues.Status, item.state)) return false;
   if (
     q.blocked === "sí" &&
     !isBlockedField(item.fieldValues.Blocked, item.fieldValues.Status)

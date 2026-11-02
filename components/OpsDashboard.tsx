@@ -10,6 +10,7 @@ import type {
 } from "@/lib/types";
 import { friendlyGitHubError } from "@/lib/githubFriendlyError";
 import { taskFieldValueForParent } from "@/lib/taskParent";
+import { asStringList } from "@/lib/fieldValueCoerce";
 import { CalendarView } from "./CalendarView";
 import { HierarchyTable } from "./HierarchyTable";
 import { RakkauNotice } from "./RakkauNotice";
@@ -208,11 +209,7 @@ export function OpsDashboard() {
         }
         let assignees = item.assignees ?? [];
         if (patch.Assignees !== undefined) {
-          assignees = Array.isArray(patch.Assignees)
-            ? patch.Assignees
-            : typeof patch.Assignees === "string"
-              ? patch.Assignees.split(",").map((s) => s.trim()).filter(Boolean)
-              : [];
+          assignees = asStringList(patch.Assignees);
         }
         return { ...item, fieldValues, parentTaskId, assignees };
       });

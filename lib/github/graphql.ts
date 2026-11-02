@@ -26,6 +26,22 @@ import {
   rebuildProjectHierarchyFromGitHub,
   resolveIssueRepositoryId,
 } from "@/lib/github/issueHierarchy";
+import {
+  canonicalFieldsCreateSpecs,
+  mapGitHubProjectFields,
+  mergeGitHubFieldCatalog,
+  PROJECT_FIELDS_SCHEMA_VERSION,
+  type GitHubProjectFieldNode,
+} from "@/lib/github/projectFieldsSchema";
+import { ensureAllUiFieldsOnGitHub } from "@/lib/github/fieldProvisioning";
+import { normalizeProjectHierarchy } from "@/lib/github/projectInvariants";
+import {
+  mapGitHubProjectItems,
+  mergeTasksAfterPush,
+  PROJECT_TASKS_SCHEMA_VERSION,
+  type GitHubProjectItemNode,
+} from "@/lib/github/projectTasksSchema";
+import { asStringList } from "@/lib/fieldValueCoerce";
 
 const GITHUB_GRAPHQL = "https://api.github.com/graphql";
 
@@ -308,18 +324,7 @@ export async function listProjects(): Promise<GitHubProjectSummary[]> {
   }));
 }
 
-interface RawFieldNode {
-  __typename?: string;
-  id?: string;
-  name?: string;
-  dataType?: string;
-  options?: Array<{
-    id: string;
-    name: string;
-    color?: string;
-    description?: string;
-  }>;
-}
+interface RawFieldNode extends GitHubProjectFieldNode {}
 
 interface RawPerson {
   login: string;
@@ -341,157 +346,16 @@ interface RawFieldValueNode {
   field?: { id?: string; name?: string };
 }
 
-interface RawItemNode {
-  id: string;
-  content: {
-    __typename?: string;
-    /** Present on DraftIssue, Issue, PullRequest — used for direct mutations */
-    id?: string;
-    number?: number;
-    title?: string;
-    url?: string;
-    state?: string;
-    body?: string;
-    assignees?: { nodes?: RawPerson[] };
-    subIssues?: { nodes?: Array<{ id: string }> };
-  } | null;
+interface RawItemNode extends GitHubProjectItemNode {
   fieldValues: { nodes: RawFieldValueNode[] };
 }
 
 function mapFields(nodes: RawFieldNode[]): ProjectField[] {
-  return nodes
-    .filter((n) => n.id && n.name)
-    .map((n) => ({
-      id: n.id!,
-      name: n.name!,
-      dataType: (n.dataType ?? "TEXT") as FieldDataType,
-      options: n.options?.map(
-        (o): FieldOption => ({
-          id: o.id,
-          name: o.name,
-          color: o.color,
-          description: o.description,
-        }),
-      ),
-    }));
+  return mapGitHubProjectFields(nodes);
 }
 
-function parseFieldValues(nodes: RawFieldValueNode[]): ItemFieldValues {
-  const values: ItemFieldValues = {};
-  for (const n of nodes) {
-    const name = n.field?.name;
-    if (!name) continue;
-    if (n.__typename === "ProjectV2ItemFieldTextValue" && n.text != null) {
-      values[name] = n.text;
-      if (name === "Title") {
-        values.Title = n.text;
-      }
-    } else if (
-      n.__typename === "ProjectV2ItemFieldSingleSelectValue" &&
-      n.name != null
-    ) {
-      values[name] = n.name;
-    } else if (n.__typename === "ProjectV2ItemFieldIterationValue" && n.title != null) {
-      values[name] = n.title;
-    } else if (
-      n.__typename === "ProjectV2ItemFieldNumberValue" &&
-      n.number != null
-    ) {
-      values[name] = String(n.number);
-    } else if (n.__typename === "ProjectV2ItemFieldDateValue" && n.date) {
-      values[name] = n.date;
-    } else if (n.__typename === "ProjectV2ItemFieldUserValue") {
-      const logins =
-        n.users?.nodes?.map((u) => u.login).filter(Boolean) ?? [];
-      if (logins.length) values[name] = logins;
-    }
-  }
-  return values;
-}
-
-function collectAssignees(
-  content: RawItemNode["content"],
-  fieldValues: ItemFieldValues,
-): string[] {
-  const fromIssue =
-    content?.assignees?.nodes?.map((u) => u.login).filter(Boolean) ?? [];
-  const fromField = fieldValues.Assignees;
-  const fromFieldList = Array.isArray(fromField)
-    ? fromField
-    : typeof fromField === "string" && fromField
-      ? fromField.split(",").map((s) => s.trim()).filter(Boolean)
-      : [];
-  return Array.from(new Set([...fromIssue, ...fromFieldList]));
-}
-
-function mapItems(nodes: RawItemNode[]): ProjectItem[] {
-  const items = nodes.map((n) => {
-    const fieldValues = parseFieldValues(n.fieldValues?.nodes ?? []);
-    // Infer HasDependency from DependsOn if remote only has DependsOn
-    if (
-      fieldValues.HasDependency == null &&
-      typeof fieldValues.DependsOn === "string" &&
-      fieldValues.DependsOn.trim()
-    ) {
-      fieldValues.HasDependency = "Sí";
-    }
-    const task = fieldValues.Task;
-    const parentTaskId = Array.isArray(task)
-      ? task[0] ?? null
-      : typeof task === "string"
-        ? task
-        : null;
-    const content = n.content;
-    let contentType: ProjectItem["contentType"] = "Unknown";
-    if (content?.__typename === "Issue") contentType = "Issue";
-    else if (content?.__typename === "DraftIssue") contentType = "DraftIssue";
-    else if (content?.__typename === "PullRequest") contentType = "PullRequest";
-    // DraftIssue has no state field in GH API; treat as OPEN (they're active items).
-    const rawState = contentType === "DraftIssue" ? "OPEN" : (content?.state ?? "OPEN");
-
-    const assignees = collectAssignees(content, fieldValues);
-    if (assignees.length) fieldValues.Assignees = assignees;
-
-    const fromContent = content?.title?.trim() ?? "";
-    const fromTitleField =
-      typeof fieldValues.Title === "string" ? fieldValues.Title.trim() : "";
-    const resolvedTitle = fromContent || fromTitleField || "(sin título)";
-    if (fromTitleField && !fieldValues.Title) fieldValues.Title = fromTitleField;
-    if (resolvedTitle !== "(sin título)" && !fieldValues.Title) {
-      fieldValues.Title = resolvedTitle;
-    }
-    if (content?.body) fieldValues._body = content.body;
-
-    return {
-      nodeId: n.id,
-      contentNodeId: content?.id ?? null,
-      number: content?.number ?? null,
-      title: resolvedTitle,
-      state: rawState as ProjectItem["state"],
-      url: content?.url ?? null,
-      contentType,
-      fieldValues,
-      parentTaskId,
-      parentIssueContentId: null,
-      assignees,
-      blockedBy: [],
-      blocks: [],
-    };
-  });
-
-  const byContent = new Map<string, ProjectItem>();
-  for (const item of items) {
-    if (item.contentNodeId) byContent.set(item.contentNodeId, item);
-  }
-  for (const n of nodes) {
-    const content = n.content;
-    if (content?.__typename !== "Issue" || !content.id) continue;
-    for (const sub of content.subIssues?.nodes ?? []) {
-      const child = byContent.get(sub.id);
-      if (child) child.parentIssueContentId = content.id;
-    }
-  }
-  return items;
+function mapItems(nodes: RawItemNode[], catalog?: ProjectField[]): ProjectItem[] {
+  return mapGitHubProjectItems(nodes, catalog);
 }
 
 function derivePeople(
@@ -550,7 +414,7 @@ export async function pullProject(projectId: string): Promise<ProjectDocument> {
   const node = data.node;
   const fields = mapFields(node.fields?.nodes ?? []);
   const rawItems = node.items?.nodes ?? [];
-  const items = mapItems(rawItems);
+  const items = mapItems(rawItems, fields);
   const owner = node.owner?.login ?? "unknown";
 
   const doc: ProjectDocument = {
@@ -561,6 +425,8 @@ export async function pullProject(projectId: string): Promise<ProjectDocument> {
     url: node.url,
     pulledAt: new Date().toISOString(),
     dirty: false,
+    fieldsSchemaVersion: PROJECT_FIELDS_SCHEMA_VERSION,
+    tasksSchemaVersion: PROJECT_TASKS_SCHEMA_VERSION,
     fields,
     generalTasks: [],
     items,
@@ -569,7 +435,7 @@ export async function pullProject(projectId: string): Promise<ProjectDocument> {
     currentQuarter: currentCalendarQuarter(),
     people: derivePeople(owner, items, rawItems),
   };
-  return rebuildProjectHierarchyFromGitHub(doc);
+  return normalizeProjectHierarchy(rebuildProjectHierarchyFromGitHub(doc));
 }
 
 export interface CreateFieldInput {
@@ -592,66 +458,18 @@ export async function provisionCanonicalFields(
   projectId: string,
   existingFields: ProjectField[],
 ): Promise<{ created: string[]; existing: string[] }> {
-  const byName = new Map(existingFields.map((f) => [f.name, f]));
-  const created: string[] = [];
-  const existing: string[] = [];
-
-  type Spec = {
-    name: string;
-    dataType: CreateFieldInput["dataType"];
-    singleSelectOptions?: CreateFieldInput["singleSelectOptions"];
-  };
-
-  const specs: Spec[] = [
-    { name: CANONICAL_FIELDS.Task, dataType: "TEXT" },
-    {
-      name: CANONICAL_FIELDS.Blocked,
-      dataType: "SINGLE_SELECT",
-      singleSelectOptions: BLOCKED_OPTIONS.map((o) => ({
-        name: o.name,
-        color: o.color ?? "GRAY",
-        description: "",
-      })),
-    },
-    { name: CANONICAL_FIELDS.BlockedReason, dataType: "TEXT" },
-    {
-      name: CANONICAL_FIELDS.HasDependency,
-      dataType: "SINGLE_SELECT",
-      singleSelectOptions: YES_NO_OPTIONS.map((o) => ({
-        name: o.name,
-        color: o.color ?? "GRAY",
-        description: "",
-      })),
-    },
-    { name: CANONICAL_FIELDS.DependsOn, dataType: "TEXT" },
-    { name: CANONICAL_FIELDS.Sprint, dataType: "TEXT" },
-    {
-      name: CANONICAL_FIELDS.Quarter,
-      dataType: "SINGLE_SELECT",
-      singleSelectOptions: [
-        { name: "Q1", color: "BLUE", description: "" },
-        { name: "Q2", color: "GREEN", description: "" },
-        { name: "Q3", color: "YELLOW", description: "" },
-        { name: "Q4", color: "ORANGE", description: "" },
-      ],
-    },
-    { name: CANONICAL_FIELDS.DueDate, dataType: "DATE" },
-  ];
-
-  for (const spec of specs) {
-    if (byName.has(spec.name)) {
-      existing.push(spec.name);
-      continue;
-    }
-    try {
-      await createField({ projectId, ...spec });
-      created.push(spec.name);
-    } catch {
-      // Best-effort: if creation fails (e.g. already exists on GitHub side), continue.
-    }
-  }
-
-  return { created, existing };
+  const result = await ensureAllUiFieldsOnGitHub(existingFields, async (spec) => {
+    await createField({ projectId, ...spec });
+  });
+  const existing = canonicalFieldsCreateSpecs()
+    .map((s) => s.name)
+    .filter(
+      (name) =>
+        existingFields.some(
+          (f) => f.name.toLowerCase() === name.toLowerCase() && !f.pendingCreate,
+        ) && !result.created.includes(name),
+    );
+  return { created: result.created, existing };
 }
 
 const GITHUB_SELECT_COLORS = new Set([
@@ -1041,21 +859,72 @@ async function ensureIssueRefForSubtask(
   return converted.contentNodeId;
 }
 
+function isDuplicateSubIssueError(err: unknown): boolean {
+  const msg =
+    err instanceof GitHubGraphQLError
+      ? err.message
+      : err instanceof Error
+        ? err.message
+        : String(err);
+  return /duplicate sub-issues?/i.test(msg);
+}
+
+async function subIssueAlreadyOnParent(
+  parentIssueId: string,
+  subIssueId: string,
+): Promise<boolean> {
+  type R = {
+    node: { subIssues?: { nodes?: Array<{ id: string }> } } | null;
+  };
+  try {
+    const data = await gql<R>(
+      `query ParentSubIssues($id: ID!) {
+         node(id: $id) {
+           ... on Issue {
+             subIssues(first: 100) { nodes { id } }
+           }
+         }
+       }`,
+      { id: parentIssueId },
+    );
+    return (data.node?.subIssues?.nodes ?? []).some((n) => n.id === subIssueId);
+  } catch {
+    return false;
+  }
+}
+
 async function linkSubtaskToGeneralTaskOnGitHub(
-  next: ProjectDocument,
+  _next: ProjectDocument,
   task: GeneralTask,
   item: ProjectItem,
   repositoryId: string,
 ): Promise<void> {
   const parentIssueId = await ensureIssueRefForGeneralTask(task, repositoryId);
   const subIssueId = await ensureIssueRefForSubtask(item, repositoryId);
-  await gql(ADD_SUB_ISSUE, {
-    input: {
-      issueId: parentIssueId,
-      subIssueId,
-      replaceParent: true,
-    },
-  });
+
+  if (item.parentIssueContentId === parentIssueId) {
+    item.parentTaskId = task.id;
+    return;
+  }
+
+  if (await subIssueAlreadyOnParent(parentIssueId, subIssueId)) {
+    item.parentIssueContentId = parentIssueId;
+    item.parentTaskId = task.id;
+    return;
+  }
+
+  try {
+    await gql(ADD_SUB_ISSUE, {
+      input: {
+        issueId: parentIssueId,
+        subIssueId,
+        replaceParent: true,
+      },
+    });
+  } catch (err) {
+    if (!isDuplicateSubIssueError(err)) throw err;
+  }
+
   item.parentIssueContentId = parentIssueId;
   item.parentTaskId = task.id;
 }
@@ -1095,44 +964,12 @@ function projectItemFromGeneralTask(task: GeneralTask): ProjectItem | null {
   };
 }
 
-/** Tras publicar: GitHub manda qué ítems existen; solo enriquecemos metadatos locales. */
+/** Tras publicar: GitHub manda qué ítems existen; enriquecer planificación local. */
 function mergeDocumentAfterPush(
   pushed: ProjectDocument,
   remote: ProjectDocument,
 ): ProjectDocument {
-  const localByContent = new Map<string, ProjectItem>();
-  const localByNode = new Map<string, ProjectItem>();
-  for (const item of pushed.items) {
-    if (item.contentNodeId) localByContent.set(item.contentNodeId, item);
-    localByNode.set(item.nodeId, item);
-  }
-  const localGtByContent = new Map<string, GeneralTask>();
-  for (const gt of pushed.generalTasks) {
-    if (gt.githubContentNodeId) localGtByContent.set(gt.githubContentNodeId, gt);
-  }
-
-  const items: ProjectItem[] = remote.items.map((ri) => {
-    const loc =
-      (ri.contentNodeId && localByContent.get(ri.contentNodeId)) ||
-      localByNode.get(ri.nodeId);
-    if (!loc) return ri;
-    return {
-      ...ri,
-      parentTaskId: loc.parentTaskId ?? ri.parentTaskId,
-      fieldValues: { ...ri.fieldValues, ...loc.fieldValues },
-    };
-  });
-
-  return rebuildProjectHierarchyFromGitHub({
-    ...remote,
-    fields: remote.fields,
-    items,
-    generalTasks: [],
-    sprints: pushed.sprints?.length ? pushed.sprints : remote.sprints,
-    currentQuarter: pushed.currentQuarter ?? remote.currentQuarter,
-    links: pushed.links ?? remote.links,
-    people: remote.people?.length ? remote.people : pushed.people,
-  });
+  return mergeTasksAfterPush(pushed, remote);
 }
 
 async function resolveUserNodeIds(logins: string[]): Promise<string[]> {
@@ -1306,42 +1143,8 @@ async function hydrateFieldsFromGitHub(next: ProjectDocument): Promise<void> {
     return;
   }
 
-  const remoteByName = new Map(
-    remoteFields.map((f) => [f.name.toLowerCase(), f]),
-  );
-  const merged: ProjectField[] = [];
-  const seen = new Set<string>();
-
-  for (const f of next.fields) {
-    const remote = remoteByName.get(f.name.toLowerCase());
-    if (remote) {
-      const key = remote.name.toLowerCase();
-      if (!seen.has(key)) {
-        merged.push({ ...remote, pendingCreate: false });
-        seen.add(key);
-      }
-      continue;
-    }
-    if (f.pendingCreate) {
-      if (CANONICAL_NAME_SET.has(f.name)) {
-        continue;
-      }
-    }
-    const key = f.name.toLowerCase();
-    if (seen.has(key)) continue;
-    merged.push(f.pendingCreate ? f : { ...f, pendingCreate: false });
-    seen.add(key);
-  }
-
-  for (const rf of remoteFields) {
-    const key = rf.name.toLowerCase();
-    if (!seen.has(key)) {
-      merged.push(rf);
-      seen.add(key);
-    }
-  }
-
-  next.fields = merged;
+  next.fields = mergeGitHubFieldCatalog(next.fields, remoteFields);
+  next.fieldsSchemaVersion = PROJECT_FIELDS_SCHEMA_VERSION;
 }
 
 /** Refresca nodeId de ítems cuando el issue/draft sigue en GitHub pero cambió el id del project item. */
@@ -1748,11 +1551,7 @@ export function ensureCanonicalFields(
   for (const item of next.items) {
     if (!Array.isArray(item.assignees)) {
       const fromFv = item.fieldValues.Assignees;
-      item.assignees = Array.isArray(fromFv)
-        ? fromFv
-        : typeof fromFv === "string" && fromFv
-          ? fromFv.split(",").map((s) => s.trim()).filter(Boolean)
-          : [];
+      item.assignees = asStringList(fromFv);
     }
     if (
       item.fieldValues.HasDependency == null &&

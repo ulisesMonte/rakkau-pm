@@ -34,6 +34,10 @@ export interface ProjectField {
   options?: FieldOption[];
   /** True when created locally and not yet pushed to GitHub */
   pendingCreate?: boolean;
+  /** Clave Rakkau si el nombre coincide con CANONICAL_FIELDS (ver projectFieldsSchema). */
+  canonicalKey?: (typeof CANONICAL_FIELDS)[keyof typeof CANONICAL_FIELDS];
+  /** Origen del registro de columna en nuestro JSON. */
+  origin?: "github" | "local_pending";
 }
 
 export type YesNoValue = "Sí" | "No" | "";
@@ -98,7 +102,7 @@ export interface CurrentQuarter {
 
 export interface ItemFieldValues {
   /** Parent initiative IDs (Task MULTI_SELECT) */
-  Task?: string[];
+  Task?: string | string[];
   /** Legacy / “está bloqueada” */
   Blocked?: YesNoValue;
   BlockedReason?: string;
@@ -112,7 +116,7 @@ export interface ItemFieldValues {
   /** Vencimiento ISO YYYY-MM-DD → GitHub DueDate (DATE) */
   DueDate?: string;
   /** Logins asignados (espejo local; también en item.assignees) */
-  Assignees?: string[];
+  Assignees?: string | string[];
   [key: string]: string | string[] | undefined;
 }
 
@@ -164,6 +168,10 @@ export interface ProjectDocument {
   currentQuarter?: CurrentQuarter;
   /** Personas conocidas para asignar (union de assignees + owner) */
   people?: ProjectPerson[];
+  /** Versión del esquema de columnas (`PROJECT_FIELDS_SCHEMA_VERSION`). */
+  fieldsSchemaVersion?: number;
+  /** Versión del esquema de tasks (`PROJECT_TASKS_SCHEMA_VERSION`). */
+  tasksSchemaVersion?: number;
 }
 
 export interface IndexEntry {

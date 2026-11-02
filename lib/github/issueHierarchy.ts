@@ -158,6 +158,13 @@ export function rebuildProjectHierarchyFromGitHub(
   doc: ProjectDocument,
 ): ProjectDocument {
   const next = structuredClone(doc);
+  const flatByContent = new Map<string, ProjectItem>();
+  for (const item of next.items) {
+    if (item.contentNodeId) {
+      flatByContent.set(item.contentNodeId, item);
+    }
+  }
+
   const generalByContent = new Map<string, GeneralTask>();
   for (const gt of next.generalTasks) {
     if (gt.githubContentNodeId) generalByContent.set(gt.githubContentNodeId, gt);
@@ -244,5 +251,62 @@ export function rebuildProjectHierarchyFromGitHub(
   }
 
   next.items = subtasks;
+  return ensureGeneralTasksForSubtasks(next, flatByContent);
+}
+
+/** Garantiza GeneralTask para cada subtarea con parentIssueContentId. */
+export function ensureGeneralTasksForSubtasks(
+  doc: ProjectDocument,
+  flatByContent?: Map<string, ProjectItem>,
+): ProjectDocument {
+  const next = structuredClone(doc);
+  const byContent = new Map<string, GeneralTask>();
+  for (const gt of next.generalTasks) {
+    if (gt.githubContentNodeId) byContent.set(gt.githubContentNodeId, gt);
+  }
+
+  for (const item of next.items) {
+    const parentContentId = item.parentIssueContentId;
+    if (!parentContentId || byContent.has(parentContentId)) continue;
+
+    const parentRow = flatByContent?.get(parentContentId);
+    const bodyText =
+      typeof parentRow?.fieldValues._body === "string"
+        ? parentRow.fieldValues._body
+        : undefined;
+    const fromBody = parseRakkauTaskIdFromBody(bodyText);
+    const fallbackId =
+      item.parentTaskId?.trim() ||
+      firstTaskIdFromItem(item) ||
+      `parent-${parentContentId.slice(-8)}`;
+    const id = fromBody || fallbackId;
+
+    let gt = defaultGeneralTaskFields(next, id, parentRow?.title ?? id);
+    gt.githubContentNodeId = parentContentId;
+    if (parentRow) {
+      gt.githubProjectItemNodeId = parentRow.nodeId;
+      gt.issueNumber = parentRow.number;
+      gt.url = parentRow.url;
+      const fv = parentRow.fieldValues;
+      if (typeof fv.Status === "string") gt.Status = fv.Status;
+      if (typeof fv.Blocked === "string") gt.Blocked = fv.Blocked;
+      if (typeof fv.BlockedReason === "string") gt.BlockedReason = fv.BlockedReason;
+      if (typeof fv.Sprint === "string") gt.Sprint = fv.Sprint;
+      if (typeof fv.Quarter === "string") gt.Quarter = fv.Quarter;
+      if (typeof fv.DueDate === "string") gt.DueDate = fv.DueDate;
+    }
+    next.generalTasks.push(gt);
+    byContent.set(parentContentId, gt);
+    if (!item.parentTaskId) item.parentTaskId = gt.id;
+    if (!item.fieldValues.Task) item.fieldValues.Task = [gt.id];
+  }
+
   return next;
+}
+
+function firstTaskIdFromItem(item: ProjectItem): string | null {
+  const t = item.fieldValues.Task;
+  if (Array.isArray(t)) return t[0]?.trim() || null;
+  if (typeof t === "string" && t.trim()) return t.trim();
+  return null;
 }

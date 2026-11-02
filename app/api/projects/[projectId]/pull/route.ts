@@ -7,6 +7,8 @@ import {
   provisionCanonicalFields,
   pullProject,
 } from "@/lib/github/graphql";
+import { PROJECT_FIELDS_SCHEMA_VERSION } from "@/lib/github/projectFieldsSchema";
+import { PROJECT_TASKS_SCHEMA_VERSION } from "@/lib/github/projectTasksSchema";
 
 type Ctx = { params: Promise<{ projectId: string }> };
 
@@ -72,6 +74,8 @@ export async function POST(request: Request, ctx: Ctx) {
 
     pulled = ensureCanonicalFields(pulled, { addPendingStubs: false });
     pulled.dirty = false;
+    pulled.fieldsSchemaVersion = PROJECT_FIELDS_SCHEMA_VERSION;
+    pulled.tasksSchemaVersion = PROJECT_TASKS_SCHEMA_VERSION;
     if (existing) {
       pulled.sprints = existing.sprints ?? pulled.sprints;
       pulled.links = existing.links ?? pulled.links;
