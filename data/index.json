@@ -1,0 +1,41 @@
+{
+  "updatedAt": "2026-11-02T20:14:23.438Z",
+  "projects": [
+    {
+      "projectId": "PVT_kwDODEMO_rakkau_ops",
+      "number": 3,
+      "title": "CIAM Ops Hybrid Lab (fixture)",
+      "owner": "ulisesMonte",
+      "path": "data/projects/demo.json",
+      "dirty": true,
+      "pulledAt": "2026-11-02T12:00:00.000Z"
+    },
+    {
+      "projectId": "PVT_kwHOB_sFhs4BpSjO",
+      "number": 3,
+      "title": "CIAM Ops Hybrid Test",
+      "owner": "ulisesMonte",
+      "path": "data/projects/PVT_kwHOB_sFhs4BpSjO.json",
+      "dirty": true,
+      "pulledAt": "2026-11-02T20:14:23.432Z"
+    },
+    {
+      "projectId": "PVT_kwHOB_sFhs4BpIxH",
+      "number": 1,
+      "title": "test",
+      "owner": "ulisesMonte",
+      "path": "data/projects/PVT_kwHOB_sFhs4BpIxH.json",
+      "dirty": true,
+      "pulledAt": "2026-11-02T19:12:30.704Z"
+    },
+    {
+      "projectId": "PVT_kwHOB_sFhs4BpSjN",
+      "number": 2,
+      "title": "@ulisesMonte's untitled project",
+      "owner": "ulisesMonte",
+      "path": "data/projects/PVT_kwHOB_sFhs4BpSjN.json",
+      "dirty": false,
+      "pulledAt": "2026-11-02T19:14:12.423Z"
+    }
+  ]
+}

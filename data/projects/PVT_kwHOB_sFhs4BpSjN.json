@@ -1,0 +1,206 @@
+{
+  "projectId": "PVT_kwHOB_sFhs4BpSjN",
+  "number": 2,
+  "title": "@ulisesMonte's untitled project",
+  "owner": "ulisesMonte",
+  "url": "https://github.com/users/ulisesMonte/projects/2",
+  "pulledAt": "2026-11-02T19:14:12.423Z",
+  "dirty": false,
+  "fields": [
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhnu13Q",
+      "name": "Title",
+      "dataType": "TITLE"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhnu13g",
+      "name": "Assignees",
+      "dataType": "ASSIGNEES"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpSjNzhnu13o",
+      "name": "Status",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "f75ad846",
+          "name": "Todo",
+          "color": "GREEN",
+          "description": "This item hasn't been started"
+        },
+        {
+          "id": "47fc9ee4",
+          "name": "In Progress",
+          "color": "YELLOW",
+          "description": "This is actively being worked on"
+        },
+        {
+          "id": "98236657",
+          "name": "Done",
+          "color": "PURPLE",
+          "description": "This has been completed"
+        }
+      ]
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhnu13w",
+      "name": "Labels",
+      "dataType": "LABELS"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhnu134",
+      "name": "Linked pull requests",
+      "dataType": "LINKED_PULL_REQUESTS"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhnu14A",
+      "name": "Milestone",
+      "dataType": "MILESTONE"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhnu14E",
+      "name": "Repository",
+      "dataType": "REPOSITORY"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhnu14M",
+      "name": "Reviewers",
+      "dataType": "REVIEWERS"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhnu14Q",
+      "name": "Parent issue",
+      "dataType": "PARENT_ISSUE"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhnu14U",
+      "name": "Sub-issues progress",
+      "dataType": "SUB_ISSUES_PROGRESS"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhnu14Y",
+      "name": "Created",
+      "dataType": "CREATED"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhnu14c",
+      "name": "Updated",
+      "dataType": "UPDATED"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhnu14g",
+      "name": "Closed",
+      "dataType": "CLOSED"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhoSftY",
+      "name": "Task",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpSjNzhoSfuA",
+      "name": "Blocked",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "bf9af245",
+          "name": "Sí",
+          "color": "RED",
+          "description": ""
+        },
+        {
+          "id": "fc4c3316",
+          "name": "No",
+          "color": "GREEN",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhoSfuk",
+      "name": "BlockedReason",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpSjNzhoSfvg",
+      "name": "HasDependency",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "3bd517ce",
+          "name": "Sí",
+          "color": "RED",
+          "description": ""
+        },
+        {
+          "id": "483f5dca",
+          "name": "No",
+          "color": "GREEN",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhoSfw0",
+      "name": "DependsOn",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhoSfxw",
+      "name": "Sprint",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpSjNzhoSfy0",
+      "name": "Quarter",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "debbf06f",
+          "name": "Q1",
+          "color": "BLUE",
+          "description": ""
+        },
+        {
+          "id": "edbf9d58",
+          "name": "Q2",
+          "color": "GREEN",
+          "description": ""
+        },
+        {
+          "id": "364b5f14",
+          "name": "Q3",
+          "color": "YELLOW",
+          "description": ""
+        },
+        {
+          "id": "09f26167",
+          "name": "Q4",
+          "color": "ORANGE",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjNzhoSfzE",
+      "name": "DueDate",
+      "dataType": "DATE"
+    }
+  ],
+  "generalTasks": [],
+  "items": [],
+  "links": {
+    "blockedBy": {},
+    "blocks": {}
+  },
+  "sprints": [],
+  "currentQuarter": {
+    "quarter": "Q4",
+    "year": 2026
+  },
+  "people": [
+    {
+      "login": "ulisesMonte"
+    }
+  ]
+}

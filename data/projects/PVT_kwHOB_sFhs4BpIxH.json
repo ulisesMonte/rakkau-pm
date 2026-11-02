@@ -1,0 +1,341 @@
+{
+  "projectId": "PVT_kwHOB_sFhs4BpIxH",
+  "number": 1,
+  "title": "test",
+  "owner": "ulisesMonte",
+  "url": "https://github.com/users/ulisesMonte/projects/1",
+  "pulledAt": "2026-11-02T19:12:30.704Z",
+  "dirty": true,
+  "fields": [
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt70",
+      "name": "Title",
+      "dataType": "TITLE"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt78",
+      "name": "Assignees",
+      "dataType": "ASSIGNEES"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhnlt8E",
+      "name": "Status",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "f75ad846",
+          "name": "Todo",
+          "color": "GREEN",
+          "description": "This item hasn't been started"
+        },
+        {
+          "id": "47fc9ee4",
+          "name": "In Progress",
+          "color": "YELLOW",
+          "description": "This is actively being worked on"
+        },
+        {
+          "id": "98236657",
+          "name": "Done",
+          "color": "PURPLE",
+          "description": "This has been completed"
+        }
+      ]
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt8M",
+      "name": "Labels",
+      "dataType": "LABELS"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt8c",
+      "name": "Linked pull requests",
+      "dataType": "LINKED_PULL_REQUESTS"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt8s",
+      "name": "Milestone",
+      "dataType": "MILESTONE"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt84",
+      "name": "Repository",
+      "dataType": "REPOSITORY"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt9U",
+      "name": "Reviewers",
+      "dataType": "REVIEWERS"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt9k",
+      "name": "Parent issue",
+      "dataType": "PARENT_ISSUE"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt94",
+      "name": "Sub-issues progress",
+      "dataType": "SUB_ISSUES_PROGRESS"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt-Q",
+      "name": "Created",
+      "dataType": "CREATED"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt-c",
+      "name": "Updated",
+      "dataType": "UPDATED"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt-k",
+      "name": "Closed",
+      "dataType": "CLOSED"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhnlvIY",
+      "name": "Test",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTIF_lAHOB_sFhs4BpIxHzhnlzm8",
+      "name": "test3",
+      "dataType": "ITERATION"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhnl0j0",
+      "name": "Prioridad",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "eac37a0f",
+          "name": "Alta",
+          "color": "GRAY",
+          "description": ""
+        },
+        {
+          "id": "72ef1cf3",
+          "name": "Media",
+          "color": "GRAY",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhoSazg",
+      "name": "Task",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhoSa04",
+      "name": "BlockedReason",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhoSa1s",
+      "name": "DependsOn",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhoSa1w",
+      "name": "Sprint",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpIxHzhoSa10",
+      "name": "DueDate",
+      "dataType": "DATE"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhoSdH8",
+      "name": "Blocked",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "0374a72c",
+          "name": "Sí",
+          "color": "RED"
+        },
+        {
+          "id": "f34a18a4",
+          "name": "No",
+          "color": "GREEN"
+        }
+      ],
+      "pendingCreate": false
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhoSdIU",
+      "name": "HasDependency",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "2b0af06b",
+          "name": "Sí",
+          "color": "RED"
+        },
+        {
+          "id": "b3ab76bb",
+          "name": "No",
+          "color": "GREEN"
+        }
+      ],
+      "pendingCreate": false
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhoSdIY",
+      "name": "Quarter",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "73cac3c4",
+          "name": "Q1",
+          "color": "BLUE"
+        },
+        {
+          "id": "49101aa0",
+          "name": "Q2",
+          "color": "GREEN"
+        },
+        {
+          "id": "3388f914",
+          "name": "Q3",
+          "color": "YELLOW"
+        },
+        {
+          "id": "16257df6",
+          "name": "Q4",
+          "color": "ORANGE"
+        }
+      ],
+      "pendingCreate": false
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhoSdBg",
+      "name": "anasge",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "ae282c18",
+          "name": "test",
+          "color": "BLUE"
+        },
+        {
+          "id": "28c349ee",
+          "name": "test2",
+          "color": "GREEN"
+        }
+      ],
+      "pendingCreate": false
+    }
+  ],
+  "generalTasks": [],
+  "items": [
+    {
+      "nodeId": "PVTI_lAHOB_sFhs4BpIxHzhENcWM",
+      "contentNodeId": null,
+      "number": 1,
+      "title": "tst",
+      "state": "OPEN",
+      "url": "https://github.com/ulisesMonte/frontend-clinch/issues/1",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [],
+        "Title": "tst",
+        "Status": "Todo"
+      },
+      "parentTaskId": null,
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lAHOB_sFhs4BpIxHzhENcmY",
+      "contentNodeId": null,
+      "number": 2,
+      "title": "test2",
+      "state": "OPEN",
+      "url": "https://github.com/ulisesMonte/frontend-clinch/issues/2",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "ulisesMonte"
+        ],
+        "Title": "test2",
+        "Status": "Todo",
+        "DueDate": "2026-11-25",
+        "HasDependency": "No",
+        "DependsOn": "",
+        "Prioridad": "Alta",
+        "anasge": "test"
+      },
+      "parentTaskId": null,
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lAHOB_sFhs4BpIxHzhEOM7Y",
+      "contentNodeId": null,
+      "number": 3,
+      "title": "test",
+      "state": "OPEN",
+      "url": "https://github.com/ulisesMonte/frontend-clinch/issues/3",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "ulisesMonte"
+        ],
+        "Status": "Todo",
+        "Title": "test",
+        "Prioridad": "Alta"
+      },
+      "parentTaskId": null,
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lAHOB_sFhs4BpIxHzhExjBs",
+      "contentNodeId": null,
+      "number": 4,
+      "title": "TEST10",
+      "state": "OPEN",
+      "url": "https://github.com/ulisesMonte/frontend-clinch/issues/4",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "ulisesMonte"
+        ],
+        "Title": "TEST10",
+        "Status": "Todo"
+      },
+      "parentTaskId": null,
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    }
+  ],
+  "links": {
+    "blockedBy": {},
+    "blocks": {}
+  },
+  "sprints": [],
+  "currentQuarter": {
+    "quarter": "Q4",
+    "year": 2026
+  },
+  "people": [
+    {
+      "login": "ulisesMonte",
+      "name": "Ulises Monte",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/133891462?u=5804334b795552892413d9b6f096904dcf885b19&v=4"
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "projectId": "PVT_kwHOB_sFhs4BpSjO",
+  "number": 3,
+  "title": "CIAM Ops Hybrid Test",
+  "owner": "ulisesMonte",
+  "url": "https://github.com/users/ulisesMonte/projects/3",
+  "pulledAt": "2026-11-02T20:14:23.432Z",
+  "dirty": true,
+  "fields": [
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhnu14k",
+      "name": "Title",
+      "dataType": "TITLE"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhnu14o",
+      "name": "Assignees",
+      "dataType": "ASSIGNEES"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpSjOzhnu14w",
+      "name": "Status",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "f75ad846",
+          "name": "Todo",
+          "color": "GREEN",
+          "description": "This item hasn't been started"
+        },
+        {
+          "id": "47fc9ee4",
+          "name": "In Progress",
+          "color": "YELLOW",
+          "description": "This is actively being worked on"
+        },
+        {
+          "id": "98236657",
+          "name": "Done",
+          "color": "PURPLE",
+          "description": "This has been completed"
+        },
+        {
+          "id": "d08fa318",
+          "name": "Bloqueado",
+          "color": "GREEN",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhnu144",
+      "name": "Labels",
+      "dataType": "LABELS"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhnu15A",
+      "name": "Linked pull requests",
+      "dataType": "LINKED_PULL_REQUESTS"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhnu15I",
+      "name": "Milestone",
+      "dataType": "MILESTONE"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhnu15Q",
+      "name": "Repository",
+      "dataType": "REPOSITORY"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhnu15g",
+      "name": "Reviewers",
+      "dataType": "REVIEWERS"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhnu15o",
+      "name": "Parent issue",
+      "dataType": "PARENT_ISSUE"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhnu15w",
+      "name": "Sub-issues progress",
+      "dataType": "SUB_ISSUES_PROGRESS"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhnu154",
+      "name": "Created",
+      "dataType": "CREATED"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhnu16A",
+      "name": "Updated",
+      "dataType": "UPDATED"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhnu16M",
+      "name": "Closed",
+      "dataType": "CLOSED"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpSjOzhnu2TM",
+      "name": "Track / Journey",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "97d99308",
+          "name": "Identity",
+          "color": "GRAY",
+          "description": ""
+        },
+        {
+          "id": "b4dd6a22",
+          "name": "Platform",
+          "color": "GRAY",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpSjOzhoSLj4",
+      "name": "Blocked",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "aa8952f3",
+          "name": "Sí",
+          "color": "RED",
+          "description": ""
+        },
+        {
+          "id": "bb39e901",
+          "name": "No",
+          "color": "GREEN",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhoSLkc",
+      "name": "BlockedReason",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpSjOzhoSLkw",
+      "name": "HasDependency",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "efd80bee",
+          "name": "Sí",
+          "color": "RED",
+          "description": ""
+        },
+        {
+          "id": "70999656",
+          "name": "No",
+          "color": "GREEN",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhoSLl0",
+      "name": "DependsOn",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhoSLm4",
+      "name": "Sprint",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpSjOzhoSLoA",
+      "name": "Quarter",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "275d0d76",
+          "name": "Q1",
+          "color": "BLUE",
+          "description": ""
+        },
+        {
+          "id": "e9d62363",
+          "name": "Q2",
+          "color": "GREEN",
+          "description": ""
+        },
+        {
+          "id": "803ef89f",
+          "name": "Q3",
+          "color": "YELLOW",
+          "description": ""
+        },
+        {
+          "id": "3515d32e",
+          "name": "Q4",
+          "color": "ORANGE",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhoSLoQ",
+      "name": "DueDate",
+      "dataType": "DATE"
+    }
+  ],
+  "generalTasks": [],
+  "items": [
+    {
+      "nodeId": "PVTI_lAHOB_sFhs4BpSjOzhFfvfQ",
+      "contentNodeId": "I_kwDOVa-rbs8AAAABb8QrGg",
+      "number": 11,
+      "title": "test-3333",
+      "state": "OPEN",
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/11",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "test-3333",
+        "Status": "Todo",
+        "Blocked": "No",
+        "HasDependency": "No",
+        "Task": [
+          "TEST-1111"
+        ]
+      },
+      "parentTaskId": "TEST-1111",
+      "parentIssueContentId": "I_kwDOVa-rbs8AAAABb8QpnQ",
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    }
+  ],
+  "links": {
+    "blockedBy": {},
+    "blocks": {}
+  },
+  "sprints": [],
+  "currentQuarter": {
+    "quarter": "Q4",
+    "year": 2026
+  },
+  "people": [
+    {
+      "login": "ulisesMonte"
+    }
+  ]
+}
