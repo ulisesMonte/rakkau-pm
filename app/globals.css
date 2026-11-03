@@ -2103,6 +2103,190 @@ textarea {
   }
 }
 
+/* ── Macros / Objetivos Q ───────────────────────────────────────── */
+.rk-macro-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.rk-macro-add {
+  align-items: end;
+}
+
+.rk-macro-stages-count {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--rk-text-dim);
+}
+
+.rk-empty-inline {
+  margin: 0;
+  color: var(--rk-text-dim);
+  font-size: 0.9rem;
+}
+
+.rk-macro-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.rk-macro-card {
+  border: 1px solid var(--rk-border-strong);
+  border-radius: var(--rk-radius);
+  background: linear-gradient(
+    135deg,
+    rgba(45, 212, 191, 0.06),
+    rgba(19, 24, 31, 0.9) 45%
+  );
+  padding: 0.85rem 1rem 1rem;
+}
+
+.rk-macro-card-head {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+}
+
+.rk-macro-card-titles {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.rk-macro-title-input {
+  font-family: var(--rk-font-display);
+  font-weight: 650;
+  font-size: 1.05rem;
+  letter-spacing: -0.03em;
+}
+
+.rk-macro-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.rk-macro-progress {
+  max-width: 18rem;
+  margin-top: 0.15rem;
+}
+
+.rk-macro-body {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--rk-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.rk-macro-stages-head,
+.rk-macro-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.rk-macro-stages-head {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rk-macro-subtitle {
+  margin: 0;
+  font-family: var(--rk-font-display);
+  font-size: 0.85rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.rk-stage-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.rk-stage-row {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid var(--rk-border);
+}
+
+.rk-stage-done {
+  opacity: 0.72;
+  border-color: rgba(63, 185, 80, 0.35);
+}
+
+.rk-stage-overdue {
+  border-color: rgba(251, 113, 133, 0.4);
+  box-shadow: inset 3px 0 0 #fb7185;
+}
+
+.rk-stage-check {
+  padding-top: 0.55rem;
+}
+
+.rk-stage-fields {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.rk-stage-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.rk-stage-idx {
+  font-family: var(--rk-font-display);
+  font-weight: 700;
+  color: var(--rk-cyan);
+  min-width: 1.25rem;
+}
+
+.rk-stage-name {
+  flex: 1;
+  min-width: 8rem;
+}
+
+.rk-macro-link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.rk-macro-link-list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.35rem 0;
+}
+
 @media (max-width: 720px) {
   .app-shell {
     padding: 1rem;

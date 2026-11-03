@@ -51,10 +51,13 @@ Prueba E2E: baseline en GitHub → pull → editar campos → push → pull veri
 ### `ProjectDocument`
 
 - `fields[]` — catálogo de columnas del Project (GitHub + `pendingCreate` local).
-- `generalTasks[]` — tareas generales (planificación + refs GitHub).
+- `macroTasks[]` — **macros / objetivos de Q** con `stages[]` (objetivo + dueDate + done); local-first, se conservan en pull.
+- `generalTasks[]` — tareas generales (planificación + refs GitHub); opcional `parentMacroId`.
 - `items[]` — subtareas / filas hijas (`fieldValues`, `parentTaskId`, `parentIssueContentId`).
 - `dirty` — cambios locales no publicados; pull sin `force` falla si `dirty: true`.
 - `fieldsSchemaVersion` / `tasksSchemaVersion` — migraciones de esquema.
+
+Jerarquía: **Macro (Objetivos Q)** → tareas generales → subtareas.
 
 ### Campos canónicos Rakkau → columna GitHub
 

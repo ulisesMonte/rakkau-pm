@@ -23,7 +23,8 @@ El PAT se lee de **`.env.local`** (o `.env`) vía `process.env.GH_TOKEN`. Nunca 
 
 - Logo oficial `public/rakkau-logo.png` en el header.
 - Tema **dark amigable** (slate tipo GitHub + cyan/magenta Rakkau).
-- Pestañas: **Tareas** · **Sprints** · **Calendario**.
+- Pestañas: **Objetivos Q** · **Tareas** · **Sprints** · **Calendario**.
+- **Macros**: objetivos por etapas en el Quarter (vencimiento + cumplido).
 - **Tarea general** vs **Subtarea**, con **fecha de vencimiento** (`DueDate`).
 - **¿Tiene dependencia?** + selector **Depende de**.
 - **Sprints**: crear por fechas, progreso del Q.

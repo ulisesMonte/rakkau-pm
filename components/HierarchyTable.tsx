@@ -1110,6 +1110,11 @@ function GeneralTaskRow({
             {resp ? (
               <span className="rk-parent-meta rk-parent-resp">{resp}</span>
             ) : null}
+            {task.parentMacroId ? (
+              <span className="rk-parent-meta rk-parent-resp" title="Vinculada a un macro de Objetivos Q">
+                macro
+              </span>
+            ) : null}
             <span className="rk-parent-meta rk-parent-count">
               {childCount === 0
                 ? "sin subtareas"
