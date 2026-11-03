@@ -13,16 +13,19 @@ import {
 } from "@/lib/github/issueHierarchy";
 import { PROJECT_FIELDS_SCHEMA_VERSION } from "@/lib/github/projectFieldsSchema";
 import { PROJECT_TASKS_SCHEMA_VERSION } from "@/lib/github/projectTasksSchema";
+import { isViewOnly } from "@/lib/viewOnly";
 
 type Ctx = { params: Promise<{ projectId: string }> };
 
 /**
  * POST — Traer de GitHub.
  * Si no hay token o falla la API, conserva / devuelve el fixture local.
+ * En modo viewer (`NEXT_PUBLIC_VIEW_ONLY`) no provisiona campos (sin createField).
  */
 export async function POST(request: Request, ctx: Ctx) {
   const { projectId } = await ctx.params;
   const decoded = decodeURIComponent(projectId);
+  const viewOnly = isViewOnly();
 
   let force = false;
   try {
@@ -33,7 +36,8 @@ export async function POST(request: Request, ctx: Ctx) {
   }
 
   const existing = await readProject(decoded);
-  if (existing?.dirty && !force) {
+  // Viewer: pull siempre permitido (no hay ediciones locales que preservar).
+  if (!viewOnly && existing?.dirty && !force) {
     return NextResponse.json(
       {
         error:
@@ -65,15 +69,20 @@ export async function POST(request: Request, ctx: Ctx) {
   }
 
   try {
-    // 1. First pull to discover what fields already exist.
+    // 1. Pull: map fields/items + rebuild hierarchy + normalize (sin mutar GitHub).
     let pulled = await pullProject(decoded);
+    let provisioned: string[] = [];
 
-    // 2. Auto-create any missing canonical fields on the GitHub project.
-    const provision = await provisionCanonicalFields(pulled.projectId, pulled.fields);
-
-    // 3. Re-pull only if we created new fields (so the doc has their real IDs).
-    if (provision.created.length > 0) {
-      pulled = await pullProject(decoded);
+    // 2. Auto-create missing canonical fields — skip in viewer mode.
+    if (!viewOnly) {
+      const provision = await provisionCanonicalFields(
+        pulled.projectId,
+        pulled.fields,
+      );
+      provisioned = provision.created;
+      if (provision.created.length > 0) {
+        pulled = await pullProject(decoded);
+      }
     }
 
     pulled = ensureCanonicalFields(pulled, { addPendingStubs: false });
@@ -107,7 +116,8 @@ export async function POST(request: Request, ctx: Ctx) {
       ok: true,
       offline: false,
       project: pulled,
-      provisioned: provision.created,
+      provisioned,
+      viewOnly,
     });
   } catch (e) {
     const message =

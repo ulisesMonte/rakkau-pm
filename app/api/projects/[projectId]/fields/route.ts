@@ -8,6 +8,7 @@ import {
   type CreateFieldInput,
 } from "@/lib/github/graphql";
 import { CANONICAL_FIELDS, type FieldOption, type ProjectField } from "@/lib/types";
+import { isViewOnly, viewerReadonlyPayload } from "@/lib/viewOnly";
 
 type Ctx = { params: Promise<{ projectId: string }> };
 
@@ -29,6 +30,10 @@ type Body = {
 };
 
 export async function POST(request: Request, ctx: Ctx) {
+  if (isViewOnly()) {
+    return NextResponse.json(viewerReadonlyPayload(), { status: 405 });
+  }
+
   const { projectId } = await ctx.params;
   const decoded = decodeURIComponent(projectId);
   const existing = await readProject(decoded);

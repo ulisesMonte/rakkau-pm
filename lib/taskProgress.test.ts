@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import type { ProjectItem } from "@/lib/types";
-import { generalTaskProgress } from "@/lib/taskProgress";
+import {
+  formatProgressFraction,
+  generalTaskProgress,
+  progressForContentNode,
+  progressForProjectItem,
+} from "@/lib/taskProgress";
 
 function item(
   partial: Partial<ProjectItem> & { parentTaskId: string | null },
@@ -48,5 +53,42 @@ describe("generalTaskProgress", () => {
       item({ parentTaskId: "T1", fieldValues: { Status: "Done" } }),
     ];
     expect(generalTaskProgress("T1", items).percent).toBe(100);
+  });
+});
+
+describe("progressForContentNode (N-nivel)", () => {
+  it("usa hijos inmediatos por parentIssueContentId", () => {
+    const items = [
+      item({
+        parentTaskId: "ROOT",
+        contentNodeId: "I_mid",
+        parentIssueContentId: "I_root",
+        fieldValues: { Status: "Todo" },
+      }),
+      item({
+        parentTaskId: "ROOT",
+        contentNodeId: "I_leaf",
+        parentIssueContentId: "I_mid",
+        fieldValues: { Status: "Done" },
+      }),
+    ];
+    const root = progressForContentNode("I_root", items);
+    expect(root).toEqual({ total: 1, done: 0, open: 1, percent: 0 });
+
+    const mid = progressForProjectItem(
+      items.find((i) => i.contentNodeId === "I_mid")!,
+      items,
+    );
+    expect(mid).toEqual({ total: 1, done: 1, open: 0, percent: 100 });
+  });
+
+  it("prefiere subIssuesSummary de GitHub", () => {
+    const p = progressForContentNode("I_root", [], {
+      total: 12,
+      completed: 3,
+      percentCompleted: 25,
+    });
+    expect(p).toEqual({ total: 12, done: 3, open: 9, percent: 25 });
+    expect(formatProgressFraction(p)).toBe("3 / 12 · 25%");
   });
 });

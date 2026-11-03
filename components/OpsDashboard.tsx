@@ -11,8 +11,10 @@ import type {
 import { friendlyGitHubError } from "@/lib/githubFriendlyError";
 import { taskFieldValueForParent } from "@/lib/taskParent";
 import { asStringList } from "@/lib/fieldValueCoerce";
+import { isViewOnly } from "@/lib/viewOnly";
 import { CalendarView } from "./CalendarView";
 import { HierarchyTable } from "./HierarchyTable";
+import { ProjectProgressSummary } from "./ProjectProgressSummary";
 import { MacroObjectivesPanel } from "./MacroObjectivesPanel";
 import { RakkauNotice } from "./RakkauNotice";
 import { SprintPanel } from "./SprintPanel";
@@ -26,7 +28,7 @@ interface ProjectsResponse {
 
 type TabId = "objetivos" | "tareas" | "sprints" | "calendario";
 
-const TABS: Array<{ id: TabId; label: string }> = [
+const ALL_TABS: Array<{ id: TabId; label: string }> = [
   { id: "objetivos", label: "Objetivos Q" },
   { id: "tareas", label: "Tareas" },
   { id: "sprints", label: "Sprints" },
@@ -34,6 +36,10 @@ const TABS: Array<{ id: TabId; label: string }> = [
 ];
 
 export function OpsDashboard() {
+  const viewOnly = isViewOnly();
+  const tabs = viewOnly
+    ? ALL_TABS.filter((t) => t.id !== "objetivos")
+    : ALL_TABS;
   const [local, setLocal] = useState<IndexEntry[]>([]);
   const [remote, setRemote] = useState<GitHubProjectSummary[] | null>(null);
   const [hasToken, setHasToken] = useState(false);
@@ -43,6 +49,8 @@ export function OpsDashboard() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<TabId>("tareas");
+  /** URL / owner/nº / PVT_ para traer un Project (acceso sin ser owner). */
+  const [sharedRef, setSharedRef] = useState("");
 
   /**
    * projectRef is the source of truth for edits. Never patch from a closed-over
@@ -76,21 +84,48 @@ export function OpsDashboard() {
     const data = (await res.json()) as ProjectsResponse;
     const localList = data.local ?? [];
     setLocal(localList);
-    setRemote(data.remote);
     setHasToken(data.hasToken);
     if (data.remoteError) setMessage(data.remoteError);
 
-    if (data.hasToken) {
-      // Con token: los remotos son la fuente de verdad.
-      // Si el selectedId actual es solo local (fixture/demo) y no existe entre los
-      // remotos, borrarlo para que el dropdown muestre "Elegí un Project…" limpio.
-      const remoteIds = new Set((data.remote ?? []).map((p) => p.id));
-      setSelectedId((prev) => (prev && !remoteIds.has(prev) ? "" : prev));
-    } else {
-      // Sin token: auto-seleccionar el primer local solo si no hay selección.
-      if (!selectedId && localList.length) {
-        setSelectedId(localList[0].projectId);
+    // Conservar Projects abiertos por URL/id que no vienen en el listado del viewer
+    // (compartidos sin ser owner) y los ya bajados en local.
+    setRemote((prevOpened) => {
+      const listed = data.remote;
+      if (listed === null) return prevOpened;
+      const byId = new Map(listed.map((p) => [p.id, p]));
+      for (const p of prevOpened ?? []) {
+        if (!byId.has(p.id)) byId.set(p.id, p);
       }
+      for (const loc of localList) {
+        if (!byId.has(loc.projectId) && !loc.projectId.includes("DEMO")) {
+          byId.set(loc.projectId, {
+            id: loc.projectId,
+            number: loc.number,
+            title: loc.title,
+            url: "",
+            owner: loc.owner,
+            repositories: [],
+          });
+        }
+      }
+      return Array.from(byId.values()).sort((a, b) =>
+        a.title.localeCompare(b.title, "es"),
+      );
+    });
+
+    if (data.hasToken) {
+      const remoteIds = new Set((data.remote ?? []).map((p) => p.id));
+      const localIds = new Set(localList.map((p) => p.projectId));
+      setSelectedId((prev) => {
+        if (!prev) return prev;
+        if (remoteIds.has(prev) || localIds.has(prev)) return prev;
+        // Fixtures demo no deben quedar seleccionados con token activo.
+        if (prev.includes("DEMO")) return "";
+        // Conservar Project compartido abierto por URL/id (fuera del listado).
+        return prev;
+      });
+    } else if (!selectedId && localList.length) {
+      setSelectedId(localList[0].projectId);
     }
   }, [selectedId]);
 
@@ -103,6 +138,11 @@ export function OpsDashboard() {
       setError(null);
       try {
         const res = await fetch(`/api/projects/${encodeURIComponent(id)}`);
+        if (res.status === 404) {
+          // Remoto listado / abierto por URL pero aún no traído → sin error.
+          replaceProject(null);
+          return;
+        }
         if (!res.ok) {
           const body = await res.json();
           throw new Error(body.error ?? `HTTP ${res.status}`);
@@ -180,6 +220,7 @@ export function OpsDashboard() {
   /** Mutate from projectRef and coalesce JSON writes to the latest snapshot. */
   const commitLocal = useCallback(
     (updater: (prev: ProjectDocument) => ProjectDocument) => {
+      if (viewOnly) return;
       const prev = projectRef.current;
       if (!prev) return;
       const next = updater(prev);
@@ -193,7 +234,7 @@ export function OpsDashboard() {
         void flushPersist();
       }, 40);
     },
-    [flushPersist],
+    [flushPersist, viewOnly],
   );
 
   function onChangeItem(
@@ -448,63 +489,113 @@ export function OpsDashboard() {
     commitLocal((project) => ({ ...project, ...patch, dirty: true }));
   }
 
+  async function pullById(id: string, force = false): Promise<boolean> {
+    const res = await fetch(
+      `/api/projects/${encodeURIComponent(id)}/pull`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ force }),
+      },
+    );
+    const body = await res.json();
+    if (res.status === 409) {
+      setError(
+        body.error ??
+          "Hay cambios locales sin publicar. Publicá primero o confirmá sobrescribir.",
+      );
+      return false;
+    }
+    if (!res.ok && !body.project) {
+      throw new Error(body.error ?? "No se pudo traer de GitHub");
+    }
+    if (!res.ok && body.project) {
+      replaceProject(body.project);
+      setError(
+        friendlyGitHubError(
+          body.message ?? body.error ?? "No se pudo traer de GitHub",
+        ),
+      );
+      await loadIndex();
+      return false;
+    }
+    if (body.project) replaceProject(body.project);
+    const pullMsg = String(body.message ?? "");
+    if (pullMsg.includes("API falló")) {
+      const inner = pullMsg.match(/\(([^)]+)\)/)?.[1]?.trim() ?? pullMsg;
+      setError(friendlyGitHubError(inner));
+    } else if (pullMsg) {
+      setMessage(pullMsg);
+    } else if (body.offline) {
+      setMessage("Modo offline — se mantiene el JSON local.");
+    } else {
+      const doc = body.project as ProjectDocument | undefined;
+      const n = doc?.generalTasks?.length ?? 0;
+      const s = doc?.items?.length ?? 0;
+      setMessage(
+        `Datos actualizados desde GitHub (${n} tarea${n === 1 ? "" : "s"} general${n === 1 ? "" : "es"}, ${s} subtarea${s === 1 ? "" : "s"}).`,
+      );
+    }
+    await loadIndex();
+    return true;
+  }
+
   async function onPull(force = false) {
     if (!selectedId) return;
     setBusy(true);
     setError(null);
     setMessage(null);
     try {
-      const res = await fetch(
-        `/api/projects/${encodeURIComponent(selectedId)}/pull`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ force }),
-        },
-      );
-      const body = await res.json();
-      if (res.status === 409) {
-        setError(
-          body.error ??
-            "Hay cambios locales sin publicar. Publicá primero o confirmá sobrescribir.",
-        );
-        return;
-      }
-      if (!res.ok && !body.project) {
-        throw new Error(body.error ?? "No se pudo traer de GitHub");
-      }
-      if (!res.ok && body.project) {
-        replaceProject(body.project);
-        setError(
-          friendlyGitHubError(
-            body.message ?? body.error ?? "No se pudo traer de GitHub",
-          ),
-        );
-        await loadIndex();
-        return;
-      }
-      if (body.project) replaceProject(body.project);
-      const pullMsg = String(body.message ?? "");
-      if (pullMsg.includes("API falló")) {
-        const inner =
-          pullMsg.match(/\(([^)]+)\)/)?.[1]?.trim() ?? pullMsg;
-        setError(friendlyGitHubError(inner));
-      } else if (pullMsg) {
-        setMessage(pullMsg);
-      } else if (body.offline) {
-        setMessage("Modo offline — se mantiene el JSON local.");
-      } else {
-        const n =
-          (body.project as ProjectDocument | undefined)?.generalTasks?.length ??
-          0;
-        const s = (body.project as ProjectDocument | undefined)?.items?.length ?? 0;
-        setMessage(
-          `Datos actualizados desde GitHub (${n} tarea${n === 1 ? "" : "s"} general${n === 1 ? "" : "es"}, ${s} subtarea${s === 1 ? "" : "s"}).`,
-        );
-      }
-      await loadIndex();
+      await pullById(selectedId, force);
     } catch (e) {
       setError(e instanceof Error ? e.message : "No se pudo traer de GitHub");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  /** Traer Project (URL, owner/nº o PVT_) → lookup + pull JSON local; sin mutar GitHub. */
+  async function onOpenShared() {
+    const ref = sharedRef.trim();
+    if (!ref) {
+      setError(
+        "Pegá la URL del Project, owner/número (ej. org/3) o el id PVT_.",
+      );
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const res = await fetch("/api/projects/lookup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ref }),
+      });
+      const body = await res.json();
+      if (!res.ok || !body.project) {
+        throw new Error(body.error ?? "No se pudo traer el Project");
+      }
+      const summary = body.project as GitHubProjectSummary;
+      setRemote((prev) => {
+        const byId = new Map((prev ?? []).map((p) => [p.id, p]));
+        byId.set(summary.id, summary);
+        return Array.from(byId.values()).sort((a, b) =>
+          a.title.localeCompare(b.title, "es"),
+        );
+      });
+      setSelectedId(summary.id);
+      setSharedRef("");
+      setMessage(
+        `Trayendo ${summary.title} (#${summary.number} · ${summary.owner})…`,
+      );
+      await pullById(summary.id, false);
+    } catch (e) {
+      setError(
+        friendlyGitHubError(
+          e instanceof Error ? e.message : "No se pudo traer el Project",
+        ),
+      );
     } finally {
       setBusy(false);
     }
@@ -561,8 +652,8 @@ export function OpsDashboard() {
   }
 
   const selectOptions: Array<{ id: string; label: string }> = [];
-  if (hasToken && remote?.length) {
-    // Con token: mostrar solo los remotos; anotar si ya están bajados localmente.
+  if (hasToken && remote !== null) {
+    // Con token: listado remoto (+ abiertos por URL / ya locales).
     const localById = new Map(local.map((p) => [p.projectId, p]));
     for (const p of remote) {
       const loc = localById.get(p.id);
@@ -571,7 +662,11 @@ export function OpsDashboard() {
           ? " · cambios sin publicar"
           : " · sincronizado"
         : " · no descargado";
-      selectOptions.push({ id: p.id, label: `${p.title} (#${p.number})${suffix}` });
+      const ownerHint = p.owner ? ` · ${p.owner}` : "";
+      selectOptions.push({
+        id: p.id,
+        label: `${p.title} (#${p.number}${ownerHint})${suffix}`,
+      });
     }
   } else {
     // Sin token: mostrar locales (fixture / demo).
@@ -611,6 +706,14 @@ export function OpsDashboard() {
           />
         </div>
         <div className="rk-status">
+          {viewOnly ? (
+            <span
+              className="rk-pill rk-pill-ok"
+              title="NEXT_PUBLIC_VIEW_ONLY — sin mutaciones a GitHub ni JSON"
+            >
+              Solo lectura
+            </span>
+          ) : null}
           <span
             className={`rk-pill ${hasToken ? "rk-pill-ok" : "rk-pill-offline"}`}
             title={
@@ -621,7 +724,7 @@ export function OpsDashboard() {
           >
             {hasToken ? "Conectado a GitHub" : "Sin conexión (demo local)"}
           </span>
-          {project?.dirty ? (
+          {!viewOnly && project?.dirty ? (
             <span
               className="rk-pill rk-pill-dirty"
               title="Hay ediciones locales pendientes de publicar (dirty)"
@@ -649,60 +752,114 @@ export function OpsDashboard() {
           ))}
         </select>
 
-        <label className="rk-repo-picker">
-          <span className="rk-repo-picker-label">Repo de issues</span>
-          <select
-            className="rk-select rk-repo-select"
-            value={project?.issueRepository ?? ""}
-            disabled={!project || busy || issueRepoOptions.length === 0}
-            aria-label="Repo de issues"
-            title="Repos de GitHub vinculados al Project (issues / sub-issues al publicar)"
-            onChange={(e) => {
-              const value = e.target.value.trim();
-              commitLocal((prev) => ({
-                ...prev,
-                issueRepository: value || null,
-                availableRepositories: Array.from(
-                  new Set([
-                    ...(prev.availableRepositories ?? []),
-                    ...issueRepoOptions,
-                  ]),
-                ),
-              }));
-            }}
-          >
-            <option value="">
-              {issueRepoOptions.length
-                ? "Elegí un repo de GitHub…"
-                : "Sin repos (traé el Project)"}
-            </option>
-            {issueRepoOptions.map((r) => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
-          </select>
-        </label>
+        {hasToken ? (
+          <label className="rk-open-shared">
+            <span className="rk-repo-picker-label">Traer</span>
+            <span className="rk-open-shared-row">
+              <input
+                className="rk-input rk-open-shared-input"
+                type="text"
+                value={sharedRef}
+                disabled={busy}
+                placeholder="URL, owner/nº o PVT_…"
+                aria-label="URL o id de Project a traer"
+                onChange={(e) => setSharedRef(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    void onOpenShared();
+                  }
+                }}
+              />
+              <button
+                type="button"
+                className="rk-btn rk-btn-ghost"
+                disabled={busy || !sharedRef.trim()}
+                onClick={() => void onOpenShared()}
+                title={
+                  viewOnly
+                    ? "Trae el Project y actualiza el JSON local (solo lectura; no crea fields ni issues)"
+                    : "Trae el Project al que tenés acceso (aunque no seas owner) y actualiza el JSON local"
+                }
+              >
+                Traer
+              </button>
+            </span>
+          </label>
+        ) : null}
 
+        {viewOnly ? (
+          project?.issueRepository ? (
+            <span
+              className="rk-repo-picker rk-repo-readonly"
+              title="Repo vinculado al Project (dato, no editable)"
+            >
+              <span className="rk-repo-picker-label">Repo</span>
+              <span className="rk-pill">{project.issueRepository}</span>
+            </span>
+          ) : null
+        ) : (
+          <label className="rk-repo-picker">
+            <span className="rk-repo-picker-label">Repo de issues</span>
+            <select
+              className="rk-select rk-repo-select"
+              value={project?.issueRepository ?? ""}
+              disabled={!project || busy || issueRepoOptions.length === 0}
+              aria-label="Repo de issues"
+              title="Repos de GitHub vinculados al Project (issues / sub-issues al publicar)"
+              onChange={(e) => {
+                const value = e.target.value.trim();
+                commitLocal((prev) => ({
+                  ...prev,
+                  issueRepository: value || null,
+                  availableRepositories: Array.from(
+                    new Set([
+                      ...(prev.availableRepositories ?? []),
+                      ...issueRepoOptions,
+                    ]),
+                  ),
+                }));
+              }}
+            >
+              <option value="">
+                {issueRepoOptions.length
+                  ? "Elegí un repo de GitHub…"
+                  : "Sin repos (traé el Project)"}
+              </option>
+              {issueRepoOptions.map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+
+        {!viewOnly && (
+          <button
+            type="button"
+            className="rk-btn rk-btn-primary"
+            disabled={!selectedId || busy}
+            onClick={() => void onPush()}
+            title="updateProjectV2ItemFieldValue / createProjectV2Field"
+          >
+            Publicar en GitHub
+          </button>
+        )}
         <button
           type="button"
-          className="rk-btn rk-btn-primary"
-          disabled={!selectedId || busy}
-          onClick={() => void onPush()}
-          title="updateProjectV2ItemFieldValue / createProjectV2Field"
-        >
-          Publicar en GitHub
-        </button>
-        <button
-          type="button"
-          className="rk-btn rk-btn-ghost"
+          className={viewOnly ? "rk-btn rk-btn-primary" : "rk-btn rk-btn-ghost"}
           disabled={!selectedId || busy}
           onClick={() => void onPull(false)}
-          title="Trae el Project remoto y sobrescribe el JSON local"
+          title={
+            viewOnly
+              ? "Trae el Project y actualiza el JSON local (sin createField / push)"
+              : "Trae el Project remoto y sobrescribe el JSON local"
+          }
         >
-          Traer de GitHub
+          {viewOnly ? "Traer" : "Traer de GitHub"}
         </button>
-        {project?.dirty && (
+        {!viewOnly && project?.dirty && (
           <button
             type="button"
             className="rk-btn rk-btn-ghost"
@@ -738,8 +895,11 @@ export function OpsDashboard() {
         <div className="rk-empty">
           <h2>Planilla operativa Rakkau</h2>
           <p>
-            Elegí el demo o un Project de GitHub. Sin token la UI funciona con
-            el JSON local: tareas, sprints y calendario.
+            {hasToken && selectedId
+              ? "Este Project todavía no está en el JSON local. Usá «Traer» (listado o URL / owner/nº / PVT_)."
+              : hasToken
+                ? "Elegí un Project del listado, o pegá URL / owner/nº / id PVT_ y usá «Traer» (aunque no seas owner)."
+                : "Elegí el demo o un Project de GitHub. Sin token la UI funciona con el JSON local: tareas, sprints y calendario."}
           </p>
         </div>
       )}
@@ -763,7 +923,7 @@ export function OpsDashboard() {
           </div>
 
           <nav className="rk-tabs" aria-label="Secciones">
-            {TABS.map((t) => (
+            {tabs.map((t) => (
               <button
                 key={t.id}
                 type="button"
@@ -776,7 +936,7 @@ export function OpsDashboard() {
             ))}
           </nav>
 
-          {tab === "objetivos" && (
+          {!viewOnly && tab === "objetivos" && (
             <section aria-label="Objetivos del quarter">
               <MacroObjectivesPanel
                 project={project}
@@ -787,14 +947,18 @@ export function OpsDashboard() {
           )}
 
           {tab === "tareas" && (
-            <section aria-label="Tareas y subtareas">
+            <section aria-label={viewOnly ? "Progreso de tareas" : "Tareas y subtareas"}>
               <div className="rk-section-head">
                 <h2 className="rk-section-title">
-                  Tareas generales y subtareas
+                  {viewOnly
+                    ? "Progreso de tareas"
+                    : "Tareas generales y subtareas"}
                 </h2>
               </div>
+              {viewOnly ? <ProjectProgressSummary project={project} /> : null}
               <HierarchyTable
                 project={project}
+                viewOnly={viewOnly}
                 onChangeItem={onChangeItem}
                 onPatchItem={onPatchItem}
                 onPatchGeneralTask={onPatchGeneralTask}
@@ -808,7 +972,10 @@ export function OpsDashboard() {
           )}
 
           {tab === "sprints" && (
-            <SprintPanel project={project} onUpdate={onUpdateProject} />
+            <SprintPanel
+              project={project}
+              onUpdate={viewOnly ? () => undefined : onUpdateProject}
+            />
           )}
 
           {tab === "calendario" && <CalendarView project={project} />}

@@ -1,6 +1,6 @@
 # rakkau ops — GitHub Projects (PoC)
 
-Planilla operativa Rakkau sobre **GitHub Projects v2** (sin DB): JSON local, jerarquía **tarea general → subtarea**, dependencias, sprints/Quarter, y botones **Publicar / Traer de GitHub**.
+Planilla operativa Rakkau sobre **GitHub Projects v2** (sin DB): JSON local, jerarquía **tarea general → subtarea**, dependencias, sprints/Quarter. Branch `frontend` arranca en **visor solo lectura** (`NEXT_PUBLIC_VIEW_ONLY=true`): Traer + ojo, sin Publicar ni ediciones.
 
 ## Arranque
 
@@ -8,8 +8,9 @@ Planilla operativa Rakkau sobre **GitHub Projects v2** (sin DB): JSON local, jer
 cd rakkau-pm
 npm install
 cp .env.example .env.local   # Windows: copy .env.example .env.local
-# Editá .env.local → GH_TOKEN=ghp_xxx  (Classic PAT scope project)
-# GH_ISSUE_REPOSITORY=owner/repo es solo fallback; en la UI elegís «Repo de issues»
+# Editá .env.local → GH_TOKEN=…  (visor: read:project; edición: project)
+# NEXT_PUBLIC_VIEW_ONLY=true por defecto en esta branch
+# GH_ISSUE_REPOSITORY=owner/repo es solo fallback
 npm run dev
 ```
 
@@ -17,18 +18,16 @@ Abrí [http://localhost:3000](http://localhost:3000). Sin token la UI corre offl
 
 **Contexto para dev y agentes:** [`docs/CONTEXT.md`](docs/CONTEXT.md) · pruebas E2E: [`docs/e2e-github-sync-evidence.md`](docs/e2e-github-sync-evidence.md)
 
-El PAT se lee de **`.env.local`** (o `.env`) vía `process.env.GH_TOKEN`. Nunca lo pongas en el JSON ni en el client. Después de cambiar el `.env*`, reiniciá `npm run dev`. El **repo de issues** se elige por Project en la UI (persistido en JSON); `GH_ISSUE_REPOSITORY` queda como fallback.
+El PAT se lee de **`.env.local`** (o `.env`) vía `process.env.GH_TOKEN`. Nunca lo pongas en el JSON ni en el client. Después de cambiar el `.env*`, reiniciá `npm run dev`. En edición, el **repo de issues** se elige por Project en la UI; en viewer se muestra solo como dato.
 
 ## Qué ver en la UI
 
-- Logo oficial `public/rakkau-logo.png` en el header.
+- Logo oficial `public/rakkau-logo.png` en el header · tipografía **Nunito**.
 - Tema **dark amigable** (slate tipo GitHub + cyan/magenta Rakkau).
-- Pestañas: **Objetivos Q** · **Tareas** · **Sprints** · **Calendario**.
-- **Macros**: objetivos por etapas en el Quarter (vencimiento + cumplido).
-- **Tarea general** vs **Subtarea**, con **fecha de vencimiento** (`DueDate`).
-- **¿Tiene dependencia?** + selector **Depende de**.
-- **Sprints**: crear por fechas, progreso del Q.
-- **Calendario**: vencimientos por día + franjas de sprint y Quarter.
+- **Viewer**: Tareas · Sprints · Calendario (sin Objetivos Q); botón Traer; solo ojo.
+- **Edición** (`VIEW_ONLY=false`): Objetivos Q · Publicar / Traer · lápiz / agregar.
+- **Tarea general** vs **Subtarea**, con **fecha de vencimiento** (`DueDate`), Responsable, EstadoOperativo, % avance.
+- **Sprints** / **Calendario**: vencimientos y franjas de Q.
 
 ## Fields canónicos
 

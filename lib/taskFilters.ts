@@ -13,6 +13,12 @@ export type TaskFilterQuery = {
   depends?: "sí" | "no";
   padre: string[];
   dueSoon?: boolean;
+  /** Nombres de labels GitHub. */
+  label: string[];
+  /** Labels `scope/*` (p. ej. scope/am). */
+  scope: string[];
+  /** Issue type: Task / Bug / Feature. */
+  issueType: string[];
 };
 
 const TOKEN_RE =
@@ -47,6 +53,9 @@ export function parseFilterQuery(input: string): TaskFilterQuery {
     sprint: [],
     quarter: [],
     padre: [],
+    label: [],
+    scope: [],
+    issueType: [],
   };
   if (!input.trim()) return q;
 
@@ -105,6 +114,21 @@ export function parseFilterQuery(input: string): TaskFilterQuery {
         case "parent":
           q.padre.push(val);
           break;
+        case "label":
+        case "labels":
+        case "etiqueta":
+          q.label.push(val);
+          break;
+        case "scope": {
+          const v = val.trim();
+          q.scope.push(/^scope\//i.test(v) ? v : `scope/${v}`);
+          break;
+        }
+        case "issuetype":
+        case "issue-type":
+        case "kind":
+          q.issueType.push(val);
+          break;
         case "due":
         case "vence":
           if (norm(val) === "soon" || norm(val) === "ya" || norm(val) === "1") {
@@ -134,11 +158,40 @@ export function serializeFilterQuery(q: TaskFilterQuery): string {
   if (q.blocked) parts.push(`blocked:${q.blocked}`);
   if (q.depends) parts.push(`depends:${q.depends}`);
   for (const p of q.padre) parts.push(`padre:${p}`);
+  for (const l of q.label) {
+    parts.push(l.includes(" ") ? `label:"${l}"` : `label:${l}`);
+  }
+  for (const s of q.scope) {
+    const short = s.replace(/^scope\//i, "");
+    parts.push(short.includes(" ") ? `scope:"${short}"` : `scope:${short}`);
+  }
+  for (const it of q.issueType) {
+    parts.push(it.includes(" ") ? `issuetype:"${it}"` : `issuetype:${it}`);
+  }
   if (q.dueSoon) parts.push("due:soon");
   for (const t of q.text) {
     parts.push(t.includes(" ") ? `"${t}"` : t);
   }
   return parts.join(" ");
+}
+
+function hasLabel(
+  labels: Array<{ name: string }> | undefined,
+  wanted: string[],
+): boolean {
+  if (!wanted.length) return true;
+  const set = new Set((labels ?? []).map((l) => norm(l.name)));
+  return wanted.some((w) => set.has(norm(w)));
+}
+
+function hasIssueType(
+  issueType: { name: string } | null | undefined,
+  wanted: string[],
+): boolean {
+  if (!wanted.length) return true;
+  const name = norm(issueType?.name ?? "");
+  if (!name) return false;
+  return wanted.some((w) => norm(w) === name);
 }
 
 function isOpenState(state?: string): boolean {
@@ -192,6 +245,9 @@ export function generalTaskMatches(
     if (!q.padre.some((p) => norm(p) === norm(task.id))) return false;
   }
   if (q.dueSoon && !dueIsSoon(task.DueDate, task.Status)) return false;
+  if (!hasLabel(task.labels, q.label)) return false;
+  if (!hasLabel(task.labels, q.scope)) return false;
+  if (!hasIssueType(task.issueType, q.issueType)) return false;
   if (
     !matchText(`${task.id} ${task.title} ${task.description ?? ""}`, q.text)
   ) {
@@ -240,6 +296,9 @@ export function subtaskMatches(
   }
   if (q.dueSoon && !dueIsSoon(item.fieldValues.DueDate, item.state))
     return false;
+  if (!hasLabel(item.labels, q.label)) return false;
+  if (!hasLabel(item.labels, q.scope)) return false;
+  if (!hasIssueType(item.issueType, q.issueType)) return false;
   const label = `${item.number ?? ""} ${itemDisplayTitle(item)} ${item.parentTaskId ?? ""}`;
   if (!matchText(label, q.text)) return false;
   return true;
@@ -256,6 +315,9 @@ export function isQueryEmpty(q: TaskFilterQuery): boolean {
     q.sprint.length === 0 &&
     q.quarter.length === 0 &&
     q.padre.length === 0 &&
+    q.label.length === 0 &&
+    q.scope.length === 0 &&
+    q.issueType.length === 0 &&
     q.text.length === 0
   );
 }

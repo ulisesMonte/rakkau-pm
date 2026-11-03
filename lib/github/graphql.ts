@@ -93,6 +93,8 @@ async function gql<T>(
       "Content-Type": "application/json",
       Accept: "application/json",
       "User-Agent": "rakkau-ops-platform",
+      // Defensivo: sub-issues fueron preview; en GA no hace falta, pero no rompe.
+      "GraphQL-Features": "sub_issues,issue_types",
     },
     body: JSON.stringify({ query, variables }),
   });
@@ -124,19 +126,38 @@ async function gql<T>(
 
 /* ---------- Queries ---------- */
 
-const LIST_PROJECTS = `
-query ListProjects($first: Int!) {
+const PROJECT_SUMMARY_FIELDS = `
+  id
+  number
+  title
+  url
+  owner { __typename ... on User { login } ... on Organization { login } }
+  repositories(first: 20) {
+    nodes { nameWithOwner }
+  }
+`;
+
+/** Projects V2 propios del viewer (no requiere read:org). */
+const LIST_VIEWER_PROJECTS = `
+query ListViewerProjects($first: Int!) {
   viewer {
     login
     projectsV2(first: $first) {
+      nodes { ${PROJECT_SUMMARY_FIELDS} }
+    }
+  }
+}
+`;
+
+/** Projects V2 de orgs (requiere scope read:org). Se consulta aparte para no tumbar el listado. */
+const LIST_ORG_PROJECTS = `
+query ListOrgProjects($first: Int!) {
+  viewer {
+    organizations(first: 30) {
       nodes {
-        id
-        number
-        title
-        url
-        owner { __typename ... on User { login } ... on Organization { login } }
-        repositories(first: 20) {
-          nodes { nameWithOwner }
+        login
+        projectsV2(first: $first) {
+          nodes { ${PROJECT_SUMMARY_FIELDS} }
         }
       }
     }
@@ -144,8 +165,123 @@ query ListProjects($first: Int!) {
 }
 `;
 
+/** Abrir un Project por node id (PVT_…) si el token tiene acceso. */
+const LOOKUP_PROJECT_NODE = `
+query LookupProjectNode($id: ID!) {
+  node(id: $id) {
+    ... on ProjectV2 {
+      ${PROJECT_SUMMARY_FIELDS}
+    }
+  }
+}
+`;
+
+/** Abrir Project de un user por número (owner + number). */
+const LOOKUP_USER_PROJECT_BY_NUMBER = `
+query LookupUserProjectByNumber($owner: String!, $number: Int!) {
+  user(login: $owner) {
+    projectV2(number: $number) { ${PROJECT_SUMMARY_FIELDS} }
+  }
+}
+`;
+
+/** Abrir Project de una org por número (owner + number). */
+const LOOKUP_ORG_PROJECT_BY_NUMBER = `
+query LookupOrgProjectByNumber($owner: String!, $number: Int!) {
+  organization(login: $owner) {
+    projectV2(number: $number) { ${PROJECT_SUMMARY_FIELDS} }
+  }
+}
+`;
+
+const ISSUE_CONTENT_FIELDS = `
+  id
+  number title url state body
+  assignees(first: 10) {
+    nodes { login name avatarUrl }
+  }
+  labels(first: 20) {
+    nodes { id name color description }
+  }
+  issueType {
+    id name color description
+  }
+  parent {
+    id
+    number
+    title
+  }
+  subIssuesSummary {
+    total
+    completed
+    percentCompleted
+  }
+  subIssues(first: 100) {
+    nodes { id }
+  }
+`;
+
+const PROJECT_ITEM_NODE_FIELDS = `
+  id
+  content {
+    __typename
+    ... on Issue {
+      ${ISSUE_CONTENT_FIELDS}
+    }
+    ... on DraftIssue {
+      id title body
+      assignees(first: 10) {
+        nodes { login name avatarUrl }
+      }
+    }
+    ... on PullRequest {
+      number title url state
+      assignees(first: 10) {
+        nodes { login name avatarUrl }
+      }
+    }
+  }
+  fieldValues(first: 80) {
+    nodes {
+      __typename
+      ... on ProjectV2ItemFieldTextValue {
+        text
+        field { ... on ProjectV2FieldCommon { id name } }
+      }
+      ... on ProjectV2ItemFieldNumberValue {
+        number
+        field { ... on ProjectV2FieldCommon { id name } }
+      }
+      ... on ProjectV2ItemFieldSingleSelectValue {
+        name
+        optionId
+        field { ... on ProjectV2FieldCommon { id name } }
+      }
+      ... on ProjectV2ItemFieldIterationValue {
+        title
+        field { ... on ProjectV2FieldCommon { id name } }
+      }
+      ... on ProjectV2ItemFieldDateValue {
+        date
+        field { ... on ProjectV2FieldCommon { id name } }
+      }
+      ... on ProjectV2ItemFieldUserValue {
+        users(first: 10) { nodes { login name avatarUrl } }
+        field { ... on ProjectV2FieldCommon { id name } }
+      }
+      ... on ProjectV2ItemFieldLabelValue {
+        labels(first: 20) {
+          nodes { id name color description }
+        }
+        field { ... on ProjectV2FieldCommon { id name } }
+      }
+    }
+  }
+`;
+
+/** Meta + fields + primera página de ítems. */
 const PULL_PROJECT = `
-query PullProject($id: ID!) {
+query PullProject($id: ID!, $after: String) {
   node(id: $id) {
     ... on ProjectV2 {
       id
@@ -171,64 +307,26 @@ query PullProject($id: ID!) {
           }
         }
       }
-      items(first: 100) {
+      items(first: 100, after: $after) {
+        pageInfo { hasNextPage endCursor }
         nodes {
-          id
-          content {
-            __typename
-            ... on Issue {
-              id
-              number title url state body
-              assignees(first: 10) {
-                nodes { login name avatarUrl }
-              }
-              subIssues(first: 50) {
-                nodes { id }
-              }
-            }
-            ... on DraftIssue {
-              id title body
-              assignees(first: 10) {
-                nodes { login name avatarUrl }
-              }
-            }
-            ... on PullRequest {
-              number title url state
-              assignees(first: 10) {
-                nodes { login name avatarUrl }
-              }
-            }
-          }
-          fieldValues(first: 80) {
-            nodes {
-              __typename
-              ... on ProjectV2ItemFieldTextValue {
-                text
-                field { ... on ProjectV2FieldCommon { id name } }
-              }
-              ... on ProjectV2ItemFieldNumberValue {
-                number
-                field { ... on ProjectV2FieldCommon { id name } }
-              }
-              ... on ProjectV2ItemFieldSingleSelectValue {
-                name
-                optionId
-                field { ... on ProjectV2FieldCommon { id name } }
-              }
-              ... on ProjectV2ItemFieldIterationValue {
-                title
-                field { ... on ProjectV2FieldCommon { id name } }
-              }
-              ... on ProjectV2ItemFieldDateValue {
-                date
-                field { ... on ProjectV2FieldCommon { id name } }
-              }
-              ... on ProjectV2ItemFieldUserValue {
-                users(first: 10) { nodes { login name avatarUrl } }
-                field { ... on ProjectV2FieldCommon { id name } }
-              }
-            }
-          }
+          ${PROJECT_ITEM_NODE_FIELDS}
+        }
+      }
+    }
+  }
+}
+`;
+
+/** Páginas siguientes de ítems (sin re-pedir fields). */
+const PULL_PROJECT_ITEMS_PAGE = `
+query PullProjectItemsPage($id: ID!, $after: String!) {
+  node(id: $id) {
+    ... on ProjectV2 {
+      items(first: 100, after: $after) {
+        pageInfo { hasNextPage endCursor }
+        nodes {
+          ${PROJECT_ITEM_NODE_FIELDS}
         }
       }
     }
@@ -310,33 +408,149 @@ mutation UpdateProjectField($input: UpdateProjectV2FieldInput!) {
 
 /* ---------- Public API ---------- */
 
-export async function listProjects(): Promise<GitHubProjectSummary[]> {
-  type R = {
-    viewer: {
-      login: string;
-      projectsV2: {
-        nodes: Array<{
-          id: string;
-          number: number;
-          title: string;
-          url: string;
-          owner: { login?: string };
-          repositories?: { nodes: Array<{ nameWithOwner: string }> };
-        }>;
-      };
-    };
-  };
-  const data = await gql<R>(LIST_PROJECTS, { first: 40 });
-  return data.viewer.projectsV2.nodes.map((n) => ({
+type RawProjectSummary = {
+  id: string;
+  number: number;
+  title: string;
+  url: string;
+  owner: { login?: string };
+  repositories?: { nodes: Array<{ nameWithOwner: string }> };
+};
+
+function mapProjectSummary(
+  n: RawProjectSummary,
+  fallbackOwner: string,
+): GitHubProjectSummary {
+  return {
     id: n.id,
     number: n.number,
     title: n.title,
     url: n.url,
-    owner: n.owner?.login ?? data.viewer.login,
+    owner: n.owner?.login ?? fallbackOwner,
     repositories: uniqueRepositorySlugs(
       (n.repositories?.nodes ?? []).map((r) => r.nameWithOwner),
     ),
-  }));
+  };
+}
+
+export async function listProjects(): Promise<GitHubProjectSummary[]> {
+  type ViewerR = {
+    viewer: {
+      login: string;
+      projectsV2: { nodes: RawProjectSummary[] };
+    };
+  };
+  type OrgR = {
+    viewer: {
+      organizations: {
+        nodes: Array<{
+          login: string;
+          projectsV2: { nodes: RawProjectSummary[] };
+        }>;
+      };
+    };
+  };
+
+  const byId = new Map<string, GitHubProjectSummary>();
+
+  const viewerData = await gql<ViewerR>(LIST_VIEWER_PROJECTS, { first: 40 });
+  for (const n of viewerData.viewer.projectsV2.nodes ?? []) {
+    byId.set(n.id, mapProjectSummary(n, viewerData.viewer.login));
+  }
+
+  // Orgs aparte: sin read:org no tumba los Projects propios del viewer.
+  try {
+    const orgData = await gql<OrgR>(LIST_ORG_PROJECTS, { first: 40 });
+    for (const org of orgData.viewer.organizations?.nodes ?? []) {
+      for (const n of org.projectsV2?.nodes ?? []) {
+        if (!byId.has(n.id)) {
+          byId.set(n.id, mapProjectSummary(n, org.login));
+        }
+      }
+    }
+  } catch {
+    /* token sin read:org u orgs inaccesibles — seguir con los propios */
+  }
+
+  return Array.from(byId.values()).sort((a, b) =>
+    a.title.localeCompare(b.title, "es"),
+  );
+}
+
+/**
+ * Resuelve un Project al que el token tiene acceso aunque no figure en el listado
+ * (p. ej. Project de otro user / org compartido).
+ *
+ * Acepta: node id `PVT_…`, URL
+ * `https://github.com/users/LOGIN/projects/N` o
+ * `https://github.com/orgs/ORG/projects/N`, o `owner/number`.
+ */
+export async function lookupAccessibleProject(
+  ref: string,
+): Promise<GitHubProjectSummary> {
+  const raw = ref.trim();
+  if (!raw) {
+    throw new GitHubGraphQLError("Pegá la URL, owner/número o id PVT_ del Project");
+  }
+
+  if (/^PVT_/i.test(raw)) {
+    type R = { node: RawProjectSummary | null };
+    const data = await gql<R>(LOOKUP_PROJECT_NODE, { id: raw });
+    if (!data.node?.id) {
+      throw new GitHubGraphQLError(
+        "No se encontró ese Project (id inválido o sin acceso con este token).",
+      );
+    }
+    return mapProjectSummary(data.node, data.node.owner?.login ?? "unknown");
+  }
+
+  const urlMatch = raw.match(
+    /github\.com\/(users|orgs)\/([^/]+)\/projects\/(\d+)/i,
+  );
+  const slashMatch = !urlMatch
+    ? raw.match(/^([^/\s]+)\/(\d+)$/)
+    : null;
+  const owner = urlMatch?.[2] ?? slashMatch?.[1];
+  const number = Number(urlMatch?.[3] ?? slashMatch?.[2]);
+  if (!owner || !Number.isFinite(number) || number <= 0) {
+    throw new GitHubGraphQLError(
+      "Formato no reconocido. Usá URL de GitHub Projects, owner/número o id PVT_.",
+    );
+  }
+
+  // User y org se consultan por separado: GraphQL falla la query entera si
+  // `user(login:)` recibe un login de org (y viceversa).
+  try {
+    type RU = { user: { projectV2: RawProjectSummary | null } | null };
+    const data = await gql<RU>(LOOKUP_USER_PROJECT_BY_NUMBER, {
+      owner,
+      number,
+    });
+    if (data.user?.projectV2?.id) {
+      return mapProjectSummary(data.user.projectV2, owner);
+    }
+  } catch {
+    /* no es user o sin acceso — probar org */
+  }
+
+  try {
+    type RO = {
+      organization: { projectV2: RawProjectSummary | null } | null;
+    };
+    const data = await gql<RO>(LOOKUP_ORG_PROJECT_BY_NUMBER, {
+      owner,
+      number,
+    });
+    if (data.organization?.projectV2?.id) {
+      return mapProjectSummary(data.organization.projectV2, owner);
+    }
+  } catch {
+    /* sin acceso / no existe */
+  }
+
+  throw new GitHubGraphQLError(
+    `No se pudo abrir ${owner}/projects/${number}. Revisá el número o los permisos del token (scope project / read:org).`,
+  );
 }
 
 interface RawFieldNode extends GitHubProjectFieldNode {}
@@ -410,7 +624,11 @@ function derivePeople(
   );
 }
 
+const PULL_ITEMS_PAGE_LIMIT = 25;
+
 export async function pullProject(projectId: string): Promise<ProjectDocument> {
+  type PageInfo = { hasNextPage: boolean; endCursor: string | null };
+  type ItemsConn = { pageInfo: PageInfo; nodes: RawItemNode[] };
   type R = {
     node: {
       id: string;
@@ -420,16 +638,40 @@ export async function pullProject(projectId: string): Promise<ProjectDocument> {
       owner: { login?: string };
       repositories?: { nodes: Array<{ nameWithOwner: string }> };
       fields: { nodes: RawFieldNode[] };
-      items: { nodes: RawItemNode[] };
+      items: ItemsConn;
     } | null;
   };
-  const data = await gql<R>(PULL_PROJECT, { id: projectId });
+  type ItemsOnlyR = {
+    node: { items: ItemsConn } | null;
+  };
+
+  const data = await gql<R>(PULL_PROJECT, { id: projectId, after: null });
   if (!data.node) {
     throw new GitHubGraphQLError(`Project ${projectId} no encontrado`);
   }
   const node = data.node;
   const fields = mapFields(node.fields?.nodes ?? []);
-  const rawItems = node.items?.nodes ?? [];
+  const rawItems: RawItemNode[] = [...(node.items?.nodes ?? [])];
+  let pageInfo = node.items?.pageInfo;
+  let pages = 1;
+
+  while (pageInfo?.hasNextPage && pageInfo.endCursor) {
+    if (pages >= PULL_ITEMS_PAGE_LIMIT) {
+      throw new GitHubGraphQLError(
+        `Pull truncado: más de ${PULL_ITEMS_PAGE_LIMIT * 100} ítems en el Project. Revisá paginación.`,
+      );
+    }
+    const next = await gql<ItemsOnlyR>(PULL_PROJECT_ITEMS_PAGE, {
+      id: projectId,
+      after: pageInfo.endCursor,
+    });
+    const conn = next.node?.items;
+    if (!conn) break;
+    rawItems.push(...(conn.nodes ?? []));
+    pageInfo = conn.pageInfo;
+    pages += 1;
+  }
+
   const items = mapItems(rawItems, fields);
   const owner = node.owner?.login ?? "unknown";
   const linkedRepos = uniqueRepositorySlugs(

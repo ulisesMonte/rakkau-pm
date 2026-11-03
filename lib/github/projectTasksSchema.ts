@@ -4,6 +4,8 @@
 
 import type {
   GeneralTask,
+  IssueLabel,
+  IssueTypeRef,
   ItemFieldValues,
   ProjectDocument,
   ProjectField,
@@ -24,6 +26,12 @@ export const PROJECT_TASKS_SCHEMA_VERSION = 1;
 
 export type RakkauTaskRole = "general" | "subtask";
 
+export type GitHubSubIssuesSummary = {
+  total?: number | null;
+  completed?: number | null;
+  percentCompleted?: number | null;
+};
+
 export type GitHubProjectItemContent = {
   __typename?: string;
   id?: string;
@@ -33,8 +41,74 @@ export type GitHubProjectItemContent = {
   state?: string;
   body?: string;
   assignees?: { nodes?: Array<{ login?: string; name?: string | null; avatarUrl?: string | null }> };
+  labels?: {
+    nodes?: Array<{
+      id?: string;
+      name?: string;
+      color?: string | null;
+      description?: string | null;
+    }>;
+  };
+  issueType?: {
+    id?: string;
+    name?: string;
+    color?: string | null;
+    description?: string | null;
+  } | null;
+  /** Padre inmediato (Issue.parent) — preferido para árbol N-nivel. */
+  parent?: { id?: string; number?: number | null; title?: string | null } | null;
+  subIssuesSummary?: GitHubSubIssuesSummary | null;
   subIssues?: { nodes?: Array<{ id: string }> };
 };
+
+function pushLabel(
+  out: IssueLabel[],
+  seen: Set<string>,
+  raw: { name?: string; color?: string | null; description?: string | null },
+) {
+  const name = raw.name?.trim();
+  if (!name) return;
+  const key = name.toLowerCase();
+  if (seen.has(key)) return;
+  seen.add(key);
+  out.push({
+    name,
+    color: raw.color ?? undefined,
+    description: raw.description ?? null,
+  });
+}
+
+/** Labels del Issue + del field Labels del Project (dedupe por nombre). */
+function mapMergedLabels(
+  content: GitHubProjectItemContent | null | undefined,
+  fieldNodes: GitHubProjectItemFieldValueNode[],
+): IssueLabel[] {
+  const out: IssueLabel[] = [];
+  const seen = new Set<string>();
+  if (content?.__typename === "Issue") {
+    for (const n of content.labels?.nodes ?? []) pushLabel(out, seen, n);
+  }
+  for (const fv of fieldNodes) {
+    if (fv.__typename !== "ProjectV2ItemFieldLabelValue") continue;
+    for (const n of fv.labels?.nodes ?? []) pushLabel(out, seen, n);
+  }
+  return out;
+}
+
+function mapIssueType(
+  content: GitHubProjectItemContent | null | undefined,
+): IssueTypeRef | null {
+  if (content?.__typename !== "Issue") return null;
+  const t = content.issueType;
+  const name = t?.name?.trim();
+  if (!name) return null;
+  return {
+    id: t?.id,
+    name,
+    color: t?.color ?? null,
+    description: t?.description ?? null,
+  };
+}
 
 export type GitHubProjectItemFieldValueNode = {
   __typename?: string;
@@ -44,6 +118,14 @@ export type GitHubProjectItemFieldValueNode = {
   name?: string;
   date?: string;
   users?: { nodes?: Array<{ login?: string }> };
+  labels?: {
+    nodes?: Array<{
+      id?: string;
+      name?: string;
+      color?: string | null;
+      description?: string | null;
+    }>;
+  };
   field?: { id?: string; name?: string };
 };
 
@@ -144,6 +226,41 @@ export function mapGitHubProjectItems(
     }
     if (content?.body) fieldValues[INTERNAL_BODY_KEY] = content.body;
 
+    const summaryRaw = content?.subIssuesSummary;
+    const subIssuesSummary =
+      summaryRaw && typeof summaryRaw.total === "number" && summaryRaw.total > 0
+        ? {
+            total: summaryRaw.total,
+            completed: summaryRaw.completed ?? 0,
+            percentCompleted:
+              typeof summaryRaw.percentCompleted === "number"
+                ? summaryRaw.percentCompleted
+                : Math.round(
+                    ((summaryRaw.completed ?? 0) / summaryRaw.total) * 100,
+                  ),
+          }
+        : summaryRaw && typeof summaryRaw.total === "number"
+          ? {
+              total: 0,
+              completed: 0,
+              percentCompleted: 0,
+            }
+          : null;
+
+    const parentFromApi =
+      content?.__typename === "Issue" && content.parent?.id
+        ? content.parent.id
+        : null;
+    const parentIssueTitle =
+      content?.__typename === "Issue" && content.parent?.title?.trim()
+        ? content.parent.title.trim()
+        : null;
+    const parentIssueNumber =
+      content?.__typename === "Issue" &&
+      typeof content.parent?.number === "number"
+        ? content.parent.number
+        : null;
+
     return {
       nodeId: n.id,
       contentNodeId: content?.id ?? null,
@@ -154,7 +271,12 @@ export function mapGitHubProjectItems(
       contentType,
       fieldValues,
       parentTaskId,
-      parentIssueContentId: null,
+      parentIssueContentId: parentFromApi,
+      parentIssueTitle,
+      parentIssueNumber,
+      subIssuesSummary,
+      labels: mapMergedLabels(content, n.fieldValues?.nodes ?? []),
+      issueType: mapIssueType(content),
       assignees,
       blockedBy: [],
       blocks: [],
@@ -165,12 +287,17 @@ export function mapGitHubProjectItems(
   for (const item of items) {
     if (item.contentNodeId) byContent.set(item.contentNodeId, item);
   }
+  // Completar/corroborar padres vía subIssues del issue en el board.
   for (const n of nodes) {
     const content = n.content;
     if (content?.__typename !== "Issue" || !content.id) continue;
     for (const sub of content.subIssues?.nodes ?? []) {
       const child = byContent.get(sub.id);
-      if (child) child.parentIssueContentId = content.id;
+      if (!child) continue;
+      // parent { id } gana; subIssues rellena huecos.
+      if (!child.parentIssueContentId) {
+        child.parentIssueContentId = content.id;
+      }
     }
   }
   return items;

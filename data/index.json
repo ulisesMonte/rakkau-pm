@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T14:31:48.953Z",
+  "updatedAt": "2026-11-03T17:31:10.818Z",
   "projects": [
     {
       "projectId": "PVT_kwDODEMO_rakkau_ops",
@@ -38,6 +38,36 @@
       "path": "data/projects/PVT_kwHOB_sFhs4BpSjN.json",
       "dirty": false,
       "pulledAt": "2026-11-02T19:14:12.423Z"
+    },
+    {
+      "projectId": "PVT_kwDOBeim084BgLyL",
+      "number": 43,
+      "title": "Banco General - CIAM",
+      "owner": "rakkau",
+      "path": "data/projects/PVT_kwDOBeim084BgLyL.json",
+      "dirty": false,
+      "pulledAt": "2026-11-03T15:17:35.892Z",
+      "issueRepository": "rakkau/banco-general-ciam"
+    },
+    {
+      "projectId": "PVT_kwDOBeim084AFjQJ",
+      "number": 2,
+      "title": "Telecom",
+      "owner": "rakkau",
+      "path": "data/projects/PVT_kwDOBeim084AFjQJ.json",
+      "dirty": false,
+      "pulledAt": "2026-11-03T17:22:24.731Z",
+      "issueRepository": "rakkau/telecom-infraestructura"
+    },
+    {
+      "projectId": "PVT_kwDOBeim084BT8Ww",
+      "number": 39,
+      "title": "Telecom - Infraestructura - Kanban Project",
+      "owner": "rakkau",
+      "path": "data/projects/PVT_kwDOBeim084BT8Ww.json",
+      "dirty": false,
+      "pulledAt": "2026-11-03T17:31:10.805Z",
+      "issueRepository": "rakkau/telecom-infraestructura"
     }
   ]
 }

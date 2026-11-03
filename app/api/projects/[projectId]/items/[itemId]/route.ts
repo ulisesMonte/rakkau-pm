@@ -5,6 +5,7 @@ import {
   GitHubGraphQLError,
   hasToken,
 } from "@/lib/github/graphql";
+import { isViewOnly, viewerReadonlyPayload } from "@/lib/viewOnly";
 
 type Ctx = { params: Promise<{ projectId: string; itemId: string }> };
 
@@ -13,6 +14,10 @@ function isDemoProjectId(projectId: string): boolean {
 }
 
 export async function DELETE(_request: Request, ctx: Ctx) {
+  if (isViewOnly()) {
+    return NextResponse.json(viewerReadonlyPayload(), { status: 405 });
+  }
+
   const { projectId, itemId } = await ctx.params;
   const decodedProject = decodeURIComponent(projectId);
   const decodedItem = decodeURIComponent(itemId);

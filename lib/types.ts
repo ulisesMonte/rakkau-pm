@@ -50,6 +50,30 @@ export type ResponsableValue = "rakkau" | "cliente" | "";
 /** Estado operativo de la tarea general (distinto del Status nativo de GitHub). */
 export type EstadoOperativoValue = "a tiempo" | "impactado" | "pausado" | "";
 
+/** Resumen de sub-issues de GitHub (Issue.subIssuesSummary). */
+export interface SubIssuesSummary {
+  total: number;
+  completed: number;
+  /** 0–100 según GitHub. */
+  percentCompleted: number;
+}
+
+/** Label de un Issue GitHub. `color` es hex sin # (API labels). */
+export interface IssueLabel {
+  name: string;
+  color?: string;
+  description?: string | null;
+}
+
+/** Issue type org-wide (Task / Bug / Feature). */
+export interface IssueTypeRef {
+  id?: string;
+  name: string;
+  /** Color GitHub (nombre o hex). */
+  color?: string | null;
+  description?: string | null;
+}
+
 /** Iniciativa / ID de negocio (opciones del field Task). */
 export interface GeneralTask {
   id: string;
@@ -80,6 +104,12 @@ export interface GeneralTask {
   url?: string | null;
   /** Columnas GitHub custom (p. ej. Track / Journey) no mapeadas a props top-level. */
   githubFieldValues?: ItemFieldValues;
+  /** Progreso de sub-issues reportado por GitHub (si el pull lo trajo). */
+  subIssuesSummary?: SubIssuesSummary | null;
+  /** Labels del Issue. */
+  labels?: IssueLabel[];
+  /** Tipo de issue (Task / Bug / Feature). */
+  issueType?: IssueTypeRef | null;
 }
 
 export type QuarterKey = "Q1" | "Q2" | "Q3" | "Q4";
@@ -195,8 +225,21 @@ export interface ProjectItem {
   parentTaskId: string | null;
   /** Logins asignados (desde GitHub Issue.assignees o edición local) */
   assignees: string[];
-  /** Issue padre en GitHub (sub-issues API), si aplica. */
+  /**
+   * Issue padre inmediato en GitHub (sub-issues / Issue.parent).
+   * Forma el árbol N-nivel: un ítem puede ser padre de otros ítems.
+   */
   parentIssueContentId?: string | null;
+  /** Título del padre GitHub (si vino en Traer y el padre no está en el board). */
+  parentIssueTitle?: string | null;
+  /** Número del padre GitHub (si vino en Traer). */
+  parentIssueNumber?: number | null;
+  /** Progreso de sub-issues reportado por GitHub (si el pull lo trajo). */
+  subIssuesSummary?: SubIssuesSummary | null;
+  /** Labels del Issue. */
+  labels?: IssueLabel[];
+  /** Tipo de issue (Task / Bug / Feature). */
+  issueType?: IssueTypeRef | null;
   blockedBy?: string[];
   blocks?: string[];
 }

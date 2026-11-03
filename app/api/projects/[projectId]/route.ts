@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { readProject, writeProject } from "@/lib/fs/store";
 import { ensureCanonicalFields } from "@/lib/github/graphql";
 import type { ProjectDocument } from "@/lib/types";
+import { isViewOnly, viewerReadonlyPayload } from "@/lib/viewOnly";
 
 type Ctx = { params: Promise<{ projectId: string }> };
 
@@ -19,6 +20,10 @@ export async function GET(_request: Request, ctx: Ctx) {
 }
 
 export async function PUT(request: Request, ctx: Ctx) {
+  if (isViewOnly()) {
+    return NextResponse.json(viewerReadonlyPayload(), { status: 405 });
+  }
+
   const { projectId } = await ctx.params;
   const decoded = decodeURIComponent(projectId);
   const body = (await request.json()) as ProjectDocument;

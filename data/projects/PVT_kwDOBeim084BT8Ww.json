@@ -1,0 +1,4413 @@
+{
+  "projectId": "PVT_kwDOBeim084BT8Ww",
+  "number": 39,
+  "title": "Telecom - Infraestructura - Kanban Project",
+  "owner": "rakkau",
+  "url": "https://github.com/orgs/rakkau/projects/39",
+  "pulledAt": "2026-11-03T17:31:10.805Z",
+  "dirty": false,
+  "fieldsSchemaVersion": 3,
+  "tasksSchemaVersion": 1,
+  "fields": [
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBHz1E",
+      "name": "Title",
+      "dataType": "TITLE",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBHz1I",
+      "name": "Assignees",
+      "dataType": "ASSIGNEES",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTSSF_lADOBeim084BT8WwzhBHz1M",
+      "name": "Status",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "f75ad846",
+          "name": "Backlog",
+          "color": "GREEN",
+          "description": "This item hasn't been started"
+        },
+        {
+          "id": "61e4505c",
+          "name": "Ready",
+          "color": "BLUE",
+          "description": "This is ready to be picked up"
+        },
+        {
+          "id": "47fc9ee4",
+          "name": "In progress",
+          "color": "YELLOW",
+          "description": "This is actively being worked on"
+        },
+        {
+          "id": "df73e18b",
+          "name": "In review",
+          "color": "PURPLE",
+          "description": "This item is in review"
+        },
+        {
+          "id": "98236657",
+          "name": "Done",
+          "color": "ORANGE",
+          "description": "This has been completed"
+        }
+      ],
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBHz1Q",
+      "name": "Labels",
+      "dataType": "LABELS",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBHz1U",
+      "name": "Linked pull requests",
+      "dataType": "LINKED_PULL_REQUESTS",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBHz1Y",
+      "name": "Milestone",
+      "dataType": "MILESTONE",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBHz1c",
+      "name": "Repository",
+      "dataType": "REPOSITORY",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBHz1k",
+      "name": "Reviewers",
+      "dataType": "REVIEWERS",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBHz1o",
+      "name": "Parent issue",
+      "dataType": "PARENT_ISSUE",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBHz1s",
+      "name": "Sub-issues progress",
+      "dataType": "SUB_ISSUES_PROGRESS",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBHz1w",
+      "name": "Created",
+      "dataType": "CREATED",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBHz10",
+      "name": "Updated",
+      "dataType": "UPDATED",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBHz14",
+      "name": "Closed",
+      "dataType": "CLOSED",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTSSF_lADOBeim084BT8WwzhBH1Pg",
+      "name": "Priority",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "79628723",
+          "name": "P0",
+          "color": "RED",
+          "description": ""
+        },
+        {
+          "id": "0a877460",
+          "name": "P1",
+          "color": "ORANGE",
+          "description": ""
+        },
+        {
+          "id": "da944a9c",
+          "name": "P2",
+          "color": "YELLOW",
+          "description": ""
+        }
+      ],
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTSSF_lADOBeim084BT8WwzhBH1Pk",
+      "name": "Size",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "6c6483d2",
+          "name": "XS",
+          "color": "GREEN",
+          "description": ""
+        },
+        {
+          "id": "f784b110",
+          "name": "S",
+          "color": "PURPLE",
+          "description": ""
+        },
+        {
+          "id": "7515a9f1",
+          "name": "M",
+          "color": "RED",
+          "description": ""
+        },
+        {
+          "id": "817d0097",
+          "name": "L",
+          "color": "YELLOW",
+          "description": ""
+        },
+        {
+          "id": "db339eb2",
+          "name": "XL",
+          "color": "PINK",
+          "description": ""
+        }
+      ],
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBH1Po",
+      "name": "Estimate",
+      "dataType": "NUMBER",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBH1Ps",
+      "name": "Start date",
+      "dataType": "DATE",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BT8WwzhBH1Pw",
+      "name": "Target date",
+      "dataType": "DATE",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTSSF_lADOBeim084BT8WwzhBIKEA",
+      "name": "Epics",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "e76d88d9",
+          "name": "TEST",
+          "color": "BLUE",
+          "description": ""
+        },
+        {
+          "id": "9c354c14",
+          "name": "UAT",
+          "color": "YELLOW",
+          "description": ""
+        },
+        {
+          "id": "847fe21c",
+          "name": "PROD",
+          "color": "RED",
+          "description": ""
+        }
+      ],
+      "pendingCreate": false,
+      "origin": "github"
+    }
+  ],
+  "generalTasks": [
+    {
+      "id": "Hornos - TEST",
+      "title": "Hornos - TEST",
+      "Status": "In review",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BT8Wwzg64wVk",
+      "githubContentNodeId": "I_kwDORUttV88AAAABROkTxQ",
+      "issueNumber": 44,
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/44",
+      "subIssuesSummary": {
+        "total": 4,
+        "completed": 3,
+        "percentCompleted": 75
+      },
+      "labels": [
+        {
+          "name": "documentation",
+          "color": "0075ca",
+          "description": "Improvements or additions to documentation"
+        },
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "githubFieldValues": {
+        "Start date": "2026-09-07",
+        "Target date": "2026-09-22",
+        "Epics": "TEST",
+        "Priority": "P0",
+        "Size": "XL",
+        "Estimate": "10"
+      }
+    },
+    {
+      "id": "UAT - Despliegue IDP Hibrido",
+      "title": "UAT - Despliegue IDP Hibrido",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BT8WwzgpS3fU",
+      "githubContentNodeId": "I_kwDORUttV877LPZp",
+      "issueNumber": 11,
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/11",
+      "subIssuesSummary": {
+        "total": 4,
+        "completed": 4,
+        "percentCompleted": 100
+      },
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "githubFieldValues": {
+        "Priority": "P0",
+        "Size": "XL",
+        "Start date": "2026-04-06",
+        "Target date": "2026-04-21",
+        "Estimate": "3",
+        "Epics": "UAT"
+      }
+    },
+    {
+      "id": "PROD - Despliegue IDP Hibrido",
+      "title": "PROD - Despliegue IDP Hibrido",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BT8WwzgshWlw",
+      "githubContentNodeId": "I_kwDORUttV88AAAABCBYznQ",
+      "issueNumber": 25,
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/25",
+      "subIssuesSummary": {
+        "total": 20,
+        "completed": 20,
+        "percentCompleted": 100
+      },
+      "issueType": null,
+      "githubFieldValues": {
+        "Priority": "P0",
+        "Size": "XL",
+        "Estimate": "20",
+        "Start date": "2026-05-12",
+        "Target date": "2026-05-28",
+        "Epics": "PROD"
+      }
+    },
+    {
+      "id": "TEST - Despliegue IDP Hibrido",
+      "title": "TEST - Despliegue IDP Hibrido",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BT8WwzgpS3e0",
+      "githubContentNodeId": "I_kwDORUttV877KnIs",
+      "issueNumber": 4,
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/4",
+      "subIssuesSummary": {
+        "total": 6,
+        "completed": 6,
+        "percentCompleted": 100
+      },
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "githubFieldValues": {
+        "Priority": "P0",
+        "Size": "XL",
+        "Estimate": "5",
+        "Start date": "2026-03-10",
+        "Target date": "2026-03-30",
+        "Epics": "TEST"
+      }
+    },
+    {
+      "id": "PROD - Garbage Collector - Out of Memory issues",
+      "title": "PROD - Garbage Collector - Out of Memory issues",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BT8WwzgqEcT8",
+      "githubContentNodeId": "I_kwDORUttV87-mjth",
+      "issueNumber": 22,
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/22",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "bug",
+          "color": "d73a4a",
+          "description": "Something isn't working"
+        },
+        {
+          "name": "documentation",
+          "color": "0075ca",
+          "description": "Improvements or additions to documentation"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dL",
+        "name": "Bug",
+        "color": "RED",
+        "description": "An unexpected problem or behavior"
+      },
+      "githubFieldValues": {
+        "Priority": "P0",
+        "Size": "L",
+        "Start date": "2026-04-09",
+        "Target date": "2026-04-28",
+        "Epics": "PROD"
+      }
+    },
+    {
+      "id": "Notas implementacoin IDP Hibrido",
+      "title": "Notas implementacoin IDP Hibrido",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BT8WwzgpS3es",
+      "githubContentNodeId": "I_kwDORUttV87ves8W",
+      "issueNumber": 1,
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/1",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "issueType": null,
+      "githubFieldValues": {
+        "Priority": "P1"
+      }
+    },
+    {
+      "id": "Pruebas Locales - Replicación entre CTS",
+      "title": "Pruebas Locales - Replicación entre CTS",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "nbravo-rakkau"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BT8WwzgpS3ew",
+      "githubContentNodeId": "I_kwDORUttV87xJwEr",
+      "issueNumber": 2,
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/2",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "documentation",
+          "color": "0075ca",
+          "description": "Improvements or additions to documentation"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "githubFieldValues": {
+        "Priority": "P1"
+      }
+    },
+    {
+      "id": "Hornos - UAT",
+      "title": "Hornos - UAT",
+      "Status": "In review",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BT8Wwzg-uJ-4",
+      "githubContentNodeId": "I_kwDORUttV88AAAABVNgTdw",
+      "issueNumber": 59,
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/59",
+      "subIssuesSummary": {
+        "total": 1,
+        "completed": 1,
+        "percentCompleted": 100
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "githubFieldValues": {
+        "Priority": "P0",
+        "Size": "XL",
+        "Estimate": "5",
+        "Start date": "2026-10-05",
+        "Target date": "2026-10-09",
+        "Epics": "UAT"
+      }
+    },
+    {
+      "id": "Hornos - PROD",
+      "title": "Hornos - PROD",
+      "Status": "Backlog",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BT8Wwzg-uTsM",
+      "githubContentNodeId": "I_kwDORUttV88AAAABVNqhUA",
+      "issueNumber": 67,
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/67",
+      "subIssuesSummary": {
+        "total": 5,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "documentation",
+          "color": "0075ca",
+          "description": "Improvements or additions to documentation"
+        },
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "githubFieldValues": {
+        "Priority": "P0",
+        "Size": "XL",
+        "Epics": "PROD",
+        "Start date": "2026-11-02",
+        "Target date": "2026-11-30"
+      }
+    },
+    {
+      "id": "DU - Release 1.47",
+      "title": "DU - Release 1.47",
+      "Status": "",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": null,
+      "githubContentNodeId": "I_kwDOH5sqys8AAAABOigBOw",
+      "issueNumber": 540,
+      "url": "https://github.com/rakkau/telecom-digitaluser/issues/540"
+    }
+  ],
+  "items": [
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg6459U",
+      "contentNodeId": "I_kwDORUttV88AAAABROs6mA",
+      "number": 57,
+      "title": "Hornos - TEST - Validar despliegues",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/57",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "Hornos - TEST - Validar despliegues",
+        "Status": "In review",
+        "Start date": "2026-09-15",
+        "Target date": "2026-09-29",
+        "_body": "Se deberán validar los despliegues con:\n- [ ] Replicación de cada DS\n- [ ] Sanitys en nuevos equipos\n- [ ] Consumo de Journeys en nuevos equipos\n- [ ] Volcado de trafico en los nuevos equipos\n- [ ] Pruebas de carga en los nuevos equipos\n- [ ] etc\n\n> Estas pruebas se realizarán en su gran mayoría por parte del cliente.",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROkTxQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg4LD_Q",
+      "contentNodeId": "I_kwDORUttV88AAAABOZvd3Q",
+      "number": 43,
+      "title": "Hornos - TEST - Plan de Despliegue",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/43",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "lordfausto",
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Plan de Despliegue",
+        "Status": "Done",
+        "Start date": "2026-09-07",
+        "Target date": "2026-09-15",
+        "Epics": "TEST",
+        "Priority": "P0",
+        "_body": "# Plan de Despliegue - Hornos TEST:\n\nCon el fin de realizar el plan de despliegue para TEST, una opción es dividir el proceso en las distintas etapas que lo conforman para luego desglosarlo cada etapa y detallar las tareas que conforman la misma. Esta metodología nos ayudará para estimar fechas.\n\n---\n## Prerequisitos\n- F5 levantado y funcionando.\n- Certificados y keystores actualizados.\n- DNS creados tanto de manera privada como publica si es necesario.\n- Puertos habilitados.\n---\n## Despliegues\n1. Validaciones DS\n2. Despliegue DS (CTS / idrepo)\n3. Despliegue RS (CTS / idrepo)\n4. Despliegue AM\n5. Despliegue IDM\n---\n\n## Tareas por despliegues (refinar)\nEn el caso de tener todos los prerequisitos completos, se estima que para poder tener el ambiente de TEST funcionando con Hornos, puede tomar 7 días laborales.\n\n\n### Validaciones DS\n1. Validar Password Policy\n2. Validar / Listar índices (se debe apagar un DS secundario del OP para listar los originales)\n3. Realizar Backup OnPrem (se debe apagar un DS secundario del OP)\n\n### Despliegue DS (CTS / idrepo):\n1. Desplegar DS\n2. Llevar keystore desde On Prem (con los certificados ya actualizados)\n3. Cambiar Password Policy\n4. Cambiar índices en Hornos\n5. Cambiar politicas de acceso en Hornos -> solo CTS\n6. Habilitar replicacion \"cn=admin data\"\n7. Validar replicacion \"ui=Monitor\" (dasactivada)\n8. Habilitar \"confidentiality-enabled\" en el backend\n9. Exponer certificados teco en puerto LDAPS\n10. Exponer certificado teco en puerto LDAP -> solo User Store, por conexion con IDM\n11. Configurar group-id\n12. Llevar y Levantar Backup en DS Hornos\n13. Apagar viejo RS San Lorenzo (apagar solo el numero 2 y dejar el numero 1)\n\n> **ATENCION:** Se asume que la actualizacion de los keystore y truststore lo realizara el equipo Teco.\n\n\n### Despliegue RS (CTS / idrepo)\n1. Desplegar RS\n2. Configurar group-id\n3. Levantar instancias (tener en cuenta limite de 3 dias para prender nuevos DS)\n \n### Despliegue AM\n1. Desplegar DS-Config\n2. Llevar kaystore desde On Prem\n3. Cambiar Password Policy\n4. Cambiar índices en Hornos\n6. Habilitar replicacion \"cn=admin data\"\n7. Validar replicacion \"ui=Monitor\" (dasactivada)\n8. Habilitar \"confidentiality-enabled\" en el backend\n9. Exponer certificados teco en puerto LDAPS\n10. Desplegar AM como site secundario (a chequear si será un mismo Site o no)\n\n### Despliegue IDM\n1. Actualizar openidm.node.id y openidm.host\n2. Desplegar IDM\n4. Conectar al DS-idrepo Hornos\n5. Validar Cluster IDM\n6. Validar conectores\n7. Validar tareas\n\n> Objetivos: Tener los Sanitys de AM e IDM en Hornos funcionando y un Login de prueba satisfactorio.\n\n---\n\n## Arquitectura\n[Diagrama con la Arquitectura para TEST.](https://drive.google.com/file/d/1kNbDjC1AkmqEG1aKr_0SPcnXE2OXFsqL/view?usp=drive_link)",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROkTxQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "lordfausto",
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzgsh9qQ",
+      "contentNodeId": "I_kwDORUttV88AAAABCCGC1g",
+      "number": 29,
+      "title": "PROD - Instalar RS-DS-4",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/29",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Status": "Done",
+        "Title": "PROD - Instalar RS-DS-4",
+        "Priority": "P1",
+        "Size": "S",
+        "Estimate": "2",
+        "Start date": "2026-05-12",
+        "Target date": "2026-05-14",
+        "Epics": "PROD",
+        "_body": "Dejar evidencia de la instalación del equipo mencionado.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzgsh-LM",
+      "contentNodeId": "I_kwDORUttV88AAAABCCGfWQ",
+      "number": 30,
+      "title": "PROD - Instalar RS-DS-3",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/30",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "PROD - Instalar RS-DS-3",
+        "Status": "Done",
+        "Priority": "P1",
+        "Size": "S",
+        "Start date": "2026-05-12",
+        "Target date": "2026-05-14",
+        "Estimate": "2",
+        "Epics": "PROD",
+        "_body": "Dejar evidencia de la instalación del equipo mencionado.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgshKZQ",
+      "contentNodeId": "I_kwDORUttV88AAAABCBNOhA",
+      "number": 24,
+      "title": "PROD - Instalar RS-CTS-4",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/24",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Status": "Done",
+        "Title": "PROD - Instalar RS-CTS-4",
+        "Priority": "P1",
+        "Size": "S",
+        "Estimate": "1",
+        "Start date": "2026-05-12",
+        "Target date": "2026-05-15",
+        "Epics": "PROD",
+        "_body": "Dejar evidencia de los comandos ejecutados en el equipo para realizar la instalación.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzgsh-P8",
+      "contentNodeId": "I_kwDORUttV88AAAABCCGk8w",
+      "number": 31,
+      "title": "PROD - Instalar RS-DS-2",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/31",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "PROD - Instalar RS-DS-2",
+        "Status": "Done",
+        "Priority": "P1",
+        "Size": "S",
+        "Estimate": "2",
+        "Start date": "2026-05-12",
+        "Target date": "2026-05-14",
+        "Epics": "PROD",
+        "_body": "Dejar evidencia de la instalación del equipo mencionado.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzgsh-VY",
+      "contentNodeId": "I_kwDORUttV88AAAABCCGpvA",
+      "number": 32,
+      "title": "PROD - Instalar RS-DS-1",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/32",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "PROD - Instalar RS-DS-1",
+        "Status": "Done",
+        "Priority": "P1",
+        "Size": "S",
+        "Estimate": "2",
+        "Start date": "2026-05-12",
+        "Target date": "2026-05-14",
+        "Epics": "PROD",
+        "_body": "Dejar evidencia de la instalación del equipo mencionado.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgshH_k",
+      "contentNodeId": "I_kwDORUttV88AAAABCBK0XQ",
+      "number": 23,
+      "title": "PROD - Instalar RS-CTS-3",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/23",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Status": "Done",
+        "Title": "PROD - Instalar RS-CTS-3",
+        "Priority": "P1",
+        "Size": "S",
+        "Estimate": "1",
+        "Start date": "2026-05-12",
+        "Target date": "2026-05-15",
+        "Epics": "PROD",
+        "_body": "Dejar evidencia de la instalación del equipo mencionado.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgshgXg",
+      "contentNodeId": "I_kwDORUttV88AAAABCBkGvQ",
+      "number": 27,
+      "title": "PROD - Instalar RS-CTS-2",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/27",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Status": "Done",
+        "Title": "PROD - Instalar RS-CTS-2",
+        "Priority": "P1",
+        "Size": "S",
+        "Estimate": "2",
+        "Start date": "2026-05-12",
+        "Target date": "2026-05-15",
+        "Epics": "PROD",
+        "_body": "Se debe dejar evidencia de la instalación.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgshdhQ",
+      "contentNodeId": "I_kwDORUttV88AAAABCBgvgQ",
+      "number": 26,
+      "title": "PROD - Instalar RS-CTS-1",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/26",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Status": "Done",
+        "Title": "PROD - Instalar RS-CTS-1",
+        "Priority": "P1",
+        "Size": "S",
+        "Estimate": "2",
+        "Start date": "2026-05-12",
+        "Target date": "2026-05-15",
+        "Epics": "PROD",
+        "_body": "Dejar evidencia de la instalación",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgtGUDg",
+      "contentNodeId": "I_kwDORUttV88AAAABCo8zSg",
+      "number": 35,
+      "title": "PROD - Instalar DS-5",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/35",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "PROD - Instalar DS-5",
+        "Status": "Done",
+        "Priority": "P1",
+        "Size": "M",
+        "Estimate": "1",
+        "Start date": "2026-05-18",
+        "Target date": "2026-05-20",
+        "Epics": "PROD",
+        "_body": "Evidencia instalacion",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": null,
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgtGUjA",
+      "contentNodeId": "I_kwDORUttV88AAAABCo9UTw",
+      "number": 36,
+      "title": "PROD - Instalar DS-6",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/36",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "PROD - Instalar DS-6",
+        "Status": "Done",
+        "Priority": "P1",
+        "Size": "M",
+        "Estimate": "1",
+        "Start date": "2026-05-18",
+        "Target date": "2026-05-20",
+        "Epics": "PROD",
+        "_body": "Evidencia instalacion",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": null,
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpS3fM",
+      "contentNodeId": "I_kwDORUttV877KuWZ",
+      "number": 9,
+      "title": "TEST - IDP Hibrido - Desplegar RS-CTS",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/9",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Title": "TEST - IDP Hibrido - Desplegar RS-CTS",
+        "Status": "Done",
+        "Priority": "P0",
+        "Size": "M",
+        "Estimate": "2",
+        "Start date": "2026-03-10",
+        "Target date": "2026-03-30",
+        "Epics": "TEST",
+        "_body": "Desplegar los dos nodos RS-CTS en AWS y onpremise, y conectarlos a los respectivos CTS.",
+        "Task": [
+          "TEST - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "TEST - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877KnIs",
+      "subIssuesSummary": {
+        "total": 1,
+        "completed": 1,
+        "percentCompleted": 100
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpS3fQ",
+      "contentNodeId": "I_kwDORUttV877KunB",
+      "number": 10,
+      "title": "TEST - IDP Hibrido - Desplegar RS-DS",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/10",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Title": "TEST - IDP Hibrido - Desplegar RS-DS",
+        "Status": "Done",
+        "Priority": "P0",
+        "Size": "M",
+        "Estimate": "2",
+        "Start date": "2026-03-10",
+        "Target date": "2026-03-30",
+        "Epics": "TEST",
+        "_body": "Desplegar los dos nodos RS-DS en AWS y onpremise, y conectarlos a los respectivos DS-idrepo.",
+        "Task": [
+          "TEST - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "TEST - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877KnIs",
+      "subIssuesSummary": {
+        "total": 1,
+        "completed": 1,
+        "percentCompleted": 100
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpS3e8",
+      "contentNodeId": "I_kwDORUttV877Ksdg",
+      "number": 6,
+      "title": "TEST - IDP Hibrido - Desplegar CTS",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/6",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Title": "TEST - IDP Hibrido - Desplegar CTS",
+        "Status": "Done",
+        "Priority": "P0",
+        "Size": "M",
+        "Start date": "2026-03-10",
+        "Target date": "2026-03-30",
+        "Estimate": "2",
+        "Epics": "TEST",
+        "_body": "Desplegar los dos nodos CTS en AWS y conectarlos a los respectivos RS.\nRecordatorio:\n- Verificar Password Policy\n- Verificar Indices\n- Verificar Schema\n- Verificar replicación",
+        "Task": [
+          "TEST - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "TEST - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877KnIs",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpS3fA",
+      "contentNodeId": "I_kwDORUttV877KtBO",
+      "number": 7,
+      "title": "TEST - IDP Hibrido - Desplegar DS-idrepo",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/7",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Title": "TEST - IDP Hibrido - Desplegar DS-idrepo",
+        "Status": "Done",
+        "Priority": "P0",
+        "Size": "M",
+        "Estimate": "2",
+        "Start date": "2026-03-10",
+        "Target date": "2026-03-30",
+        "Epics": "TEST",
+        "_body": "Desplegar los dos nodos DS en AWS y conectarlos a los respectivos RS.\nRecordatorio:\n- Verificar Password Policy\n- Verificar Indices\n- Verificar Schema\n- Verificar replicación",
+        "Task": [
+          "TEST - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "TEST - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877KnIs",
+      "subIssuesSummary": {
+        "total": 1,
+        "completed": 1,
+        "percentCompleted": 100
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpS3fI",
+      "contentNodeId": "I_kwDORUttV877Kt0D",
+      "number": 8,
+      "title": "TEST - IDP Hibrido - Desplegar IDM",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/8",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Title": "TEST - IDP Hibrido - Desplegar IDM",
+        "Status": "Done",
+        "Priority": "P0",
+        "Size": "M",
+        "Estimate": "2",
+        "Start date": "2026-03-10",
+        "Target date": "2026-03-30",
+        "Epics": "TEST",
+        "_body": "Desplegar los dos nodos IDM en AWS y conectarlos al balanceador NLB hardcodeado en el /etc/hosts.\nVerificar que los nuevos nodos figuren dentro del mismo Cluster de IDM pre-existente.",
+        "Task": [
+          "TEST - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "TEST - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877KnIs",
+      "subIssuesSummary": {
+        "total": 1,
+        "completed": 1,
+        "percentCompleted": 100
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpcBng",
+      "contentNodeId": "I_kwDORUttV877-tzJ",
+      "number": 21,
+      "title": "[INCIDENTE] TEST - IDP Hibrido - Nodos IDM Caidos",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/21",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Status": "Done",
+        "Title": "[INCIDENTE] TEST - IDP Hibrido - Nodos IDM Caidos",
+        "Priority": "P0",
+        "Size": "XL",
+        "Estimate": "1",
+        "Start date": "2026-04-08",
+        "Target date": "2026-04-08",
+        "Epics": "TEST",
+        "_body": "Se detectaron que los nodos 5 y 6 de IDM (AWS) se encuentran caídos desde el 1/04/2026.\nSe debe revisar la causa de dicha caida y encontrar una solución al problema.",
+        "Task": [
+          "TEST - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "TEST - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877Kt0D",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "bug",
+          "color": "d73a4a",
+          "description": "Something isn't working"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dL",
+        "name": "Bug",
+        "color": "RED",
+        "description": "An unexpected problem or behavior"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpS3fs",
+      "contentNodeId": "I_kwDORUttV877LSW2",
+      "number": 15,
+      "title": "UAT - IDP Hibrido - Desplegar IDM",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/15",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Title": "UAT - IDP Hibrido - Desplegar IDM",
+        "Status": "Done",
+        "Priority": "P0",
+        "Size": "M",
+        "Estimate": "2",
+        "Start date": "2026-04-06",
+        "Target date": "2026-04-20",
+        "Epics": "UAT",
+        "_body": "Desplegar un nodo IDM en AWS y conectarlos al balanceador NLB hardcodeado en el /etc/hosts.\nVerificar que los nuevos nodos figuren dentro del mismo Cluster de IDM pre-existente.",
+        "Task": [
+          "UAT - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "UAT - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877LPZp",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpS3fo",
+      "contentNodeId": "I_kwDORUttV877LR1G",
+      "number": 14,
+      "title": "UAT - IDP Hibrido - Desplegar DS-idrepo",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/14",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Title": "UAT - IDP Hibrido - Desplegar DS-idrepo",
+        "Status": "Done",
+        "Priority": "P0",
+        "Size": "M",
+        "Estimate": "2",
+        "Start date": "2026-04-06",
+        "Target date": "2026-04-17",
+        "Epics": "UAT",
+        "_body": "Desplegar los un nodo DS en AWS y conectarlos a los respectivos RS.\nRecordatorio:\n- Verificar Password Policy\n- Verificar Indices\n- Verificar Schema\n- Verificar replicación",
+        "Task": [
+          "UAT - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "UAT - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877LPZp",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpS3fg",
+      "contentNodeId": "I_kwDORUttV877LRXw",
+      "number": 13,
+      "title": "UAT - IDP Hibrido - Desplegar CTS",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/13",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Title": "UAT - IDP Hibrido - Desplegar CTS",
+        "Status": "Done",
+        "Priority": "P0",
+        "Size": "M",
+        "Estimate": "2",
+        "Start date": "2026-04-06",
+        "Target date": "2026-04-16",
+        "Epics": "UAT",
+        "_body": "Desplegar los un nodo CTS en AWS y conectarlos a los respectivos RS.\nRecordatorio:\n- Verificar Password Policy\n- Verificar Indices\n- Verificar Schema\n- Verificar replicación",
+        "Task": [
+          "UAT - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "UAT - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877LPZp",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpS3fc",
+      "contentNodeId": "I_kwDORUttV877LQn7",
+      "number": 12,
+      "title": "UAT - IDP Hibrido - Desplegar AM y DS-Config",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/12",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Title": "UAT - IDP Hibrido - Desplegar AM y DS-Config",
+        "Status": "Done",
+        "Priority": "P0",
+        "Size": "M",
+        "Estimate": "2",
+        "Start date": "2026-04-06",
+        "Target date": "2026-04-14",
+        "Epics": "UAT",
+        "_body": "Se debe desplegar dos nodos AMs en AWS y configurarlos como Site Secundario y distinto al actual del onpremise.",
+        "Task": [
+          "UAT - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "UAT - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877LPZp",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzgsh8gM",
+      "contentNodeId": "I_kwDORUttV88AAAABCCEhnA",
+      "number": 28,
+      "title": "PROD - 1er Ventana",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/28",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Status": "Done",
+        "Title": "PROD - 1er Ventana",
+        "Priority": "P0",
+        "Size": "L",
+        "Start date": "2026-05-14",
+        "Target date": "2026-05-15",
+        "Epics": "PROD",
+        "Estimate": "1",
+        "_body": "1era Ventana: jueves 14-5 (noche) 01:00\n--\n- Configurar group-id en los DS On Prem (CTS - idrepo)\n- Sumar los RS al anillo actual\n- Editar la lista de RS en los DS On Prem, agregar dedicados y remover embebidos (CTS - idrepo)\n- Apagar RS embebido de los DS (CTS - idrepo)\n- Reiniciar instancia (CTS - idrepo)\n- Validar replicacion de la instancia (CTS - idrepo)\n- Repetir con otra instancia hasta completar el total (CTS - idrepo)\n> La ventana se inicia con el objetivo de completar todas las instancias de un tipo de DS, en caso de que el tiempo sea suficiente, se avanzara con el otro tipo de DS.\n\n---\n\nValidaciones\n--\n\n### DS-CTS\n- [ ] Puertos\n- [ ] tabla de hosts configurada\n- [ ] telnet a demás equipos\n- [ ] Password Policy identico\n- [ ] Indices identicos\n- [ ] Schema identico\n- [ ] Politicas de acceso\n- [ ] Borrado de tokens configurado\n- [ ] CERTIFICADOS actualizados\n- [ ] Replicación exitosa\n- [ ] Systemctl configurado\n- [ ] Graylog configurado\n\n### DS-idrepo\n- [ ] tabla de hosts configurada\n- [ ] telnet a demás equipos\n- [ ] Password Policy identico\n- [ ] Indices identicos\n- [ ] Schema identico\n- [ ] CERTIFICADOS actualizados\n- [ ] Replicación exitosa\n- [ ] Systemctl configurado\n- [ ] Graylog configurado\n\n### RS-CTS\n- [ ] Puertos\n- [ ] tabla de hosts configurada\n- [ ] telnet a demás equipos\n- [ ] CERTIFICADOS actualizados\n- [ ] Replicación\n- [ ] Systemctl configurado\n- [ ] Graylog configurado\n\n### RS-idrepo\n- [ ] Puertos\n- [ ] tabla de hosts configurada\n- [ ] telnet a demás equipos\n- [ ] CERTIFICADOS actualizados\n- [ ] Replicación exitosa\n- [ ] Systemctl configurado\n- [ ] Graylog configurado",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpVCEY",
+      "contentNodeId": "I_kwDORUttV877iAox",
+      "number": 18,
+      "title": "TEST - IDP Hibrido - Replicación \"cn=admin data\" en DS-Config",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/18",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "nbravo-rakkau"
+        ],
+        "Title": "TEST - IDP Hibrido - Replicación \"cn=admin data\" en DS-Config",
+        "Status": "Done",
+        "Priority": "P1",
+        "Size": "S",
+        "Estimate": "1",
+        "Start date": "2026-04-07",
+        "Target date": "2026-04-10",
+        "Epics": "TEST",
+        "_body": "Se debe arreglar la replicación de cn=admin data de los DS-Config que no se encuentran replicando exitosamente en este momento.",
+        "Task": [
+          "TEST - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "TEST - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877Knus",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dL",
+        "name": "Bug",
+        "color": "RED",
+        "description": "An unexpected problem or behavior"
+      },
+      "assignees": [
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpS3fw",
+      "contentNodeId": "I_kwDORUttV877Y9Wq",
+      "number": 16,
+      "title": "TEST - IDP Hibrido - Activar Graylog en RS-CTS",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/16",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "TEST - IDP Hibrido - Activar Graylog en RS-CTS",
+        "Status": "Done",
+        "Priority": "P2",
+        "Size": "S",
+        "Start date": "2026-03-31",
+        "Target date": "2026-04-28",
+        "Estimate": "1",
+        "_body": "Se debe activar la exportación de Logs hacia Graylog cuando nos indiquen el puerto a utilizar.",
+        "Task": [
+          "TEST - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "TEST - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877KuWZ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpS3f0",
+      "contentNodeId": "I_kwDORUttV877Y-hK",
+      "number": 17,
+      "title": "TEST - IDP Hibrido - Activar Graylog en RS-DS",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/17",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "TEST - IDP Hibrido - Activar Graylog en RS-DS",
+        "Status": "Done",
+        "Priority": "P2",
+        "Size": "S",
+        "Estimate": "1",
+        "Start date": "2026-03-31",
+        "Target date": "2026-04-28",
+        "_body": "Se debe activar la exportación de Logs hacia Graylog cuando nos indiquen el puerto a utilizar.",
+        "Task": [
+          "TEST - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "TEST - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877KunB",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpS6Kk",
+      "contentNodeId": "I_kwDORUttV877Knus",
+      "number": 5,
+      "title": "TEST - IDP Hibrido - Desplegar AM y DS-Config",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/5",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Title": "TEST - IDP Hibrido - Desplegar AM y DS-Config",
+        "Status": "Done",
+        "Priority": "P0",
+        "Size": "M",
+        "Estimate": "2",
+        "Start date": "2026-03-10",
+        "Target date": "2026-03-30",
+        "Epics": "TEST",
+        "_body": "Se debe desplegar dos nodos AMs en AWS y configurarlos como Site Secundario y distinto al actual del onpremise.",
+        "Task": [
+          "TEST - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "TEST - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877KnIs",
+      "subIssuesSummary": {
+        "total": 1,
+        "completed": 1,
+        "percentCompleted": 100
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpVCpE",
+      "contentNodeId": "I_kwDORUttV877iD-O",
+      "number": 19,
+      "title": "TEST - IDP Hibrido - Arreglar replicación \"cn=admin data\" en DS-idrepo",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/19",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "nbravo-rakkau"
+        ],
+        "Title": "TEST - IDP Hibrido - Arreglar replicación \"cn=admin data\" en DS-idrepo",
+        "Status": "Done",
+        "Priority": "P1",
+        "Size": "S",
+        "Estimate": "1",
+        "Start date": "2026-04-07",
+        "Target date": "2026-04-10",
+        "Epics": "TEST",
+        "_body": "Se debe arreglar la replicación de cn=admin data de los DS-idrepo que no se encuentran replicando exitosamente en este momento.",
+        "Task": [
+          "TEST - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "TEST - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV877KtBO",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgpVcVI",
+      "contentNodeId": "I_kwDORUttV877j3Hk",
+      "number": 20,
+      "title": "PROD - IDP Hibrido - Plan de Despliegue",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/20",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo",
+          "nbravo-rakkau"
+        ],
+        "Title": "PROD - IDP Hibrido - Plan de Despliegue",
+        "Status": "Done",
+        "Priority": "P1",
+        "Size": "M",
+        "Estimate": "1",
+        "Start date": "2026-04-07",
+        "Target date": "2026-04-10",
+        "Epics": "PROD",
+        "_body": "Realizar un documento de plan de despliegue para Producción donde se detallen las distintas tareas a realizar y luego se pueda dividir en etapas y/o ventanas.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "documentation",
+          "color": "0075ca",
+          "description": "Improvements or additions to documentation"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo",
+        "nbravo-rakkau"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgtX3bY",
+      "contentNodeId": "I_kwDORUttV88AAAABC7XRFQ",
+      "number": 40,
+      "title": "PROD - 2da Ventana",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/40",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Status": "Done",
+        "Title": "PROD - 2da Ventana",
+        "Priority": "P1",
+        "Size": "L",
+        "Estimate": "1",
+        "Start date": "2026-05-20",
+        "Target date": "2026-05-21",
+        "Epics": "PROD",
+        "_body": "Se deben prender los DS-idrepo de AWS y verificar que se siga dando servicio y la replicacion se encuentre en buen estado.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgtOKNc",
+      "contentNodeId": "I_kwDORUttV88AAAABCwtiiQ",
+      "number": 37,
+      "title": "PROD - Instalar DS Config 8",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/37",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "PROD - Instalar DS Config 8",
+        "Status": "Done",
+        "Priority": "P1",
+        "Size": "M",
+        "Estimate": "1",
+        "Start date": "2026-05-18",
+        "Target date": "2026-05-20",
+        "Epics": "PROD",
+        "_body": "evidencia",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": null,
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgtOKV0",
+      "contentNodeId": "I_kwDORUttV88AAAABCwtvMg",
+      "number": 38,
+      "title": "PROD - Instalar DS Config 7",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/38",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "PROD - Instalar DS Config 7",
+        "Status": "Done",
+        "Priority": "P1",
+        "Size": "M",
+        "Estimate": "1",
+        "Start date": "2026-05-18",
+        "Target date": "2026-05-20",
+        "Epics": "PROD",
+        "_body": "evidencia",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": null,
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgtOLEI",
+      "contentNodeId": "I_kwDORUttV88AAAABCwum5A",
+      "number": 39,
+      "title": "PROD - Instalar DS Config 9",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/39",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "PROD - Instalar DS Config 9",
+        "Status": "Done",
+        "Priority": "P1",
+        "Size": "M",
+        "Estimate": "1",
+        "Start date": "2026-05-18",
+        "Target date": "2026-05-20",
+        "Epics": "PROD",
+        "_body": "evidencia",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": null,
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzgs3Qpk",
+      "contentNodeId": "I_kwDORUttV88AAAABCZlF0Q",
+      "number": 33,
+      "title": "PROD - Instalar CTS-5",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/33",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Status": "Done",
+        "Title": "PROD - Instalar CTS-5",
+        "Priority": "P1",
+        "Estimate": "1",
+        "Size": "M",
+        "Start date": "2026-05-15",
+        "Target date": "2026-05-16",
+        "Epics": "PROD",
+        "_body": "Dejar evidencia de la instalación del equipo mencionado.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzgs3Qv0",
+      "contentNodeId": "I_kwDORUttV88AAAABCZlNgA",
+      "number": 34,
+      "title": "PROD - Instalar CTS-6",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/34",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Status": "Done",
+        "Title": "PROD - Instalar CTS-6",
+        "Priority": "P1",
+        "Size": "M",
+        "Estimate": "1",
+        "Start date": "2026-05-15",
+        "Target date": "2026-05-16",
+        "Epics": "PROD",
+        "_body": "Dejar evidencia de la instalación del equipo mencionado.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgtX4c0",
+      "contentNodeId": "I_kwDORUttV88AAAABC7YTEw",
+      "number": 41,
+      "title": "PROD - 3er Ventana",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/41",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Status": "Done",
+        "Title": "PROD - 3er Ventana",
+        "Priority": "P1",
+        "Size": "L",
+        "Estimate": "1",
+        "Start date": "2026-05-21",
+        "Target date": "2026-05-22",
+        "Epics": "PROD",
+        "_body": "Se deben prender los CTS de AWS y los DS-Config de AWS.\nAdemás, se debe comprobar que se sigue dando servicio, que los opendj estan activos y que la replicacion funciona satisfactoriamente.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzgtX4zw",
+      "contentNodeId": "I_kwDORUttV88AAAABC7YtQQ",
+      "number": 42,
+      "title": "PROD - 4ta Ventana",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/42",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Status": "Done",
+        "Title": "PROD - 4ta Ventana",
+        "Priority": "P1",
+        "Size": "L",
+        "Estimate": "1",
+        "Start date": "2026-05-27",
+        "Target date": "2026-05-28",
+        "Epics": "PROD",
+        "_body": "Se debe cambiar los Connection Strings de los Realms de los AM para que haya conexion a los DS de ambas regiones.\nVerificar que sigue funcionando el login despues del cambio.",
+        "Task": [
+          "PROD - Despliegue IDP Hibrido"
+        ]
+      },
+      "parentTaskId": "PROD - Despliegue IDP Hibrido",
+      "parentIssueContentId": "I_kwDORUttV88AAAABCBYznQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzgzv4KA",
+      "contentNodeId": "I_kwDOH5sqys8AAAABJy2KBQ",
+      "number": 525,
+      "title": "DU - IDM - Inconveniente con el Cluster",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-digitaluser/issues/525",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "DU - IDM - Inconveniente con el Cluster",
+        "Status": "Done",
+        "_body": "Flor nos informó por Teams que estaban teniendo el siguiente error en PROD:\n```\n2026-07-21 11:20:35.493  PLAIDMAPP6\n[113] Jul 21, 2026 11:20:34.058 AM org.forgerock.openidm.sync.impl.queue.QueueConsumerFactory lambda$new$1\nSEVERE: Failed to query cluster nodes. Lock balancing aborted.\norg.forgerock.json.resource.InternalServerErrorException: /: List index out of range: -1\nat org.forgerock.opendj.rest2ldap.Rest2Ldap.asResourceException(Rest2Ldap.java:505)\nat org.forgerock.opendj.ldap.Utils.lambda$toPromise$6(Utils.java:234)\n```\nEste error se origina cuando un DS tiene entradas duplicadas para un nodo de IDM, entonces no puede parsear correctamente la respuesta y rompe.",
+        "Task": [
+          "DU - Release 1.47"
+        ]
+      },
+      "parentTaskId": "DU - Release 1.47",
+      "parentIssueContentId": "I_kwDOH5sqys8AAAABOigBOw",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "kind/bug",
+          "color": "d73a4a",
+          "description": "Something isn't working"
+        },
+        {
+          "name": "scope/idm",
+          "color": "3742F9",
+          "description": ""
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dL",
+        "name": "Bug",
+        "color": "RED",
+        "description": "An unexpected problem or behavior"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": [],
+      "parentIssueTitle": "DU - Release 1.47",
+      "parentIssueNumber": 540
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg64xFw",
+      "contentNodeId": "I_kwDORUttV88AAAABROlM7Q",
+      "number": 45,
+      "title": "Hornos - TEST - Despliegues y Configuración",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/45",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Despliegues y Configuración",
+        "Status": "Done",
+        "Start date": "2026-09-14",
+        "Target date": "2026-09-22",
+        "Priority": "P0",
+        "Epics": "TEST",
+        "Size": "XL",
+        "_body": "En este issue se listarán las subtareas relacionadas al despliegue y configuracion de los equipos.",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROkTxQ",
+      "subIssuesSummary": {
+        "total": 11,
+        "completed": 11,
+        "percentCompleted": 100
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg64ySQ",
+      "contentNodeId": "I_kwDORUttV88AAAABROmaCQ",
+      "number": 46,
+      "title": "Hornos - TEST - Despliegue CTS5",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/46",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Despliegue CTS5",
+        "Status": "Done",
+        "Start date": "2026-09-15",
+        "Target date": "2026-09-16",
+        "Priority": "P0",
+        "Size": "L",
+        "Epics": "TEST",
+        "_body": "Se deberá desplegar y configurar el equipo:\nCTS 5 | 10.76.68.189 | TLACTSAPP5.hor.corp.cloudteco.com.arctstest5.telecom.com.ar | TLACTSAPP5\n-- | -- | -- | --\n\n\n",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROlM7Q",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg64yqo",
+      "contentNodeId": "I_kwDORUttV88AAAABROmvRQ",
+      "number": 47,
+      "title": "Hornos - TEST - Despliegue DS4",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/47",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Despliegue DS4",
+        "Status": "Done",
+        "Start date": "2026-09-15",
+        "Target date": "2026-09-16",
+        "Epics": "TEST",
+        "_body": "Se deberá desplegar y configurar el equipo:\n\nDS UserStore 4 | 10.76.68.192 | TLADSAPP4.hor.corp.cloudteco.com.ardstest4.telecom.com.ar | TLADSAPP4\n-- | -- | -- | --\n\n\n",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROlM7Q",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg64zBs",
+      "contentNodeId": "I_kwDORUttV88AAAABROnIFg",
+      "number": 48,
+      "title": "Hornos - TEST - Despliegue AM7",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/48",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Despliegue AM7",
+        "Status": "Done",
+        "Start date": "2026-09-21",
+        "Target date": "2026-09-23",
+        "_body": "Se deberá desplegar y configurar el equipo:\nAM 7 | 10.76.68.181 | TLAMANGAPP7.hor.corp.cloudteco.com.ar | TLAMANGAPP7\n-- | -- | -- | --\n\n\n",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROlM7Q",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg64zWY",
+      "contentNodeId": "I_kwDORUttV88AAAABROnc0Q",
+      "number": 49,
+      "title": "Hornos - TEST - Despliegue AM8",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/49",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Despliegue AM8",
+        "Status": "Done",
+        "Start date": "2026-09-21",
+        "Target date": "2026-09-23",
+        "_body": "Se deberá desplegar y configurar el equipo:\nAM 8 | 10.76.68.185 | TLAMANGAPP8.hor.corp.cloudteco.com.ar | TLAMANGAPP8\n-- | -- | -- | --\n\n\n",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROlM7Q",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg64zl4",
+      "contentNodeId": "I_kwDORUttV88AAAABROnv8Q",
+      "number": 50,
+      "title": "Hornos - TEST - Despliegue IDM7",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/50",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Despliegue IDM7",
+        "Status": "Done",
+        "_body": "Se deberá desplegar y configurar el equipo:\nIDM 7 | 10.76.68.190 | TLAIDMAPP7.hor.corp.cloudteco.com.ar | TLAIDMAPP7\n-- | -- | -- | --\n\n\n",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROlM7Q",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg64z3o",
+      "contentNodeId": "I_kwDORUttV88AAAABROoDMQ",
+      "number": 51,
+      "title": "Hornos - TEST - Despliegue IDM8",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/51",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Despliegue IDM8",
+        "Status": "Done",
+        "Start date": "2026-09-16",
+        "Target date": "2026-09-17",
+        "Priority": "P0",
+        "Epics": "TEST",
+        "_body": "Se deberá desplegar y configurar el equipo:\nIDM 8 | 10.76.68.191 | TLAIDMAPP8.hor.corp.cloudteco.com.ar | TLAIDMAPP8\n-- | -- | -- | --\n\n\n",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROlM7Q",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg640WI",
+      "contentNodeId": "I_kwDORUttV88AAAABROokCg",
+      "number": 52,
+      "title": "Hornos - TEST - Despliegue RSCTS5",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/52",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Despliegue RSCTS5",
+        "Status": "Done",
+        "Start date": "2026-09-14",
+        "Target date": "2026-09-15",
+        "_body": "Se deberá desplegar y configurar el equipo:\nRS-CTS 5 | 10.76.68.251 | TLARSCTSAPP5.hor.corp.cloudteco.com.ar | TLARSCTSAPP5\n-- | -- | -- | --\n\n\n",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROlM7Q",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg640o4",
+      "contentNodeId": "I_kwDORUttV88AAAABROo4rg",
+      "number": 53,
+      "title": "Hornos - TEST - Despliegue RSCTS6",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/53",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Despliegue RSCTS6",
+        "Status": "Done",
+        "Start date": "2026-09-14",
+        "Target date": "2026-09-15",
+        "_body": "Se deberá desplegar y configurar el equipo:\nRS-CTS 6 | 10.76.68.252 | TLARSCTSAPP6.hor.corp.cloudteco.com.ar | TLARSCTSAPP6\n-- | -- | -- | --\n\n\n",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROlM7Q",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg640_g",
+      "contentNodeId": "I_kwDORUttV88AAAABROpKhg",
+      "number": 54,
+      "title": "Hornos - TEST - Despliegue RSDS5",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/54",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Despliegue RSDS5",
+        "Status": "Done",
+        "Start date": "2026-09-14",
+        "Target date": "2026-09-15",
+        "_body": "Se debera desplegar y configurar el equipo:\nRS-DS 5 | 10.76.68.253 | TLARSDSAPP5.hor.corp.cloudteco.com.ar | TLARSDSAPP5\n-- | -- | -- | --\n\n\n",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROlM7Q",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg641uc",
+      "contentNodeId": "I_kwDORUttV88AAAABROpieQ",
+      "number": 55,
+      "title": "Hornos - TEST - Despliegue RSDS6",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/55",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Despliegue RSDS6",
+        "Status": "Done",
+        "Start date": "2026-09-14",
+        "Target date": "2026-09-15",
+        "_body": "Se deberá desplegar y configurar el equipo:\nRS-DS 6 | 10.76.68.254 | TLARSDSAPP6.hor.corp.cloudteco.com.ar | TLARSDSAPP6\n-- | -- | -- | --\n\n\n",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROlM7Q",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg644bY",
+      "contentNodeId": "I_kwDORUttV88AAAABROrhVw",
+      "number": 56,
+      "title": "Hornos - TEST - Cambiar topología DS-Config",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/56",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Cambiar topología DS-Config",
+        "Status": "Done",
+        "Start date": "2026-09-22",
+        "Target date": "2026-09-25",
+        "_body": "Se deberá cambiar la topologia de los DS-config. Los siguientes equipos deberán pasar a ser RS:\n\nAM 3 | 10.76.12.75 | TLAMANGAPP3.est.corp.cloudteco.com.ar | TLAMANGAPP3\n-- | -- | -- | --\nAM 8 | 10.76.68.185 | TLAMANGAPP8.hor.corp.cloudteco.com.ar | TLAMANGAPP8\nAM 6 | 10.62.66.138 | TLAMANGAPPH2.us-east-1.aws.cloudteco.com.ar | TLAMANGAPPH2\n\n\n\n\n\n\n\n",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROkTxQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg7FNj0",
+      "contentNodeId": "I_kwDORUttV88AAAABRbCpMg",
+      "number": 58,
+      "title": "Hornos - TEST - Modificar /etc/hosts en todos los equipos",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/58",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - TEST - Modificar /etc/hosts en todos los equipos",
+        "Status": "Done",
+        "Priority": "P0",
+        "Epics": "TEST",
+        "Size": "M",
+        "Start date": "2026-09-14",
+        "Target date": "2026-09-22",
+        "_body": "Se deberá agregar los nuevos equipos a los /etc/hosts de cada equipo Forgerock nuevo y ya existente.\n\n- [x] TLAMANGAPP1\n- [x] TLAMANGAPP2\n- [x] TLAMANGAPP3\n- [x] TLAMANGAPP4\n- [x] TLAMANGAPP7\n- [x] TLAMANGAPP8\n- [x] TLACTSAPP1\n- [x] TLACTSAPP2\n- [x] TLACTSAPP5\n- [x] TLADSAPP1\n- [x] TLADSAPP2\n- [x] TLADSAPP4\n- [x] TLAIDMAPP1\n- [x] TLAIDMAPP2\n- [x] TLAIDMAPP3\n- [x] TLAIDMAPP4\n- [x] TLAIDMAPP7\n- [x] TLAIDMAPP8\n- [x] TLARSCTSAPP1\n- [x] TLARSCTSAPP2\n- [x] TLARSDSAPP1\n- [x] TLARSDSAPP2\n- [x] TLARSCTSAPP5\n- [x] TLARSCTSAPP6\n- [x] TLARSDSAPP5\n- [x] TLARSDSAPP6\n- [x] TLAMANGAPPH1\n- [x] TLAMANGAPPH2\n- [x] TLACTSAPPH1\n- [x] TLACTSAPPH2\n- [x] TLADSAPPH1\n- [x] TLAIDMAPPH1\n- [x] TLAIDMAPPH2\n- [x] TLARSCTSAPPH3\n- [x] TLARSCTSAPPH4\n- [x] TLARSDSAPPH3\n- [x] TLARSDSAPPH4",
+        "Task": [
+          "Hornos - TEST"
+        ]
+      },
+      "parentTaskId": "Hornos - TEST",
+      "parentIssueContentId": "I_kwDORUttV88AAAABROlM7Q",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg-uLq0",
+      "contentNodeId": "I_kwDORUttV88AAAABVNhpWw",
+      "number": 60,
+      "title": "Hornos - UAT - Despliegues y Configuración",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/60",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - UAT - Despliegues y Configuración",
+        "Status": "Done",
+        "_body": "En este issue se listarán las subtareas relacionadas al despliegue y configuracion de los equipos.",
+        "Task": [
+          "Hornos - UAT"
+        ]
+      },
+      "parentTaskId": "Hornos - UAT",
+      "parentIssueContentId": "I_kwDORUttV88AAAABVNgTdw",
+      "subIssuesSummary": {
+        "total": 6,
+        "completed": 6,
+        "percentCompleted": 100
+      },
+      "labels": [],
+      "issueType": null,
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg-uM14",
+      "contentNodeId": "I_kwDORUttV88AAAABVNitcA",
+      "number": 61,
+      "title": "Hornos - UAT - Despliegue AM7",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/61",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - UAT - Despliegue AM7",
+        "Status": "Done",
+        "_body": "Se deberá desplegar y configurar el equipo:\nULAMANGAPP7",
+        "Task": [
+          "Hornos - UAT"
+        ]
+      },
+      "parentTaskId": "Hornos - UAT",
+      "parentIssueContentId": "I_kwDORUttV88AAAABVNhpWw",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg-uNNU",
+      "contentNodeId": "I_kwDORUttV88AAAABVNjB3g",
+      "number": 62,
+      "title": "Hornos - UAT - Despliegue AM8",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/62",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - UAT - Despliegue AM8",
+        "Status": "Done",
+        "_body": "Se deberá desplegar y configurar el equipo:\nULAMANGAPP8",
+        "Task": [
+          "Hornos - UAT"
+        ]
+      },
+      "parentTaskId": "Hornos - UAT",
+      "parentIssueContentId": "I_kwDORUttV88AAAABVNhpWw",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg-uNdc",
+      "contentNodeId": "I_kwDORUttV88AAAABVNjS0w",
+      "number": 63,
+      "title": "Hornos - UAT - Despliegue CTS4",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/63",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - UAT - Despliegue CTS4",
+        "Status": "Done",
+        "_body": "Se deberá desplegar y configurar el equipo:\nULADSAPP4",
+        "Task": [
+          "Hornos - UAT"
+        ]
+      },
+      "parentTaskId": "Hornos - UAT",
+      "parentIssueContentId": "I_kwDORUttV88AAAABVNhpWw",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg-uNk0",
+      "contentNodeId": "I_kwDORUttV88AAAABVNjcOQ",
+      "number": 64,
+      "title": "Hornos - UAT - Despliegue DS4",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/64",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - UAT - Despliegue DS4",
+        "Status": "Done",
+        "_body": "Se deberá desplegar y configurar el equipo:\nULADSAPP4",
+        "Task": [
+          "Hornos - UAT"
+        ]
+      },
+      "parentTaskId": "Hornos - UAT",
+      "parentIssueContentId": "I_kwDORUttV88AAAABVNhpWw",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg-uN8M",
+      "contentNodeId": "I_kwDORUttV88AAAABVNjziw",
+      "number": 65,
+      "title": "Hornos - UAT - Despliegue IDM4",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/65",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - UAT - Despliegue IDM4",
+        "Status": "Done",
+        "_body": "Se deberá desplegar y configurar el equipo:\nULAIDMAPP4.hor.corp.cloudteco.com.ar",
+        "Task": [
+          "Hornos - UAT"
+        ]
+      },
+      "parentTaskId": "Hornos - UAT",
+      "parentIssueContentId": "I_kwDORUttV88AAAABVNhpWw",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg-uPL0",
+      "contentNodeId": "I_kwDORUttV88AAAABVNlTXw",
+      "number": 66,
+      "title": "Hornos - UAT - Modificar /etc/hosts en todos los equipos",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/66",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - UAT - Modificar /etc/hosts en todos los equipos",
+        "Status": "Done",
+        "_body": "Se deberá agregar los nuevos equipos a los /etc/hosts de cada equipo Forgerock nuevo y ya existente.\n\n- [x] ULAMANGAPP1\n- [x] ULAMANGAPP2\n- [x] ULAMANGAPP3\n- [x] ULAMANGAPP4\n- [x] ULAMANGAPP7\n- [x] ULAMANGAPP8\n- [x] ULADSAPP1.pac.corp.cloudteco.com.ar\n- [x] ULADSAPP2.est.corp.cloudteco.com.ar\n- [x] ULADSAPP4.hor.corp.cloudteco.com.ar\n- [x] ULAIDMAPP1.pac.corp.cloudteco.com.ar\n- [x] ULAIDMAPP2\n- [x] ULAIDMAPP4.hor.corp.cloudteco.com.ar\n\n### AWS\n- [x] ULAMANGAPP5\n- [x] ULAMANGAPP6\n- [x] ULADSAPP3\n- [x] ULAIDMAPP3",
+        "Task": [
+          "Hornos - UAT"
+        ]
+      },
+      "parentTaskId": "Hornos - UAT",
+      "parentIssueContentId": "I_kwDORUttV88AAAABVNhpWw",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8Wwzg-uUDs",
+      "contentNodeId": "I_kwDORUttV88AAAABVNq8AA",
+      "number": 68,
+      "title": "Hornos - PROD - Plan de Despliegue",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/68",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Plan de Despliegue",
+        "Status": "Backlog",
+        "Priority": "P1",
+        "Size": "M",
+        "Epics": "PROD",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABVNqhUA",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [
+        {
+          "name": "documentation",
+          "color": "0075ca",
+          "description": "Improvements or additions to documentation"
+        },
+        {
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        }
+      ],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE2-oE",
+      "contentNodeId": "I_kwDORUttV88AAAABbR9zhQ",
+      "number": 69,
+      "title": "Hornos - PROD - Configuración y Despliegues",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/69",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Configuración y Despliegues",
+        "Status": "Backlog",
+        "_body": "En este issue se listarán las subtareas relacionadas al despliegue y configuracion de los equipos.",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABVNqhUA",
+      "subIssuesSummary": {
+        "total": 15,
+        "completed": 1,
+        "percentCompleted": 6
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3AU4",
+      "contentNodeId": "I_kwDORUttV88AAAABbR_d6g",
+      "number": 70,
+      "title": "Hornos - PROD - Despliegue RS-CTS5",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/70",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue RS-CTS5",
+        "Status": "In progress",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3AlA",
+      "contentNodeId": "I_kwDORUttV88AAAABbR_tvA",
+      "number": 71,
+      "title": "Hornos - PROD - Despliegue RS-CTS6",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/71",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue RS-CTS6",
+        "Status": "Done",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3Auk",
+      "contentNodeId": "I_kwDORUttV88AAAABbR_1mg",
+      "number": 72,
+      "title": "Hornos - PROD - Despliegue RS-DS5",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/72",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue RS-DS5",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3A3k",
+      "contentNodeId": "I_kwDORUttV88AAAABbR_8oQ",
+      "number": 73,
+      "title": "Hornos - PROD - Despliegue RS-DS6",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/73",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue RS-DS6",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3BMU",
+      "contentNodeId": "I_kwDORUttV88AAAABbSAMpg",
+      "number": 74,
+      "title": "Hornos - PROD - Despliegue CTS7",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/74",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue CTS7",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3BYo",
+      "contentNodeId": "I_kwDORUttV88AAAABbSAYWw",
+      "number": 75,
+      "title": "Hornos - PROD - Despliegue CTS8",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/75",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue CTS8",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3BiY",
+      "contentNodeId": "I_kwDORUttV88AAAABbSAgRQ",
+      "number": 76,
+      "title": "Hornos - PROD - Despliegue DS7",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/76",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue DS7",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3BqQ",
+      "contentNodeId": "I_kwDORUttV88AAAABbSAmlA",
+      "number": 77,
+      "title": "Hornos - PROD - Despliegue DS8",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/77",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue DS8",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3B78",
+      "contentNodeId": "I_kwDORUttV88AAAABbSA0gg",
+      "number": 78,
+      "title": "Hornos - PROD - Despliegue AM10",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/78",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue AM10",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3CF0",
+      "contentNodeId": "I_kwDORUttV88AAAABbSA7IQ",
+      "number": 79,
+      "title": "Hornos - PROD - Despliegue AM11",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/79",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue AM11",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3COM",
+      "contentNodeId": "I_kwDORUttV88AAAABbSBDDw",
+      "number": 80,
+      "title": "Hornos - PROD - Despliegue AM12",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/80",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue AM12",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3CuA",
+      "contentNodeId": "I_kwDORUttV88AAAABbSBjrg",
+      "number": 81,
+      "title": "Hornos - PROD - Cambio topología DS-Config",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/81",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Cambio topología DS-Config",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 5,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3C14",
+      "contentNodeId": "I_kwDORUttV88AAAABbSBqUw",
+      "number": 82,
+      "title": "Hornos - PROD - Despliegue IDM10",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/82",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue IDM10",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3C8A",
+      "contentNodeId": "I_kwDORUttV88AAAABbSBvHQ",
+      "number": 83,
+      "title": "Hornos - PROD - Despliegue IDM11",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/83",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue IDM11",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3C_4",
+      "contentNodeId": "I_kwDORUttV88AAAABbSB0Dg",
+      "number": 84,
+      "title": "Hornos - PROD - Despliegue IDM12",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/84",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue IDM12",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbR9zhQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3D2I",
+      "contentNodeId": "I_kwDORUttV88AAAABbSCn3A",
+      "number": 85,
+      "title": "Hornos - PROD - Cambio de Config a DS-Config6",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/85",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Cambio de Config a DS-Config6",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbSBjrg",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3EFM",
+      "contentNodeId": "I_kwDORUttV88AAAABbSC1OA",
+      "number": 86,
+      "title": "Hornos - PROD - Cambio de Config a DS-Confi9",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/86",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Cambio de Config a DS-Confi9",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbSBjrg",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3EWE",
+      "contentNodeId": "I_kwDORUttV88AAAABbSDGIw",
+      "number": 87,
+      "title": "Hornos - PROD - Despliegue DS-Config10",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/87",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue DS-Config10",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbSBjrg",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3EaY",
+      "contentNodeId": "I_kwDORUttV88AAAABbSDKnw",
+      "number": 88,
+      "title": "Hornos - PROD - Despliegue DS-Config11",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/88",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue DS-Config11",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbSBjrg",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3Ehg",
+      "contentNodeId": "I_kwDORUttV88AAAABbSDQNQ",
+      "number": 89,
+      "title": "Hornos - PROD - Despliegue DS-Config12 como RS",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/89",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Despliegue DS-Config12 como RS",
+        "Status": "Backlog",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbSBjrg",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3KAE",
+      "contentNodeId": "I_kwDORUttV88AAAABbSJHQw",
+      "number": 90,
+      "title": "Hornos - PROD - Modificar /etc/hosts",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/90",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Modificar /etc/hosts",
+        "Status": "In progress",
+        "_body": "Se deberá modificar la tabla de hosts de todos los equipos:\n\n- [ ] PLAMANGAPP1.pac.corp.cloudteco.com.ar\n- [ ] PLAMANGAPP2.pac.corp.cloudteco.com.ar\n- [ ] PLAMANGAPP3.pac.corp.cloudteco.com.ar\n- [ ] PLAMANGAPP4.est.corp.cloudteco.com.ar\n- [ ] PLAMANGAPP5.est.corp.cloudteco.com.ar\n- [ ] PLAMANGAPP6.est.corp.cloudteco.com.ar\n- [ ] PLAMANGAPP10.hor.corp.cloudteco.com.ar\n- [ ] PLAMANGAPP11.hor.corp.cloudteco.com.ar\n- [ ] PLAMANGAPP12.hor.corp.cloudteco.com.ar\n- [ ] PLACTSAPP1.pac.corp.cloudteco.com.ar\n- [ ] PLACTSAPP2.pac.corp.cloudteco.com.ar\n- [ ] PLACTSAPP3.est.corp.cloudteco.com.ar\n- [ ] PLACTSAPP4.est.corp.cloudteco.com.ar\n- [ ] PLACTSAPP7.hor.corp.cloudteco.com.ar\n- [ ] PLACTSAPP8.hor.corp.cloudteco.com.ar\n- [ ] PLADSAPP1.pac.corp.cloudteco.com.ar\n- [ ] PLADSAPP2.pac.corp.cloudteco.com.ar\n- [ ] PLADSAPP3.est.corp.cloudteco.com.ar\n- [ ] PLADSAPP4.est.corp.cloudteco.com.ar\n- [ ] PLADSAPP7.hor.corp.cloudteco.com.ar\n- [ ] PLADSAPP8.hor.corp.cloudteco.com.ar\n- [ ] PLAIDMAPP1.pac.corp.cloudteco.com.ar\n- [ ] PLAIDMAPP2.pac.corp.cloudteco.com.ar\n- [ ] PLAIDMAPP3.pac.corp.cloudteco.com.ar\n- [ ] PLAIDMAPP4.est.corp.cloudteco.com.ar\n- [ ] PLAIDMAPP5.est.corp.cloudteco.com.ar\n- [ ] PLAIDMAPP6.est.corp.cloudteco.com.ar\n- [ ] PLAIDMAPP10.hor.corp.cloudteco.com.ar\n- [ ] PLAIDMAPP11.hor.corp.cloudteco.com.ar\n- [ ] PLAIDMAPP12.hor.corp.cloudteco.com.ar\n- [x] PLARSCTSAPP1.slz.corp.cloudteco.com.ar\n- [x] PLARSCTSAPP2.slz.corp.cloudteco.com.ar\n- [x] PLARSCTSAPP5.hor.corp.cloudteco.com.ar\n- [x] PLARSCTSAPP6.hor.corp.cloudteco.com.ar\n- [ ] PLARSDSAPP1.slz.corp.cloudteco.com.ar\n- [ ] PLARSDSAPP2.slz.corp.cloudteco.com.ar\n- [ ] PLARSDSAPP5.hor.corp.cloudteco.com.ar\n- [ ] PLARSDSAPP6.hor.corp.cloudteco.com.ar\n\n**_AWS:_**\n- [ ] PLAMANGAPP7.us-east-1.aws.cloudteco.com.ar\n- [ ] PLAMANGAPP8.us-east-1.aws.cloudteco.com.ar\n- [ ] PLAMANGAPP9.us-east-1.aws.cloudteco.com.ar\n- [ ] PLACTSAPP5.us-east-1.aws.cloudteco.com.ar\n- [ ] PLACTSAPP6.us-east-1.aws.cloudteco.com.ar\n- [ ] PLADSAPP5.us-east-1.aws.cloudteco.com.ar\n- [ ] PLADSAPP6.us-east-1.aws.cloudteco.com.ar\n- [ ] PLAIDMAPP7.us-east-1.aws.cloudteco.com.ar\n- [ ] PLAIDMAPP8.us-east-1.aws.cloudteco.com.ar\n- [ ] PLAIDMAPP9.us-east-1.aws.cloudteco.com.ar\n- [x] PLARSCTSAPP3.us-east-1.aws.cloudteco.com.ar\n- [x] PLARSCTSAPP4.us-east-1.aws.cloudteco.com.ar\n- [ ] PLARSDSAPP3.us-east-1.aws.cloudteco.com.ar\n- [ ] PLARSDSAPP4.us-east-1.aws.cloudteco.com.ar",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABVNqhUA",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3KO4",
+      "contentNodeId": "I_kwDORUttV88AAAABbSJXEQ",
+      "number": 91,
+      "title": "Hornos - PROD - Ventanas Nocturnas",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/91",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Ventanas Nocturnas",
+        "Status": "Backlog",
+        "_body": "En este issue se listaran las ventanas nocturnas.",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABVNqhUA",
+      "subIssuesSummary": {
+        "total": 5,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3M3M",
+      "contentNodeId": "I_kwDORUttV88AAAABbSMGOg",
+      "number": 92,
+      "title": "Hornos - PROD - Ventana 1",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/92",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Ventana 1",
+        "Status": "Backlog",
+        "_body": "Prerequisitos\n--\n- [ ] Tabla de hosts de todos los RS modificada\n- [ ] Tabla de hosts de todos los CTS modificada\n- [ ] Tabla de hosts de todos los DS modificada\n\n---\n\nTareas de la ventana\n--\n\n- Sumar los RS al anillo actual\n- Editar la lista de RS en los DS On Prem, agregar nuevos RS y eliminar los sobrantes (CTS - idrepo)\n- Reiniciar instancia (CTS - idrepo)\n- Validar replicacion de la instancia (CTS - idrepo)\n- Repetir con otra instancia hasta completar el total (CTS - idrepo)\n> La ventana se inicia con el objetivo de completar todas las instancias de un tipo de DS, en caso de que el tiempo sea suficiente, se avanzara con el otro tipo de DS.",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbSJXEQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3NvQ",
+      "contentNodeId": "I_kwDORUttV88AAAABbSNGUw",
+      "number": 93,
+      "title": "Hornos - PROD - Ventana 2 (teco)",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/93",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "Hornos - PROD - Ventana 2 (teco)",
+        "Status": "Backlog",
+        "_body": "El equipo de Telecom deberá apagar un CTS y un DS para tomar los backups requeridos, y luego enviarlos a los equipos de Hornos.\n",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbSJXEQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3Ow4",
+      "contentNodeId": "I_kwDORUttV88AAAABbSOGYw",
+      "number": 94,
+      "title": "Hornos - PROD - Ventana 3",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/94",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Ventana 3",
+        "Status": "Backlog",
+        "_body": "Prerequisitos\n--\n- [ ] Tabla de hosts de todos los RS modificada\n- [ ] Tabla de hosts de todos los CTS modificada\n- [ ] Tabla de hosts de todos los DS modificada\n- [ ] Backup restoreado\n- [ ] Indices rebuildeados\n- [ ] Password Policy creadas\n\n---\n\nTareas de la ventana\n--\n1. Prender nuevos DS (CTS - idrepo)\n2. Validar replicación y entradas.",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbSJXEQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3QCA",
+      "contentNodeId": "I_kwDORUttV88AAAABbSPZyA",
+      "number": 95,
+      "title": "Hornos - PROD - Ventana 4",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/95",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Ventana 4",
+        "Status": "Backlog",
+        "_body": "Prerequisitos\n--\n- [ ] Tabla de hosts de todos los AM modificada\n- [ ] Cambio de topologia realizado\n- [ ] Backup restoreado\n- [ ] Indices rebuildeados\n\n---\n\nTareas de la ventana\n--\n1. Sumar los RS al anillo actual\n2. Editar la lista de RS en los DS On Prem, agregar nuevos RS y eliminar los sobrantes (DS-Config)\n3. Apagar RS embebido de los DS (DS-Config)\n4. Reiniciar instancia (DS-Config)\n5. Validar replicacion de la instancia (DS-Config)\n6. Repetir con otra instancia hasta completar el total (DS-Config)",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbSJXEQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3Q-A",
+      "contentNodeId": "I_kwDORUttV88AAAABbSQdBA",
+      "number": 96,
+      "title": "Hornos - PROD - Ventana 5",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/96",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "tobias-calvo"
+        ],
+        "Title": "Hornos - PROD - Ventana 5",
+        "Status": "Backlog",
+        "_body": "Prerequisitos\n--\n- [ ] Tabla de hosts modificada en TODOS los equipos.\n- [ ] DS funcionando\n- [ ] CTS funcionando\n- [ ] Conexion entre AM y DS (Cruzada).\n- [ ] Conexion entre AM y CTS (Cruzada).\n\n---\n\nTareas de la ventana\n--\n1. Configurar connection strings en todos los realms para DS-idrepo",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABbSJXEQ",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dI",
+        "name": "Task",
+        "color": "YELLOW",
+        "description": "A specific piece of work"
+      },
+      "assignees": [
+        "tobias-calvo"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BT8WwzhE3TRw",
+      "contentNodeId": "I_kwDORUttV88AAAABbSSqVg",
+      "number": 97,
+      "title": "Hornos - PROD - Pruebas de Carga y Funcionales",
+      "state": "OPEN",
+      "url": "https://github.com/rakkau/telecom-infraestructura/issues/97",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "Hornos - PROD - Pruebas de Carga y Funcionales",
+        "Status": "Backlog",
+        "_body": "A cargo de Telecom pero bloqueantes para dar por cerrada la iniciativa / proyecto.",
+        "Task": [
+          "Hornos - PROD"
+        ]
+      },
+      "parentTaskId": "Hornos - PROD",
+      "parentIssueContentId": "I_kwDORUttV88AAAABVNqhUA",
+      "subIssuesSummary": {
+        "total": 0,
+        "completed": 0,
+        "percentCompleted": 0
+      },
+      "labels": [],
+      "issueType": {
+        "id": "IT_kwDOBeim084A-5dO",
+        "name": "Feature",
+        "color": "BLUE",
+        "description": "A request, idea, or new functionality"
+      },
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    }
+  ],
+  "links": {
+    "blockedBy": {},
+    "blocks": {}
+  },
+  "sprints": [],
+  "currentQuarter": {
+    "quarter": "Q4",
+    "year": 2026
+  },
+  "people": [
+    {
+      "login": "lordfausto",
+      "name": "Anibal Ortiz",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/63617748?u=923ce0e7ecf8912c87938372ff95b8d4875f3b19&v=4"
+    },
+    {
+      "login": "nbravo-rakkau",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/191251114?v=4"
+    },
+    {
+      "login": "rakkau"
+    },
+    {
+      "login": "tobias-calvo",
+      "name": "Tobias Calvo",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/67845273?u=7018149a0379144445031b2bc7b871bf7abf6484&v=4"
+    }
+  ],
+  "availableRepositories": [
+    "rakkau/telecom-infraestructura",
+    "rakkau/telecom-digitaluser"
+  ],
+  "issueRepository": "rakkau/telecom-infraestructura"
+}

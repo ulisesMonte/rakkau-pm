@@ -266,7 +266,11 @@ export function defaultGeneralTaskFields(
   };
 }
 
-/** Separa filas del project: padres ÔåÆ generalTasks, hijos ÔåÆ items (subtareas). */
+/**
+ * Separa filas del project:
+ * - Sin padre GitHub → generalTasks (raíces)
+ * - Con parentIssueContentId → items (pueden anidar N niveles entre sí)
+ */
 export function rebuildProjectHierarchyFromGitHub(
   doc: ProjectDocument,
 ): ProjectDocument {
@@ -284,33 +288,28 @@ export function rebuildProjectHierarchyFromGitHub(
   }
 
   const subtasks: ProjectItem[] = [];
+  const roots: ProjectItem[] = [];
 
   for (const item of next.items) {
     if (item.parentIssueContentId) {
-      const parentContentId = item.parentIssueContentId;
-      const parentGt =
-        generalByContent.get(parentContentId) ||
-        next.generalTasks.find((g) => g.githubContentNodeId === parentContentId);
-      item.parentTaskId = parentGt?.id ?? item.parentTaskId;
-      if (parentGt && !item.fieldValues.Task) {
-        item.fieldValues.Task = [parentGt.id];
-      }
       subtasks.push(item);
       continue;
     }
+    roots.push(item);
+  }
 
+  for (const item of roots) {
     const bodyText =
       typeof item.fieldValues._body === "string" ? item.fieldValues._body : undefined;
     const rakkauId = parseRakkauTaskIdFromBody(bodyText);
 
-    // Ya mapeado a esta fila exacta del project
     let gt = next.generalTasks.find(
       (g) =>
         g.githubContentNodeId === item.contentNodeId ||
         g.githubProjectItemNodeId === item.nodeId,
     );
 
-    // Otro draft/├¡tem distinto con el mismo id de negocio ÔåÆ mostrarlo como subtarea (no perder fila)
+    // Otro draft/ítem distinto con el mismo id de negocio → subtarea (no perder fila)
     if (!gt && rakkauId) {
       const sameBusinessId = next.generalTasks.find((g) => g.id === rakkauId);
       if (
@@ -319,6 +318,9 @@ export function rebuildProjectHierarchyFromGitHub(
       ) {
         item.parentTaskId = rakkauId;
         if (!item.fieldValues.Task) item.fieldValues.Task = [rakkauId];
+        if (!item.parentIssueContentId && sameBusinessId.githubContentNodeId) {
+          item.parentIssueContentId = sameBusinessId.githubContentNodeId;
+        }
         subtasks.push(item);
         continue;
       }
@@ -327,7 +329,8 @@ export function rebuildProjectHierarchyFromGitHub(
       }
     }
 
-    const taskId = rakkauId || item.title;
+    const preferredId = rakkauId || item.title;
+    const taskId = uniqueGeneralTaskId(next, preferredId, item);
 
     if (!gt) {
       gt = next.generalTasks.find((g) => g.id === taskId && !g.githubContentNodeId);
@@ -342,25 +345,115 @@ export function rebuildProjectHierarchyFromGitHub(
     ) {
       item.parentTaskId = gt.id;
       if (!item.fieldValues.Task) item.fieldValues.Task = [gt.id];
+      if (!item.parentIssueContentId) {
+        item.parentIssueContentId = gt.githubContentNodeId;
+      }
       subtasks.push(item);
       continue;
     }
 
-    gt.id = rakkauId || gt.id || taskId;
+    gt.id = rakkauId || taskId || gt.id;
     gt.title = item.title || gt.title;
     gt.githubProjectItemNodeId = item.nodeId;
     gt.githubContentNodeId = item.contentNodeId ?? gt.githubContentNodeId;
     gt.issueNumber = item.number ?? gt.issueNumber;
     gt.url = item.url ?? gt.url;
+    gt.subIssuesSummary = item.subIssuesSummary ?? gt.subIssuesSummary ?? null;
+    gt.labels = item.labels?.length ? item.labels : gt.labels;
+    gt.issueType = item.issueType ?? gt.issueType ?? null;
     Object.assign(gt, applyItemFieldValuesToGeneralTask(gt, item.fieldValues));
     if (gt.githubContentNodeId) generalByContent.set(gt.githubContentNodeId, gt);
   }
 
+  // parentTaskId = raíz de negocio (filtro); el árbol UI usa parentIssueContentId.
+  for (const item of subtasks) {
+    const rootId = resolveRootGeneralTaskId(
+      item.parentIssueContentId,
+      generalByContent,
+      flatByContent,
+    );
+    if (rootId) {
+      item.parentTaskId = rootId;
+      if (!item.fieldValues.Task) item.fieldValues.Task = [rootId];
+    } else {
+      const parentGt =
+        (item.parentIssueContentId &&
+          generalByContent.get(item.parentIssueContentId)) ||
+        null;
+      item.parentTaskId = parentGt?.id ?? item.parentTaskId;
+      if (parentGt && !item.fieldValues.Task) {
+        item.fieldValues.Task = [parentGt.id];
+      }
+    }
+  }
+
   next.items = subtasks;
+  // Quitar generalTasks huérfanos que quedaron de un pull previo y ahora son mid-level.
+  const midLevelContent = new Set(
+    subtasks
+      .map((i) => i.contentNodeId)
+      .filter((id): id is string => Boolean(id)),
+  );
+  next.generalTasks = next.generalTasks.filter((gt) => {
+    if (!gt.githubContentNodeId) return true;
+    return !midLevelContent.has(gt.githubContentNodeId);
+  });
+
   return ensureGeneralTasksForSubtasks(next, flatByContent);
 }
 
-/** Garantiza GeneralTask para cada subtarea con parentIssueContentId. */
+function isSyntheticParentTaskId(id: string): boolean {
+  return /^parent-/i.test(id.trim());
+}
+
+/**
+ * Evita ids duplicados cuando dos issues raíz comparten título
+ * (sin rakkau-task-id en el body).
+ */
+function uniqueGeneralTaskId(
+  doc: ProjectDocument,
+  preferred: string,
+  item: ProjectItem,
+): string {
+  const clash = (id: string) =>
+    doc.generalTasks.some(
+      (g) =>
+        g.id === id &&
+        Boolean(g.githubContentNodeId) &&
+        g.githubContentNodeId !== item.contentNodeId,
+    );
+  if (!clash(preferred)) return preferred;
+  if (item.number != null) {
+    const withNum = `${preferred} #${item.number}`;
+    if (!clash(withNum)) return withNum;
+  }
+  const suffix =
+    item.contentNodeId?.slice(-8) || item.nodeId.slice(-8) || "dup";
+  return `${preferred} · ${suffix}`;
+}
+
+/** Camina parentIssueContentId hasta una GeneralTask raíz. */
+function resolveRootGeneralTaskId(
+  parentContentId: string | null | undefined,
+  generalByContent: Map<string, GeneralTask>,
+  flatByContent: Map<string, ProjectItem>,
+): string | null {
+  let current = parentContentId ?? null;
+  const seen = new Set<string>();
+  while (current && !seen.has(current)) {
+    seen.add(current);
+    const gt = generalByContent.get(current);
+    if (gt) return gt.id;
+    const row = flatByContent.get(current);
+    current = row?.parentIssueContentId ?? null;
+  }
+  return null;
+}
+
+/**
+ * Garantiza GeneralTask solo cuando el padre GitHub no está en el board
+ * (ni como raíz ni como ítem intermedio).
+ */
 export function ensureGeneralTasksForSubtasks(
   doc: ProjectDocument,
   flatByContent?: Map<string, ProjectItem>,
@@ -371,9 +464,25 @@ export function ensureGeneralTasksForSubtasks(
     if (gt.githubContentNodeId) byContent.set(gt.githubContentNodeId, gt);
   }
 
+  const itemContents = new Set<string>();
+  for (const item of next.items) {
+    if (item.contentNodeId) itemContents.add(item.contentNodeId);
+  }
+  if (flatByContent) {
+    for (const id of flatByContent.keys()) itemContents.add(id);
+  }
+
   for (const item of next.items) {
     const parentContentId = item.parentIssueContentId;
-    if (!parentContentId || byContent.has(parentContentId)) continue;
+    if (!parentContentId) continue;
+    if (byContent.has(parentContentId)) {
+      if (!item.parentTaskId) {
+        item.parentTaskId = byContent.get(parentContentId)!.id;
+      }
+      continue;
+    }
+    // Padre mid-level presente en el board → no sintetizar GeneralTask.
+    if (itemContents.has(parentContentId)) continue;
 
     const parentRow = flatByContent?.get(parentContentId);
     const bodyText =
@@ -381,23 +490,46 @@ export function ensureGeneralTasksForSubtasks(
         ? parentRow.fieldValues._body
         : undefined;
     const fromBody = parseRakkauTaskIdFromBody(bodyText);
-    const fallbackId =
+    // Preferir título/número reales del Issue.parent (Traer), no parent-XXXX.
+    const titleFromChild =
+      item.parentIssueTitle?.trim() ||
+      parentRow?.title ||
+      null;
+    const numberFromChild =
+      item.parentIssueNumber ?? parentRow?.number ?? null;
+    const preferredId =
+      fromBody ||
+      titleFromChild ||
       item.parentTaskId?.trim() ||
       firstTaskIdFromItem(item) ||
+      (numberFromChild != null ? `#${numberFromChild}` : null) ||
       `parent-${parentContentId.slice(-8)}`;
-    const id = fromBody || fallbackId;
+    const id = uniqueGeneralTaskId(next, preferredId, {
+      ...item,
+      contentNodeId: parentContentId,
+      number: numberFromChild,
+      title: titleFromChild ?? preferredId,
+    });
 
-    let gt = defaultGeneralTaskFields(next, id, parentRow?.title ?? id);
+    let gt = defaultGeneralTaskFields(
+      next,
+      id,
+      titleFromChild ?? preferredId,
+    );
     gt.githubContentNodeId = parentContentId;
+    gt.issueNumber = numberFromChild;
     if (parentRow) {
       gt.githubProjectItemNodeId = parentRow.nodeId;
-      gt.issueNumber = parentRow.number;
+      gt.issueNumber = parentRow.number ?? gt.issueNumber;
       gt.url = parentRow.url;
+      gt.subIssuesSummary = parentRow.subIssuesSummary ?? null;
       gt = applyItemFieldValuesToGeneralTask(gt, parentRow.fieldValues);
     }
     next.generalTasks.push(gt);
     byContent.set(parentContentId, gt);
-    if (!item.parentTaskId) item.parentTaskId = gt.id;
+    if (!item.parentTaskId || isSyntheticParentTaskId(item.parentTaskId)) {
+      item.parentTaskId = gt.id;
+    }
     if (!item.fieldValues.Task) item.fieldValues.Task = [gt.id];
   }
 

@@ -1,0 +1,1442 @@
+{
+  "projectId": "PVT_kwDOBeim084BgLyL",
+  "number": 43,
+  "title": "Banco General - CIAM",
+  "owner": "rakkau",
+  "url": "https://github.com/orgs/rakkau/projects/43",
+  "pulledAt": "2026-11-03T15:17:35.892Z",
+  "dirty": false,
+  "fieldsSchemaVersion": 3,
+  "tasksSchemaVersion": 1,
+  "fields": [
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTYU",
+      "name": "Title",
+      "dataType": "TITLE",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTYY",
+      "name": "Assignees",
+      "dataType": "ASSIGNEES",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTSSF_lADOBeim084BgLyLzhaZTYc",
+      "name": "Status",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "f75ad846",
+          "name": "Backlog",
+          "color": "GREEN",
+          "description": "This item hasn't been started"
+        },
+        {
+          "id": "61e4505c",
+          "name": "Ready",
+          "color": "BLUE",
+          "description": "This is ready to be picked up"
+        },
+        {
+          "id": "47fc9ee4",
+          "name": "In progress",
+          "color": "YELLOW",
+          "description": "This is actively being worked on"
+        },
+        {
+          "id": "df73e18b",
+          "name": "In review",
+          "color": "PURPLE",
+          "description": "This item is in review"
+        },
+        {
+          "id": "98236657",
+          "name": "Done",
+          "color": "ORANGE",
+          "description": "This has been completed"
+        }
+      ],
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTYg",
+      "name": "Labels",
+      "dataType": "LABELS",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTYk",
+      "name": "Linked pull requests",
+      "dataType": "LINKED_PULL_REQUESTS",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTYo",
+      "name": "Milestone",
+      "dataType": "MILESTONE",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTYs",
+      "name": "Repository",
+      "dataType": "REPOSITORY",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTY0",
+      "name": "Reviewers",
+      "dataType": "REVIEWERS",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTY4",
+      "name": "Parent issue",
+      "dataType": "PARENT_ISSUE",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTY8",
+      "name": "Sub-issues progress",
+      "dataType": "SUB_ISSUES_PROGRESS",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTZA",
+      "name": "Created",
+      "dataType": "CREATED",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTZE",
+      "name": "Updated",
+      "dataType": "UPDATED",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTZI",
+      "name": "Closed",
+      "dataType": "CLOSED",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTSSF_lADOBeim084BgLyLzhaZTdo",
+      "name": "Priority",
+      "dataType": "SINGLE_SELECT",
+      "options": [],
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTSSF_lADOBeim084BgLyLzhaZTds",
+      "name": "Size",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "6c6483d2",
+          "name": "XS",
+          "color": "GREEN",
+          "description": ""
+        },
+        {
+          "id": "f784b110",
+          "name": "S",
+          "color": "PURPLE",
+          "description": ""
+        },
+        {
+          "id": "7515a9f1",
+          "name": "M",
+          "color": "RED",
+          "description": ""
+        },
+        {
+          "id": "817d0097",
+          "name": "L",
+          "color": "YELLOW",
+          "description": ""
+        },
+        {
+          "id": "db339eb2",
+          "name": "XL",
+          "color": "PINK",
+          "description": ""
+        }
+      ],
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTdw",
+      "name": "Estimate",
+      "dataType": "NUMBER",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTd0",
+      "name": "Start date",
+      "dataType": "DATE",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTF_lADOBeim084BgLyLzhaZTd4",
+      "name": "Target date",
+      "dataType": "DATE",
+      "pendingCreate": false,
+      "origin": "github"
+    }
+  ],
+  "generalTasks": [
+    {
+      "id": "PoC - migracion semilla e identidad",
+      "title": "PoC - migracion semilla e identidad",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "MartinJotimliansky",
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg2TF6Q",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABMgavaA",
+      "issueNumber": 4,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/4",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Documentacion - generar documento CI-CD y enviar al cliente",
+      "title": "Documentacion - generar documento CI-CD y enviar al cliente",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev",
+        "MartinJotimliansky"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg2laNs",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABMztyng",
+      "issueNumber": 5,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/5",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Relevamiento - Utilizacion de  MTLs - enviar correo",
+      "title": "Relevamiento - Utilizacion de  MTLs - enviar correo",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg396qs",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABOMjpKA",
+      "issueNumber": 11,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/11",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "POC experiencias front en mobile",
+      "title": "POC experiencias front en mobile",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev",
+        "MartinJotimliansky"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg2lfpQ",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABMzzTgA",
+      "issueNumber": 6,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/6",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Federación contra EntraID",
+      "title": "Federación contra EntraID",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg2TF6I",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABLSA2OA",
+      "issueNumber": 3,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/3",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Investigacion Secretos en Transmit",
+      "title": "Investigacion Secretos en Transmit",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg2lp9E",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABMz-yCQ",
+      "issueNumber": 7,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/7",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Sesión generada al validar TOTP usando el usuario principal",
+      "title": "Sesión generada al validar TOTP usando el usuario principal",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev",
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg2ltS4",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABM0CPDg",
+      "issueNumber": 8,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/8",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "POC - experiencia validacion TOTP en mobile sin intervencion del usuario",
+      "title": "POC - experiencia validacion TOTP en mobile sin intervencion del usuario",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev",
+        "AlanRichmond",
+        "MartinJotimliansky",
+        "ulisesMonte"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg3AdMY",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABNPEc1A",
+      "issueNumber": 9,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/9",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "POC login mobile con Ionic + Capacitor usando SDK",
+      "title": "POC login mobile con Ionic + Capacitor usando SDK",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "AlanRichmond",
+        "ulisesMonte"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg3XKSE",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABNlkcyA",
+      "issueNumber": 10,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/10",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Relevamiento - Gestion de secretos - enviar correo",
+      "title": "Relevamiento - Gestion de secretos - enviar correo",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg399Dw",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABOMmYtw",
+      "issueNumber": 12,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/12",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Pruebas de carga",
+      "title": "Pruebas de carga",
+      "Status": "In progress",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "MartinJotimliansky"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg4Guqw",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABOVdyBQ",
+      "issueNumber": 13,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/13",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Desarrollo - Journey de Migración de TOTP y aprovisionamiento de identidad",
+      "title": "Desarrollo - Journey de Migración de TOTP y aprovisionamiento de identidad",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg4HEfM",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABOV1o8Q",
+      "issueNumber": 14,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/14",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Desarrollo - Journey de Validación de TOTP",
+      "title": "Desarrollo - Journey de Validación de TOTP",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg4HGOI",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABOV3wig",
+      "issueNumber": 15,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/15",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Desarrollo - Journey de Reemplazo de TOTP",
+      "title": "Desarrollo - Journey de Reemplazo de TOTP",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg4HGbU",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABOV4E0g",
+      "issueNumber": 16,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/16",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Envio de logs-datos de forma asincronica al finalizar journeys",
+      "title": "Envio de logs-datos de forma asincronica al finalizar journeys",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "MartinJotimliansky",
+        "nbravo-rakkau"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg4JrZY",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABOYVxjw",
+      "issueNumber": 17,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/17",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Configurar facephi como autenticator custom",
+      "title": "Configurar facephi como autenticator custom",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg4Jxgw",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABOYcFGw",
+      "issueNumber": 18,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/18",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Evaluar Custom Authentication para la validación de TOTP delegado",
+      "title": "Evaluar Custom Authentication para la validación de TOTP delegado",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg4voag",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABO_dhqA",
+      "issueNumber": 19,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/19",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Gestion de secretos - AWS Secret Manager",
+      "title": "Gestion de secretos - AWS Secret Manager",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg5Ix8w",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABPYo_Kg",
+      "issueNumber": 20,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/20",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Bloqueo de usuario por 24hs",
+      "title": "Bloqueo de usuario por 24hs",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "MartinJotimliansky",
+        "ulisesMonte"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg5IzE8",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABPYqgzQ",
+      "issueNumber": 21,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/21",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Revisar - consultar costo por logs custom",
+      "title": "Revisar - consultar costo por logs custom",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg6AfBg",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABQUFb8w",
+      "issueNumber": 22,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/22",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Poc - Transaction Signing with TOTP",
+      "title": "Poc - Transaction Signing with TOTP",
+      "Status": "Backlog",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg6BqhM",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABQVVFiA",
+      "issueNumber": 23,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/23",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "SDK Transmit - Ionic",
+      "title": "SDK Transmit - Ionic",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg6BtsU",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABQVX7NQ",
+      "issueNumber": 24,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/24",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Alertas de seguridad por fuera del motor de fraude",
+      "title": "Alertas de seguridad por fuera del motor de fraude",
+      "Status": "Backlog",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg6ZQc0",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABQttLXw",
+      "issueNumber": 25,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/25",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "CI-CD Apoyo",
+      "title": "CI-CD Apoyo",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev",
+        "MartinJotimliansky"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg6jUAI",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABQ3r1Sw",
+      "issueNumber": 26,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/26",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Analisis releases post MVP - Passkey",
+      "title": "Analisis releases post MVP - Passkey",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "nbravo-rakkau"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg656yE",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABRPuc0Q",
+      "issueNumber": 27,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/27",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "POC revisando e implementando el uso de Passkeys en Android utilizando Transmit.",
+      "title": "POC revisando e implementando el uso de Passkeys en Android utilizando Transmit.",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "AlanRichmond"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg7nBsY",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABR9mUnA",
+      "issueNumber": 28,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/28",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Implementacion de par y pkce con journeys de tipo sdk",
+      "title": "Implementacion de par y pkce con journeys de tipo sdk",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "AlanRichmond",
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg7_8m8",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABSaXcKg",
+      "issueNumber": 29,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/29",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Relevamiento flujos backoffice",
+      "title": "Relevamiento flujos backoffice",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg8Jx38",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABSkisyQ",
+      "issueNumber": 30,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/30",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Desarrollo journeys backend",
+      "title": "Desarrollo journeys backend",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "MartinJotimliansky",
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg80rXw",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABTQy55Q",
+      "issueNumber": 31,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/31",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Relevamiento - Modelo de seguridad",
+      "title": "Relevamiento - Modelo de seguridad",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg807Y0",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABTRC4QA",
+      "issueNumber": 32,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/32",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Documento - Mejores practicas o ejemplos de governanza de la herramienta CIAM Transmit security",
+      "title": "Documento - Mejores practicas o ejemplos de governanza de la herramienta CIAM Transmit security",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev",
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg9chRc",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABT6emWw",
+      "issueNumber": 33,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/33",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Desarrollo - Wrapper",
+      "title": "Desarrollo - Wrapper",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "IvanTarjan",
+        "ulisesMonte",
+        "nbravo-rakkau"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg9ffnU",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABT9XQbw",
+      "issueNumber": 35,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/35",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "SDK Biocatch",
+      "title": "SDK Biocatch",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg9fhsU",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABT9ZNUw",
+      "issueNumber": 36,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/36",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Journeys - Pendientes del cliente",
+      "title": "Journeys - Pendientes del cliente",
+      "Status": "Backlog",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "nbravo-rakkau"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg9gcRc",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABT-TNkw",
+      "issueNumber": 37,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/37",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Crear documentación para la creacion y rotacion de certificado MTLS saliente con capturas",
+      "title": "Crear documentación para la creacion y rotacion de certificado MTLS saliente con capturas",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg9gxIU",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABT-pVWA",
+      "issueNumber": 38,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/38",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Journeys - Desarrollo",
+      "title": "Journeys - Desarrollo",
+      "Status": "Backlog",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "AlanRichmond",
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg9tQq8",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABULjDkw",
+      "issueNumber": 39,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/39",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Permitir testear los journeys desde el preview de Mosaic sin params del front",
+      "title": "Permitir testear los journeys desde el preview de Mosaic sin params del front",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg98M_o",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABUakxmw",
+      "issueNumber": 44,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/44",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Integracion con Splunk",
+      "title": "Integracion con Splunk",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "MartinJotimliansky"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg9_6R0",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABUelNvw",
+      "issueNumber": 45,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/45",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Relevamiento Device Attestation",
+      "title": "Relevamiento Device Attestation",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzg-3uSs",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABVWlEwQ",
+      "issueNumber": 47,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/47",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Presentación de slides sobre el documento de gobernanza",
+      "title": "Presentación de slides sobre el documento de gobernanza",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzhAvqSE",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABXLglKQ",
+      "issueNumber": 51,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/51",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Autenticacion fuera de banda",
+      "title": "Autenticacion fuera de banda",
+      "Status": "Backlog",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzhAz1sg",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABXP8JcQ",
+      "issueNumber": 52,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/52",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Documento de diseño",
+      "title": "Documento de diseño",
+      "Status": "Backlog",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "MartinJotimliansky",
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzhB8cVY",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABYYh4Jw",
+      "issueNumber": 53,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/53",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Documento paso a produccion",
+      "title": "Documento paso a produccion",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev",
+        "MartinJotimliansky"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzhB8mqo",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABYYrteg",
+      "issueNumber": 54,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/54",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "[Migración TOTP] - Entregable Parcial",
+      "title": "[Migración TOTP] - Entregable Parcial",
+      "Status": "Done",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzhCdhjw",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABY39ISg",
+      "issueNumber": 55,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/55",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "[Remplazo TOTP] - Entregable Parcial",
+      "title": "[Remplazo TOTP] - Entregable Parcial",
+      "Status": "Backlog",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "Cocoloco2005Dev",
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzhDoCNw",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABaCPEqQ",
+      "issueNumber": 56,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/56",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "Validar API getScore de BioCatch e integrarla en el journey de Reemplazo TOTP",
+      "title": "Validar API getScore de BioCatch e integrarla en el journey de Reemplazo TOTP",
+      "Status": "Backlog",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "TizianoLuca04"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzhDovPs",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABaC5WIA",
+      "issueNumber": 57,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/57",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "SDK Facephi",
+      "title": "SDK Facephi",
+      "Status": "Backlog",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "EstadoOperativo": "a tiempo",
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lADOBeim084BgLyLzhEhtE4",
+      "githubContentNodeId": "I_kwDOTWNGUc8AAAABa8PcHg",
+      "issueNumber": 58,
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/58",
+      "githubFieldValues": {}
+    }
+  ],
+  "items": [
+    {
+      "nodeId": "PVTI_lADOBeim084BgLyLzg9fbx8",
+      "contentNodeId": "I_kwDOTWNGUc8AAAABT9TdcA",
+      "number": 34,
+      "title": "Investigacion - Typed List para evaluacion de politicas",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/34",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "Cocoloco2005Dev"
+        ],
+        "Title": "Investigacion - Typed List para evaluacion de politicas",
+        "Status": "Done",
+        "_body": "Se debe validar la factibilidad de implementar una typed list para validación de políticas de negocio en el contexto de la ejecución deun journey",
+        "Task": [
+          "Relevamiento - Modelo de seguridad"
+        ]
+      },
+      "parentTaskId": "Relevamiento - Modelo de seguridad",
+      "parentIssueContentId": "I_kwDOTWNGUc8AAAABTRC4QA",
+      "assignees": [
+        "Cocoloco2005Dev"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BgLyLzg9tmok",
+      "contentNodeId": "I_kwDOTWNGUc8AAAABUL6VOQ",
+      "number": 40,
+      "title": "Caso donde el journey no requiera validación.",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/40",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "Cocoloco2005Dev"
+        ],
+        "Title": "Caso donde el journey no requiera validación.",
+        "Status": "Done",
+        "_body": "Sumar al journey de validación el caso en el que no se requiere validación, de modo que el journey finalice directamente sin solicitar el TOTP o biometria.",
+        "Task": [
+          "Journeys - Desarrollo"
+        ]
+      },
+      "parentTaskId": "Journeys - Desarrollo",
+      "parentIssueContentId": "I_kwDOTWNGUc8AAAABULjDkw",
+      "assignees": [
+        "Cocoloco2005Dev"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BgLyLzg9toHw",
+      "contentNodeId": "I_kwDOTWNGUc8AAAABUL8DEA",
+      "number": 41,
+      "title": "Check de TOTP enrolado al inicio del journey",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/41",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "ulisesMonte",
+          "TizianoLuca04"
+        ],
+        "Title": "Check de TOTP enrolado al inicio del journey",
+        "Status": "Done",
+        "_body": "## Descripción\n\nAgregar un check al inicio del journey de validación para consultar si el usuario tiene TOTP enrolado, y que el resultado se guarde en una variable que se usaria mas adelante en caso de que el usuario tenga que ir por una validacion con TOTP, esto deribaria al inner journey para enrolar TOTP.",
+        "Task": [
+          "Journeys - Desarrollo"
+        ]
+      },
+      "parentTaskId": "Journeys - Desarrollo",
+      "parentIssueContentId": "I_kwDOTWNGUc8AAAABULjDkw",
+      "assignees": [
+        "ulisesMonte",
+        "TizianoLuca04"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BgLyLzg9tozA",
+      "contentNodeId": "I_kwDOTWNGUc8AAAABUL81Ug",
+      "number": 42,
+      "title": "Inner journey de enrolamiento TOTP",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/42",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "ulisesMonte"
+        ],
+        "Title": "Inner journey de enrolamiento TOTP",
+        "Status": "Done",
+        "_body": "## Descripción\n\nDesarrollar un inner journey que permita enrolar el TOTP cuando el usuario no lo tiene enrolado, para que pueda completar la validación sin salir del flujo.\n\n## Criterios de aceptación\n\n- [ ] El inner journey se dispara cuando el usuario no tiene TOTP enrolado.\n- [ ] El usuario puede completar el enrolamiento del TOTP dentro del inner journey.\n- [ ] Una vez enrolado, el journey de validación puede continuar.",
+        "Task": [
+          "Journeys - Desarrollo"
+        ]
+      },
+      "parentTaskId": "Journeys - Desarrollo",
+      "parentIssueContentId": "I_kwDOTWNGUc8AAAABULjDkw",
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BgLyLzg9vazs",
+      "contentNodeId": "I_kwDOTWNGUc8AAAABUNt9mQ",
+      "number": 43,
+      "title": "Pruebas con conectores de authscript/typescript",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/43",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "Cocoloco2005Dev"
+        ],
+        "Title": "Pruebas con conectores de authscript/typescript",
+        "Status": "Done",
+        "_body": "Pruebas para verificar el alcanace que puede tener transmit con la matriz de MODELO_DE_SEGURIDAD que dio banco general  con estos datos:\n-journey basico de validaicon de pass\n-journey basico de validacion de pass + iteracion de un typed list de 100 entradas\n-journey basico de validacion de pass + iteracion de un typed list de 200 entradas\n-journey basico de validacion de pass + iteracion de un typed list de 500 entradas\n-journey basico de validacion de pass + consumo de una api (simula devolver la informacion para tomar la desicion)",
+        "Task": [
+          "Relevamiento - Modelo de seguridad"
+        ]
+      },
+      "parentTaskId": "Relevamiento - Modelo de seguridad",
+      "parentIssueContentId": "I_kwDOTWNGUc8AAAABTRC4QA",
+      "assignees": [
+        "Cocoloco2005Dev"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BgLyLzg-KXV0",
+      "contentNodeId": "I_kwDOTWNGUc8AAAABUod3QA",
+      "number": 46,
+      "title": "Demostracion cambio en la Typed List",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/46",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "Demostracion cambio en la Typed List",
+        "Status": "Done",
+        "_body": "Mandar a banco una demostracion de una alta, baja y modificacion de una entrada de la typed list que aloja la matriz de seguridad",
+        "Task": [
+          "Relevamiento - Modelo de seguridad"
+        ]
+      },
+      "parentTaskId": "Relevamiento - Modelo de seguridad",
+      "parentIssueContentId": "I_kwDOTWNGUc8AAAABTRC4QA",
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lADOBeim084BgLyLzhAuwgE",
+      "contentNodeId": "I_kwDOTWNGUc8AAAABXKqOLw",
+      "number": 50,
+      "title": "[Migración TOTP] Conectar el journey a las APIs que mandó el banco",
+      "state": "CLOSED",
+      "url": "https://github.com/rakkau/banco-general-ciam/issues/50",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "ulisesMonte",
+          "TizianoLuca04"
+        ],
+        "Title": "[Migración TOTP] Conectar el journey a las APIs que mandó el banco",
+        "Status": "Done",
+        "_body": "# [Migración TOTP] Conectar el journey a las APIs que mandó el banco\n\n**Entrega según plan:** 16/10\n\n## Resumen\n\nHasta ahora, el journey de Migración simulaba las respuestas del banco con un mock. El banco ya nos mandó la documentación (swagger) de las APIs reales, así que podemos empezar a reemplazar esa simulación.\n\nLas APIs son **temporales**: el banco las va a dar de baja cuando termine la migración de clientes.\n\n## Qué hace hoy el journey\n\n1. Valida la sesión del cliente y su token de Entrust **en un solo paso** (simulado).\n2. Busca los datos del cliente (simulado).\n3. Crea al usuario en Transmit.\n4. Le registra el nuevo TOTP y el dispositivo.\n\n## Qué cambia\n\n**1. Validar sesión y token en dos pasos separados.**\nEl banco nos dio una API para validar la sesión y otra para validar el token de Entrust. El paso simulado se reemplaza por dos llamados reales: primero la sesión y después el token.\n\n**2. Buscar los datos del cliente con la API real.**\nLa API nos devuelve el nombre del cliente y su cédula \"hasheada\" (codificada) para FacePhi y BioCatch.\n\n**3. Corregir de dónde sale el número de cliente (ENTE_MIS) y el email.**\nHoy el journey los toma de la respuesta simulada, pero la API real no los devuelve. Hay que tomarlos de lo que manda la app o la web al iniciar el journey.\n\n**4. Guardar en el usuario los datos nuevos.**\nGuardamos el nombre y las dos cédulas codificadas. Las cédulas las van a usar después los journeys de Validación y Reemplazo.\n\n**5. Mostrar mensajes de error claros.**\nHoy, si falla la sesión o falla el token, el cliente ve el mismo mensaje. Hay que separar los casos y agregar uno para cuando el servicio del banco no responde.\n\n**6. Pedirle más datos a la app y a la web.**\nLas APIs del banco piden datos del cliente que hoy el journey no recibe: login, alias, número de banca virtual, tipo de cliente, etc. Hay que acordar con los canales que los manden.\n\n**7. Actualizar los datos de prueba.**\nEl paso que completa datos de prueba (`bco_sub_params_defaults`) **se mantiene**. Lo actualizamos con los datos que piden las APIs nuevas, tomando como base el ejemplo del swagger, para poder seguir probando sin la app.\n\n## Qué todavía no podemos cerrar\n\n| Tema | Por qué |\n|---|---|\n| Guardar LOGIN y ENTE_BV del cliente | La API de datos del cliente no los devuelve, aunque su descripción dice que sí |\n| Saber cuándo una respuesta es OK o error | El swagger no dice qué códigos devuelve en cada caso |\n| Conectarnos de forma segura a la API | El swagger no dice cómo autenticarnos (certificado, clave, etc.) |\n\n## Qué necesitamos del banco\n\n1. ¿La API de datos del cliente va a devolver ENTE_MIS, ENTE_BV y LOGIN? Si no, ¿de dónde los tomamos?\n2. Los códigos de respuesta de cada API: cuáles son OK y cuáles son error.\n3. Cómo nos autenticamos contra las APIs y si la URL del swagger es la definitiva.\n4. Qué valor va en los campos \"técnicos\" del pedido (terminal, oficina, usuario, aplicación, etc.).\n5. Un cliente de prueba con sesión y token válidos en su ambiente.\n\n## Está terminado cuando\n\n- [x] El journey ya no usa respuestas simuladas para la sesión, el token ni los datos del cliente.\n- [x] El cliente ve mensajes distintos si falla la sesión, el token o el servicio.\n- [x] El usuario queda creado en Transmit con su número de cliente y sus cédulas codificadas.\n- [x] Si algo falla después de crear el usuario, el usuario se borra (como hoy).\n- [x] Se puede probar sin la app usando los datos de prueba actualizados.\n- [x] Probado contra las APIs reales del banco.\n\n<details>\n<summary><b>Detalle técnico (para quien implementa)</b></summary>\n\n### APIs del swagger\n\n| API | Para qué |\n|---|---|\n| `POST /migration/validsession` | Validar sesión COBIS |\n| `POST /migration/validtoken` | Validar token Entrust |\n| `POST /migration/getclientdata` | Devuelve `cedulaHashFacePhi`, `cedulaHashBioCatch`, `fullName` |\n\n### Pasos del journey a reemplazar\n\n| Paso actual | Hoy usa | Pasa a usar |\n|---|---|---|\n| `Cobis+Entrust unificado` | `bg_pipedream_mock` → `cobis/entrust/validate` | `validsession` + `validtoken` |\n| `Cobis: datos del usuario (mock)` | `bg_pipedream_mock` → `cobis/user-data` | `getclientdata` |\n\nEl provider `bg_pipedream_mock` no se borra porque lo siguen usando Validación y Reemplazo.\n\n### Tareas técnicas\n- [ ] Variable de entorno `base_url_bg_migration` y un provider por endpoint.\n- [ ] Guardar los hashes en `custom_data` y `fullName` en `name`.\n- [ ] Agregar una rama de error a `getclientdata` (hoy el mock no la tiene).\n- [ ] Agregar mensaje al reject de `user already exists`.\n\n### Ojo: `getclientdata` usa otros nombres en el header\n\n| `validsession` / `validtoken` | `getclientdata` |\n|---|---|\n| `bgSession` | `sessionBG` |\n| `customerNumber` | `clientNumber` |\n| `customerUserNumber` | `userClientNumber` |\n| `customerType` | `clientType` |\n\n### Cambios en `bco_sub_params_defaults`\nSe suman los campos del header, el `profile` y el token. Los valores salen del ejemplo del swagger:\n\n```js\n\"sesionBg\": req.sesionBg || \"4F83E52F64533494D4F01EC3615C75C019D06AC7\",\n\"ente_mis\": req.ente_mis || \"41111119\",\n\"otp_entrust\": req.otp_entrust || \"60737-39481\",\n\"clientIp\": req.clientIp || \"10.90.5.106\",\n\"canal\": req.canal || \"5\",\n\"terminal\": req.terminal || \"ATM001\",\n\"user\": req.user || \"juan.perez\",\n\"application\": req.application || \"APP_AUTH\",\n\"requestOrigin\": req.requestOrigin || \"BM\",\n\"referenceNumber\": req.referenceNumber || \"REF-2026-001\",\n\"uniqueNumber\": req.uniqueNumber || 0,\n\"office\": req.office || 0,\n\"node\": req.node || 0,\n\"userRole\": req.userRole || 0,\n\"profile\": req.profile || {\n  \"login\": \"41111119\", \"customerNumber\": 41111119, \"virtualBankingNumber\": 31111205,\n  \"alias\": \"joel527p3\", \"profileNumber\": 3, \"customerUserNumber\": 41111119,\n  \"associatedView\": 0, \"customerType\": { \"code\": \"P\", \"description\": \"PERSONAL\" }\n},\n\"token_response\": req.token_response || \"null\",\n\"token_type_code\": req.token_type_code || \"309273\",\n\"token_type_description\": req.token_type_description || \"string\"\n```\n\n- [ ] Sumar estas variables al paso `Completa params vacios (solo test)` del journey.\n- [ ] El default de `canal` queda en `\"5\"` (hoy el journey pone `\"5\"` y el procedure `\"1\"`).\n\n\n</details>\n",
+        "Task": [
+          "Journeys - Desarrollo"
+        ]
+      },
+      "parentTaskId": "Journeys - Desarrollo",
+      "parentIssueContentId": "I_kwDOTWNGUc8AAAABULjDkw",
+      "assignees": [
+        "ulisesMonte",
+        "TizianoLuca04"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    }
+  ],
+  "links": {
+    "blockedBy": {},
+    "blocks": {}
+  },
+  "sprints": [],
+  "currentQuarter": {
+    "quarter": "Q4",
+    "year": 2026
+  },
+  "people": [
+    {
+      "login": "AlanRichmond",
+      "name": "Alan Richmond",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/85528603?u=bc445b08d7ad9f00ea668f775127912f588859cb&v=4"
+    },
+    {
+      "login": "Cocoloco2005Dev",
+      "name": "Mateo Soto",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/32347344?u=3563da40f0cece02255d2742a6f4d3abf5e39a6c&v=4"
+    },
+    {
+      "login": "IvanTarjan",
+      "name": "Ivan",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/83725856?u=6808c9228a60ca558cad0fa7fa1c8945b6ed14bc&v=4"
+    },
+    {
+      "login": "MartinJotimliansky",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/123986044?v=4"
+    },
+    {
+      "login": "nbravo-rakkau",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/191251114?v=4"
+    },
+    {
+      "login": "rakkau"
+    },
+    {
+      "login": "TizianoLuca04",
+      "name": "Tluca04",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288057859?u=a60c34fd6b5fe0a2896ef88f0bc49d3bf61b04b4&v=4"
+    },
+    {
+      "login": "ulisesMonte",
+      "name": "Ulises Monte",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/133891462?u=5804334b795552892413d9b6f096904dcf885b19&v=4"
+    }
+  ],
+  "availableRepositories": [
+    "rakkau/banco-general-ciam"
+  ],
+  "issueRepository": "rakkau/banco-general-ciam"
+}

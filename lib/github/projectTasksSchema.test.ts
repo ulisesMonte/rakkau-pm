@@ -33,8 +33,31 @@ describe("projectTasksSchema", () => {
           title: "TEST-1111",
           state: "OPEN",
           subIssues: { nodes: [{ id: "I_child" }] },
+          subIssuesSummary: { total: 1, completed: 0, percentCompleted: 0 },
+          labels: {
+            nodes: [{ name: "good first issue", color: "7057ff" }],
+          },
+          issueType: {
+            id: "IT_1",
+            name: "Feature",
+            color: "BLUE",
+            description: "A request, idea, or new functionality",
+          },
         },
-        fieldValues: { nodes: [] },
+        fieldValues: {
+          nodes: [
+            {
+              __typename: "ProjectV2ItemFieldLabelValue",
+              labels: {
+                nodes: [
+                  { name: "good first issue", color: "7057ff" },
+                  { name: "priority", color: "d73a4a" },
+                ],
+              },
+              field: { name: "Labels" },
+            },
+          ],
+        },
       },
       {
         id: "PVTI_child",
@@ -44,6 +67,8 @@ describe("projectTasksSchema", () => {
           number: 11,
           title: "test-3333",
           state: "OPEN",
+          parent: { id: "I_parent" },
+          issueType: { name: "Bug", color: "RED" },
         },
         fieldValues: {
           nodes: [
@@ -58,6 +83,83 @@ describe("projectTasksSchema", () => {
     ]);
     const child = items.find((i) => i.number === 11);
     expect(child?.parentIssueContentId).toBe("I_parent");
+    expect(child?.issueType?.name).toBe("Bug");
+    const parent = items.find((i) => i.number === 10);
+    expect(parent?.subIssuesSummary?.total).toBe(1);
+    expect(parent?.labels?.map((l) => l.name)).toEqual([
+      "good first issue",
+      "priority",
+    ]);
+    expect(parent?.issueType?.name).toBe("Feature");
+  });
+
+  it("maps N-level parents (mid-level keeps parentIssueContentId)", () => {
+    const items = mapGitHubProjectItems([
+      {
+        id: "PVTI_root",
+        content: {
+          __typename: "Issue",
+          id: "I_root",
+          number: 67,
+          title: "Hornos - PROD",
+          state: "OPEN",
+          subIssues: { nodes: [{ id: "I_mid" }] },
+          subIssuesSummary: { total: 1, completed: 0, percentCompleted: 0 },
+        },
+        fieldValues: { nodes: [] },
+      },
+      {
+        id: "PVTI_mid",
+        content: {
+          __typename: "Issue",
+          id: "I_mid",
+          number: 68,
+          title: "Plan",
+          state: "OPEN",
+          parent: { id: "I_root" },
+          subIssues: { nodes: [{ id: "I_leaf" }] },
+          subIssuesSummary: { total: 1, completed: 1, percentCompleted: 100 },
+        },
+        fieldValues: { nodes: [] },
+      },
+      {
+        id: "PVTI_leaf",
+        content: {
+          __typename: "Issue",
+          id: "I_leaf",
+          number: 70,
+          title: "RS-CTS",
+          state: "CLOSED",
+          parent: { id: "I_mid" },
+        },
+        fieldValues: {
+          nodes: [
+            {
+              __typename: "ProjectV2ItemFieldSingleSelectValue",
+              name: "Done",
+              field: { name: "Status" },
+            },
+          ],
+        },
+      },
+    ]);
+
+    let doc = rebuildProjectHierarchyFromGitHub({
+      ...baseDoc(),
+      items,
+    });
+    doc = normalizeProjectHierarchy(doc);
+
+    expect(doc.generalTasks).toHaveLength(1);
+    expect(doc.generalTasks[0].issueNumber).toBe(67);
+    expect(doc.items).toHaveLength(2);
+
+    const mid = doc.items.find((i) => i.number === 68);
+    const leaf = doc.items.find((i) => i.number === 70);
+    expect(mid?.parentIssueContentId).toBe("I_root");
+    expect(leaf?.parentIssueContentId).toBe("I_mid");
+    // Mid-level stays as item (not promoted to generalTask).
+    expect(doc.generalTasks.some((g) => g.issueNumber === 68)).toBe(false);
   });
 
   it("mergeTasksAfterPush keeps remote generalTasks", () => {
@@ -120,6 +222,43 @@ describe("projectTasksSchema", () => {
     );
   });
 
+  it("disambiguates root generalTasks with the same title", () => {
+    const items = mapGitHubProjectItems([
+      {
+        id: "PVTI_a",
+        content: {
+          __typename: "Issue",
+          id: "I_a",
+          number: 223,
+          title: "Digital User - AM - Key renewal",
+          state: "OPEN",
+        },
+        fieldValues: { nodes: [] },
+      },
+      {
+        id: "PVTI_b",
+        content: {
+          __typename: "Issue",
+          id: "I_b",
+          number: 254,
+          title: "Digital User - AM - Key renewal",
+          state: "OPEN",
+        },
+        fieldValues: { nodes: [] },
+      },
+    ]);
+    const doc = rebuildProjectHierarchyFromGitHub({
+      ...baseDoc(),
+      items,
+    });
+    expect(doc.generalTasks).toHaveLength(2);
+    const ids = doc.generalTasks.map((g) => g.id);
+    expect(new Set(ids).size).toBe(2);
+    expect(ids.some((id) => id.includes("#254") || id.includes("#223"))).toBe(
+      true,
+    );
+  });
+
   it("normalize creates parent when only subtask on board", () => {
     const flat: ProjectItem[] = [
       {
@@ -142,5 +281,116 @@ describe("projectTasksSchema", () => {
     });
     doc = normalizeProjectHierarchy(doc);
     expect(doc.generalTasks.some((g) => g.id === "TEST-1111")).toBe(true);
+  });
+
+  it("maps parent title/number from Issue.parent", () => {
+    const items = mapGitHubProjectItems([
+      {
+        id: "PVTI_c",
+        content: {
+          __typename: "Issue",
+          id: "I_child",
+          number: 525,
+          title: "DU - IDM - Inconveniente con el Cluster",
+          state: "CLOSED",
+          parent: {
+            id: "I_parent",
+            number: 540,
+            title: "DU - Release 1.47",
+          },
+        },
+        fieldValues: { nodes: [] },
+      },
+    ]);
+    expect(items[0]?.parentIssueContentId).toBe("I_parent");
+    expect(items[0]?.parentIssueTitle).toBe("DU - Release 1.47");
+    expect(items[0]?.parentIssueNumber).toBe(540);
+  });
+
+  it("normalize renames synthetic parent-* with parentIssueTitle", () => {
+    const flat: ProjectItem[] = [
+      {
+        nodeId: "PVTI_c",
+        contentNodeId: "I_child",
+        number: 525,
+        title: "DU - IDM - Inconveniente con el Cluster",
+        state: "CLOSED",
+        url: null,
+        contentType: "Issue",
+        fieldValues: { Task: ["parent-ABOigBOw"] },
+        parentTaskId: "parent-ABOigBOw",
+        parentIssueContentId: "I_kwDOH5sqys8AAAABOigBOw",
+        parentIssueTitle: "DU - Release 1.47",
+        parentIssueNumber: 540,
+        assignees: [],
+      },
+    ];
+    const doc = normalizeProjectHierarchy({
+      ...baseDoc(),
+      items: flat,
+      generalTasks: [
+        {
+          id: "parent-ABOigBOw",
+          title: "parent-ABOigBOw",
+          githubProjectItemNodeId: null,
+          githubContentNodeId: "I_kwDOH5sqys8AAAABOigBOw",
+          issueNumber: null,
+          url: null,
+        },
+      ],
+    });
+    expect(doc.generalTasks).toHaveLength(1);
+    expect(doc.generalTasks[0]?.id).toBe("DU - Release 1.47");
+    expect(doc.generalTasks[0]?.title).toBe("DU - Release 1.47");
+    expect(doc.generalTasks[0]?.issueNumber).toBe(540);
+    expect(doc.items[0]?.parentTaskId).toBe("DU - Release 1.47");
+    expect(doc.items[0]?.fieldValues.Task).toEqual(["DU - Release 1.47"]);
+    expect(doc.generalTasks.some((g) => /^parent-/i.test(g.id))).toBe(false);
+  });
+
+  it("normalize drops synthetic when real parent root already exists", () => {
+    const flat: ProjectItem[] = [
+      {
+        nodeId: "PVTI_c",
+        contentNodeId: "I_child",
+        number: 525,
+        title: "child",
+        state: "OPEN",
+        url: null,
+        contentType: "Issue",
+        fieldValues: { Task: ["parent-ABOigBOw"] },
+        parentTaskId: "parent-ABOigBOw",
+        parentIssueContentId: "I_parent",
+        parentIssueTitle: "DU - Release 1.47",
+        parentIssueNumber: 540,
+        assignees: [],
+      },
+    ];
+    const doc = normalizeProjectHierarchy({
+      ...baseDoc(),
+      items: flat,
+      generalTasks: [
+        {
+          id: "parent-ABOigBOw",
+          title: "parent-ABOigBOw",
+          githubProjectItemNodeId: null,
+          githubContentNodeId: "I_parent",
+          issueNumber: null,
+          url: null,
+        },
+        {
+          id: "DU - Release 1.47",
+          title: "DU - Release 1.47",
+          githubProjectItemNodeId: "PVTI_real",
+          githubContentNodeId: "I_parent",
+          issueNumber: 540,
+          url: "https://github.com/rakkau/telecom-digitaluser/issues/540",
+        },
+      ],
+    });
+    expect(doc.generalTasks).toHaveLength(1);
+    expect(doc.generalTasks[0]?.id).toBe("DU - Release 1.47");
+    expect(doc.generalTasks[0]?.issueNumber).toBe(540);
+    expect(doc.items[0]?.parentTaskId).toBe("DU - Release 1.47");
   });
 });

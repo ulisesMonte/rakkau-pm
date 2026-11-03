@@ -63,6 +63,25 @@ export function githubTableColumns(project: ProjectDocument): ProjectField[] {
   );
 }
 
+/**
+ * Layout fijo del visor de progreso (sin dump de fields técnicos).
+ * Título · Tipo · Labels · Status · EstadoOperativo · Avance% · Asignados · Vence · (ojo)
+ * Tipo = Issue Type (Task/Bug/Feature). Labels = etiquetas del repo (cualquier set).
+ */
+export const VIEWER_PROGRESS_COLUMNS = [
+  "Tarea / Subtarea",
+  "Tipo",
+  "Labels",
+  "Status",
+  "Estado operativo",
+  "Avance",
+  "Asignados",
+  "Vence",
+] as const;
+
+/** Incluye la columna de acciones (ojo). */
+export const VIEWER_PROGRESS_COL_COUNT = VIEWER_PROGRESS_COLUMNS.length + 1;
+
 /** Campos con editor fijo arriba en EditPanel — no repetir en «Campos del proyecto». */
 const EDIT_PANEL_DEDICATED_CANONICAL = new Set<string>(
   Object.values(CANONICAL_FIELDS),
