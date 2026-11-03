@@ -4,7 +4,7 @@
   "title": "CIAM Ops Hybrid Test",
   "owner": "ulisesMonte",
   "url": "https://github.com/users/ulisesMonte/projects/3",
-  "pulledAt": "2026-11-02T20:53:07.342Z",
+  "pulledAt": "2026-11-03T12:32:22.585Z",
   "dirty": true,
   "fieldsSchemaVersion": 1,
   "tasksSchemaVersion": 1,
@@ -258,9 +258,83 @@
       "origin": "github"
     },
     {
-      "id": "local_task_1793652819332",
+      "id": "PVTF_lAHOB_sFhs4BpSjOzhoYpig",
+      "name": "Comentarios",
+      "dataType": "TEXT",
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpSjOzhoY3Qk",
+      "name": "Status tarea general",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "500b5b51",
+          "name": "Impactado",
+          "color": "BLUE",
+          "description": ""
+        },
+        {
+          "id": "8d0d3f69",
+          "name": "Bloqueado",
+          "color": "GREEN",
+          "description": ""
+        }
+      ],
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "local_task_1793709359194",
       "name": "Task",
       "dataType": "TEXT",
+      "pendingCreate": true
+    },
+    {
+      "id": "local_responsable_1793711051050",
+      "name": "Responsable",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "opt-resp-rakkau",
+          "name": "rakkau",
+          "color": "PURPLE",
+          "description": "Equipo Rakkau"
+        },
+        {
+          "id": "opt-resp-cliente",
+          "name": "cliente",
+          "color": "BLUE",
+          "description": "Cliente"
+        }
+      ],
+      "pendingCreate": true
+    },
+    {
+      "id": "local_estado_op_1793712409703",
+      "name": "EstadoOperativo",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "opt-eo-atiempo",
+          "name": "a tiempo",
+          "color": "GREEN",
+          "description": "Dentro de plan"
+        },
+        {
+          "id": "opt-eo-impactado",
+          "name": "impactado",
+          "color": "ORANGE",
+          "description": "Con desvío / bloqueo"
+        },
+        {
+          "id": "opt-eo-pausado",
+          "name": "pausado",
+          "color": "GRAY",
+          "description": "En pausa"
+        }
+      ],
       "pendingCreate": true
     }
   ],
@@ -268,18 +342,26 @@
     {
       "id": "TEST-1111",
       "title": "TEST-1111",
-      "Status": "Bloqueado",
+      "Status": "Todo",
       "HasDependency": "No",
       "DependsOn": "",
-      "Blocked": "Sí",
-      "BlockedReason": "Esta bloqueado por u requetimento del cliente",
-      "assignees": [],
+      "Blocked": "No",
+      "BlockedReason": "",
+      "assignees": [
+        "ulisesMonte"
+      ],
       "Sprint": "",
       "Quarter": "Q4",
       "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpSjOzhFfdwI",
       "githubContentNodeId": "I_kwDOVa-rbs8AAAABb8QpnQ",
       "issueNumber": 10,
-      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/10"
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/10",
+      "DueDate": "2026-11-27",
+      "githubFieldValues": {
+        "Comentarios": "Este issue "
+      },
+      "Responsable": "rakkau",
+      "EstadoOperativo": "a tiempo"
     },
     {
       "id": "TEST-2222",
@@ -295,12 +377,13 @@
       "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpSjOzhFfd6E",
       "githubContentNodeId": "DI_lAHOB_sFhs4BpSjOzgLktWE",
       "issueNumber": null,
-      "url": null
+      "url": null,
+      "githubFieldValues": {}
     },
     {
       "id": "TEST-20000",
       "title": "test2000",
-      "Status": "Done",
+      "Status": "In Progress",
       "HasDependency": "No",
       "DependsOn": "",
       "Blocked": "No",
@@ -311,7 +394,83 @@
       "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpSjOzhFgUng",
       "githubContentNodeId": "I_kwDOVa-rbs8AAAABb85iNQ",
       "issueNumber": 12,
-      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/12"
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/12",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "INC-30Q",
+      "title": "Desarrollo de journeys",
+      "Status": "",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpSjOzhFqeAI",
+      "githubContentNodeId": "I_kwDOVa-rbs8AAAABcHbOYQ",
+      "issueNumber": 14,
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/14",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "TTT1",
+      "title": "TEST-TAREA",
+      "Status": "Bloqueado",
+      "HasDependency": "Sí",
+      "DependsOn": "",
+      "Blocked": "Sí",
+      "BlockedReason": "",
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "Sprint": "spront1",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpSjOzhFqhjw",
+      "githubContentNodeId": "I_kwDOVa-rbs8AAAABcHfVpQ",
+      "issueNumber": 17,
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/17",
+      "githubFieldValues": {
+        "Track / Journey": "Identity"
+      }
+    },
+    {
+      "id": "TEST-T2",
+      "title": "TESTTT-T2",
+      "Status": "In Progress",
+      "HasDependency": "Sí",
+      "DependsOn": "TEST-2222",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "Sprint": "spront1",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpSjOzhFqtIA",
+      "githubContentNodeId": "I_kwDOVa-rbs8AAAABcHrpaw",
+      "issueNumber": 19,
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/19",
+      "DueDate": "2026-11-18",
+      "githubFieldValues": {}
+    },
+    {
+      "id": "TEST-333",
+      "title": "Test-3",
+      "Status": "",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "assignees": [],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpSjOzhFrMkE",
+      "githubContentNodeId": "I_kwDOVa-rbs8AAAABcIMNAg",
+      "issueNumber": 21,
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/21",
+      "githubFieldValues": {}
     }
   ],
   "items": [
@@ -320,17 +479,19 @@
       "contentNodeId": "I_kwDOVa-rbs8AAAABb8QrGg",
       "number": 11,
       "title": "test-3333",
-      "state": "OPEN",
+      "state": "CLOSED",
       "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/11",
       "contentType": "Issue",
       "fieldValues": {
         "Title": "test-3333",
-        "Status": "Todo",
+        "Status": "Done",
         "Blocked": "No",
         "HasDependency": "No",
         "Task": [
           "TEST-1111"
-        ]
+        ],
+        "BlockedReason": "",
+        "Assignees": []
       },
       "parentTaskId": "TEST-1111",
       "parentIssueContentId": "I_kwDOVa-rbs8AAAABb8QpnQ",
@@ -363,20 +524,175 @@
       "assignees": [],
       "blockedBy": [],
       "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lAHOB_sFhs4BpSjOzhFqeBk",
+      "contentNodeId": "I_kwDOVa-rbs8AAAABcHbPzQ",
+      "number": 15,
+      "title": "Desarrollo de subjourney validacion",
+      "state": "OPEN",
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/15",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Assignees": [
+          "ulisesMonte"
+        ],
+        "Title": "Desarrollo de subjourney validacion",
+        "Status": "In Progress",
+        "Blocked": "No",
+        "HasDependency": "Sí",
+        "DependsOn": "TEST-2222",
+        "Quarter": "Q4",
+        "DueDate": "2026-11-20",
+        "Track / Journey": "Identity",
+        "Task": [
+          "INC-30Q"
+        ],
+        "BlockedReason": ""
+      },
+      "parentTaskId": "INC-30Q",
+      "parentIssueContentId": "I_kwDOVa-rbs8AAAABcHbOYQ",
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lAHOB_sFhs4BpSjOzhFqhko",
+      "contentNodeId": "I_kwDOVa-rbs8AAAABcHfRwA",
+      "number": 16,
+      "title": "subtarea-test",
+      "state": "OPEN",
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/16",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "subtarea-test",
+        "Status": "Todo",
+        "Blocked": "No",
+        "HasDependency": "No",
+        "Task": [
+          "TEST-1111"
+        ],
+        "DependsOn": "",
+        "BlockedReason": "",
+        "Assignees": []
+      },
+      "parentTaskId": "TEST-1111",
+      "parentIssueContentId": "I_kwDOVa-rbs8AAAABb8QpnQ",
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lAHOB_sFhs4BpSjOzhFqhnU",
+      "contentNodeId": "I_kwDOVa-rbs8AAAABcHfYAQ",
+      "number": 18,
+      "title": "subtarea-t1",
+      "state": "OPEN",
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/18",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "subtarea-t1",
+        "Status": "Todo",
+        "Blocked": "No",
+        "HasDependency": "No",
+        "Task": [
+          "TTT1"
+        ],
+        "DependsOn": "",
+        "BlockedReason": "",
+        "Assignees": []
+      },
+      "parentTaskId": "TTT1",
+      "parentIssueContentId": "I_kwDOVa-rbs8AAAABcHfVpQ",
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lAHOB_sFhs4BpSjOzhFqtI8",
+      "contentNodeId": "I_kwDOVa-rbs8AAAABcHrrTA",
+      "number": 20,
+      "title": "TEST-SUBTAREA2",
+      "state": "OPEN",
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/20",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "TEST-SUBTAREA2",
+        "Status": "Todo",
+        "Blocked": "No",
+        "HasDependency": "No",
+        "Task": [
+          "TEST-T2"
+        ],
+        "DependsOn": "",
+        "BlockedReason": "",
+        "Assignees": []
+      },
+      "parentTaskId": "TEST-T2",
+      "parentIssueContentId": "I_kwDOVa-rbs8AAAABcHrpaw",
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
+    },
+    {
+      "nodeId": "PVTI_lAHOB_sFhs4BpSjOzhFrMk8",
+      "contentNodeId": "I_kwDOVa-rbs8AAAABcIMOzA",
+      "number": 22,
+      "title": "subtarea-test3",
+      "state": "OPEN",
+      "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/22",
+      "contentType": "Issue",
+      "fieldValues": {
+        "Title": "subtarea-test3",
+        "Status": "In Progress",
+        "Blocked": "No",
+        "HasDependency": "Sí",
+        "DependsOn": "#11",
+        "Sprint": "spront1",
+        "Task": [
+          "TEST-333"
+        ],
+        "BlockedReason": "",
+        "Assignees": []
+      },
+      "parentTaskId": "TEST-333",
+      "parentIssueContentId": "I_kwDOVa-rbs8AAAABcIMNAg",
+      "assignees": [],
+      "blockedBy": [],
+      "blocks": []
     }
   ],
   "links": {
     "blockedBy": {},
     "blocks": {}
   },
-  "sprints": [],
+  "sprints": [
+    {
+      "id": "sp-1793706060721",
+      "name": "spront1",
+      "quarter": "Q4",
+      "year": 2026,
+      "status": "planned",
+      "startDate": "2026-11-03",
+      "endDate": "2026-12-03",
+      "color": "#2dd4bf"
+    }
+  ],
   "currentQuarter": {
     "quarter": "Q4",
     "year": 2026
   },
   "people": [
     {
-      "login": "ulisesMonte"
+      "login": "ulisesMonte",
+      "name": "Ulises Monte",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/133891462?u=5804334b795552892413d9b6f096904dcf885b19&v=4"
     }
-  ]
+  ],
+  "availableRepositories": [
+    "ulisesMonte/ciam-ops-hybrid-test"
+  ],
+  "issueRepository": "ulisesMonte/ciam-ops-hybrid-test"
 }

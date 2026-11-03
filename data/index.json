@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T20:53:39.336Z",
+  "updatedAt": "2026-11-03T13:26:49.721Z",
   "projects": [
     {
       "projectId": "PVT_kwDODEMO_rakkau_ops",
@@ -17,7 +17,8 @@
       "owner": "ulisesMonte",
       "path": "data/projects/PVT_kwHOB_sFhs4BpSjO.json",
       "dirty": true,
-      "pulledAt": "2026-11-02T20:53:07.342Z"
+      "pulledAt": "2026-11-03T12:32:22.585Z",
+      "issueRepository": "ulisesMonte/ciam-ops-hybrid-test"
     },
     {
       "projectId": "PVT_kwHOB_sFhs4BpIxH",
@@ -25,8 +26,9 @@
       "title": "test",
       "owner": "ulisesMonte",
       "path": "data/projects/PVT_kwHOB_sFhs4BpIxH.json",
-      "dirty": true,
-      "pulledAt": "2026-11-02T19:12:30.704Z"
+      "dirty": false,
+      "pulledAt": "2026-11-03T13:20:44.529Z",
+      "issueRepository": "ulisesMonte/frontend-clinch"
     },
     {
       "projectId": "PVT_kwHOB_sFhs4BpSjN",

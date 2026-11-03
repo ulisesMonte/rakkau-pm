@@ -4,18 +4,24 @@
   "title": "test",
   "owner": "ulisesMonte",
   "url": "https://github.com/users/ulisesMonte/projects/1",
-  "pulledAt": "2026-11-02T19:12:30.704Z",
-  "dirty": true,
+  "pulledAt": "2026-11-03T13:20:44.529Z",
+  "dirty": false,
+  "fieldsSchemaVersion": 2,
+  "tasksSchemaVersion": 1,
   "fields": [
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt70",
       "name": "Title",
-      "dataType": "TITLE"
+      "dataType": "TITLE",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt78",
       "name": "Assignees",
-      "dataType": "ASSIGNEES"
+      "dataType": "ASSIGNEES",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTSSF_lAHOB_sFhs4BpIxHzhnlt8E",
@@ -40,67 +46,93 @@
           "color": "PURPLE",
           "description": "This has been completed"
         }
-      ]
+      ],
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt8M",
       "name": "Labels",
-      "dataType": "LABELS"
+      "dataType": "LABELS",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt8c",
       "name": "Linked pull requests",
-      "dataType": "LINKED_PULL_REQUESTS"
+      "dataType": "LINKED_PULL_REQUESTS",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt8s",
       "name": "Milestone",
-      "dataType": "MILESTONE"
+      "dataType": "MILESTONE",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt84",
       "name": "Repository",
-      "dataType": "REPOSITORY"
+      "dataType": "REPOSITORY",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt9U",
       "name": "Reviewers",
-      "dataType": "REVIEWERS"
+      "dataType": "REVIEWERS",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt9k",
       "name": "Parent issue",
-      "dataType": "PARENT_ISSUE"
+      "dataType": "PARENT_ISSUE",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt94",
       "name": "Sub-issues progress",
-      "dataType": "SUB_ISSUES_PROGRESS"
+      "dataType": "SUB_ISSUES_PROGRESS",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt-Q",
       "name": "Created",
-      "dataType": "CREATED"
+      "dataType": "CREATED",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt-c",
       "name": "Updated",
-      "dataType": "UPDATED"
+      "dataType": "UPDATED",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlt-k",
       "name": "Closed",
-      "dataType": "CLOSED"
+      "dataType": "CLOSED",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhnlvIY",
       "name": "Test",
-      "dataType": "TEXT"
+      "dataType": "TEXT",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTIF_lAHOB_sFhs4BpIxHzhnlzm8",
       "name": "test3",
-      "dataType": "ITERATION"
+      "dataType": "ITERATION",
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTSSF_lAHOB_sFhs4BpIxHzhnl0j0",
@@ -119,96 +151,49 @@
           "color": "GRAY",
           "description": ""
         }
-      ]
+      ],
+      "pendingCreate": false,
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhoSazg",
       "name": "Task",
-      "dataType": "TEXT"
+      "dataType": "TEXT",
+      "pendingCreate": false,
+      "canonicalKey": "Task",
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhoSa04",
       "name": "BlockedReason",
-      "dataType": "TEXT"
+      "dataType": "TEXT",
+      "pendingCreate": false,
+      "canonicalKey": "BlockedReason",
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhoSa1s",
       "name": "DependsOn",
-      "dataType": "TEXT"
+      "dataType": "TEXT",
+      "pendingCreate": false,
+      "canonicalKey": "DependsOn",
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhoSa1w",
       "name": "Sprint",
-      "dataType": "TEXT"
+      "dataType": "TEXT",
+      "pendingCreate": false,
+      "canonicalKey": "Sprint",
+      "origin": "github"
     },
     {
       "id": "PVTF_lAHOB_sFhs4BpIxHzhoSa10",
       "name": "DueDate",
-      "dataType": "DATE"
-    },
-    {
-      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhoSdH8",
-      "name": "Blocked",
-      "dataType": "SINGLE_SELECT",
-      "options": [
-        {
-          "id": "0374a72c",
-          "name": "Sí",
-          "color": "RED"
-        },
-        {
-          "id": "f34a18a4",
-          "name": "No",
-          "color": "GREEN"
-        }
-      ],
-      "pendingCreate": false
-    },
-    {
-      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhoSdIU",
-      "name": "HasDependency",
-      "dataType": "SINGLE_SELECT",
-      "options": [
-        {
-          "id": "2b0af06b",
-          "name": "Sí",
-          "color": "RED"
-        },
-        {
-          "id": "b3ab76bb",
-          "name": "No",
-          "color": "GREEN"
-        }
-      ],
-      "pendingCreate": false
-    },
-    {
-      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhoSdIY",
-      "name": "Quarter",
-      "dataType": "SINGLE_SELECT",
-      "options": [
-        {
-          "id": "73cac3c4",
-          "name": "Q1",
-          "color": "BLUE"
-        },
-        {
-          "id": "49101aa0",
-          "name": "Q2",
-          "color": "GREEN"
-        },
-        {
-          "id": "3388f914",
-          "name": "Q3",
-          "color": "YELLOW"
-        },
-        {
-          "id": "16257df6",
-          "name": "Q4",
-          "color": "ORANGE"
-        }
-      ],
-      "pendingCreate": false
+      "dataType": "DATE",
+      "pendingCreate": false,
+      "canonicalKey": "DueDate",
+      "origin": "github"
     },
     {
       "id": "PVTSSF_lAHOB_sFhs4BpIxHzhoSdBg",
@@ -218,110 +203,205 @@
         {
           "id": "ae282c18",
           "name": "test",
-          "color": "BLUE"
+          "color": "BLUE",
+          "description": ""
         },
         {
           "id": "28c349ee",
           "name": "test2",
-          "color": "GREEN"
+          "color": "GREEN",
+          "description": ""
         }
       ],
-      "pendingCreate": false
+      "pendingCreate": false,
+      "origin": "github"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhoSdH8",
+      "name": "Blocked",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "0374a72c",
+          "name": "Sí",
+          "color": "RED",
+          "description": ""
+        },
+        {
+          "id": "f34a18a4",
+          "name": "No",
+          "color": "GREEN",
+          "description": ""
+        }
+      ],
+      "pendingCreate": false,
+      "canonicalKey": "Blocked",
+      "origin": "github"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhoSdIU",
+      "name": "HasDependency",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "2b0af06b",
+          "name": "Sí",
+          "color": "RED",
+          "description": ""
+        },
+        {
+          "id": "b3ab76bb",
+          "name": "No",
+          "color": "GREEN",
+          "description": ""
+        }
+      ],
+      "pendingCreate": false,
+      "canonicalKey": "HasDependency",
+      "origin": "github"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhoSdIY",
+      "name": "Quarter",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "73cac3c4",
+          "name": "Q1",
+          "color": "BLUE",
+          "description": ""
+        },
+        {
+          "id": "49101aa0",
+          "name": "Q2",
+          "color": "GREEN",
+          "description": ""
+        },
+        {
+          "id": "3388f914",
+          "name": "Q3",
+          "color": "YELLOW",
+          "description": ""
+        },
+        {
+          "id": "16257df6",
+          "name": "Q4",
+          "color": "ORANGE",
+          "description": ""
+        }
+      ],
+      "pendingCreate": false,
+      "canonicalKey": "Quarter",
+      "origin": "github"
+    },
+    {
+      "id": "PVTSSF_lAHOB_sFhs4BpIxHzhoZWF0",
+      "name": "Responsable",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "8a3ef63c",
+          "name": "rakkau",
+          "color": "PURPLE",
+          "description": "Equipo Rakkau"
+        },
+        {
+          "id": "7ea03724",
+          "name": "cliente",
+          "color": "BLUE",
+          "description": "Cliente"
+        }
+      ],
+      "pendingCreate": false,
+      "canonicalKey": "Responsable",
+      "origin": "github"
     }
   ],
-  "generalTasks": [],
-  "items": [
+  "generalTasks": [
     {
-      "nodeId": "PVTI_lAHOB_sFhs4BpIxHzhENcWM",
-      "contentNodeId": null,
-      "number": 1,
+      "id": "tst",
       "title": "tst",
-      "state": "OPEN",
+      "Status": "Todo",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpIxHzhENcWM",
+      "githubContentNodeId": "I_kwDOUW3kiM8AAAABam3kdw",
+      "issueNumber": 1,
       "url": "https://github.com/ulisesMonte/frontend-clinch/issues/1",
-      "contentType": "Issue",
-      "fieldValues": {
-        "Assignees": [],
-        "Title": "tst",
-        "Status": "Todo"
-      },
-      "parentTaskId": null,
-      "assignees": [],
-      "blockedBy": [],
-      "blocks": []
+      "githubFieldValues": {}
     },
     {
-      "nodeId": "PVTI_lAHOB_sFhs4BpIxHzhENcmY",
-      "contentNodeId": null,
-      "number": 2,
+      "id": "test2",
       "title": "test2",
-      "state": "OPEN",
+      "Status": "Todo",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
+      "assignees": [
+        "ulisesMonte"
+      ],
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpIxHzhENcmY",
+      "githubContentNodeId": "I_kwDOUW3kiM8AAAABam30jQ",
+      "issueNumber": 2,
       "url": "https://github.com/ulisesMonte/frontend-clinch/issues/2",
-      "contentType": "Issue",
-      "fieldValues": {
-        "Assignees": [
-          "ulisesMonte"
-        ],
-        "Title": "test2",
-        "Status": "Todo",
-        "DueDate": "2026-11-25",
-        "HasDependency": "No",
-        "DependsOn": "",
-        "Prioridad": "Alta",
-        "anasge": "test"
-      },
-      "parentTaskId": null,
-      "assignees": [
-        "ulisesMonte"
-      ],
-      "blockedBy": [],
-      "blocks": []
+      "githubFieldValues": {}
     },
     {
-      "nodeId": "PVTI_lAHOB_sFhs4BpIxHzhEOM7Y",
-      "contentNodeId": null,
-      "number": 3,
+      "id": "test",
       "title": "test",
-      "state": "OPEN",
-      "url": "https://github.com/ulisesMonte/frontend-clinch/issues/3",
-      "contentType": "Issue",
-      "fieldValues": {
-        "Assignees": [
-          "ulisesMonte"
-        ],
-        "Status": "Todo",
-        "Title": "test",
-        "Prioridad": "Alta"
-      },
-      "parentTaskId": null,
+      "Status": "Todo",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
       "assignees": [
         "ulisesMonte"
       ],
-      "blockedBy": [],
-      "blocks": []
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpIxHzhEOM7Y",
+      "githubContentNodeId": "I_kwDOUW3kiM8AAAABanmqwA",
+      "issueNumber": 3,
+      "url": "https://github.com/ulisesMonte/frontend-clinch/issues/3",
+      "githubFieldValues": {
+        "Prioridad": "Alta"
+      }
     },
     {
-      "nodeId": "PVTI_lAHOB_sFhs4BpIxHzhExjBs",
-      "contentNodeId": null,
-      "number": 4,
+      "id": "TEST10",
       "title": "TEST10",
-      "state": "OPEN",
-      "url": "https://github.com/ulisesMonte/frontend-clinch/issues/4",
-      "contentType": "Issue",
-      "fieldValues": {
-        "Assignees": [
-          "ulisesMonte"
-        ],
-        "Title": "TEST10",
-        "Status": "Todo"
-      },
-      "parentTaskId": null,
+      "Status": "Todo",
+      "HasDependency": "No",
+      "DependsOn": "",
+      "Blocked": "No",
+      "BlockedReason": "",
+      "Responsable": "",
       "assignees": [
         "ulisesMonte"
       ],
-      "blockedBy": [],
-      "blocks": []
+      "Sprint": "",
+      "Quarter": "Q4",
+      "githubProjectItemNodeId": "PVTI_lAHOB_sFhs4BpIxHzhExjBs",
+      "githubContentNodeId": "I_kwDOUW3kiM8AAAABbMOb_A",
+      "issueNumber": 4,
+      "url": "https://github.com/ulisesMonte/frontend-clinch/issues/4",
+      "githubFieldValues": {}
     }
   ],
+  "items": [],
   "links": {
     "blockedBy": {},
     "blocks": {}
@@ -337,5 +417,9 @@
       "name": "Ulises Monte",
       "avatarUrl": "https://avatars.githubusercontent.com/u/133891462?u=5804334b795552892413d9b6f096904dcf885b19&v=4"
     }
-  ]
+  ],
+  "availableRepositories": [
+    "ulisesMonte/frontend-clinch"
+  ],
+  "issueRepository": "ulisesMonte/frontend-clinch"
 }
