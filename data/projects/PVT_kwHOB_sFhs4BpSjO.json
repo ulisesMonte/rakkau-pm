@@ -378,7 +378,8 @@
       "githubContentNodeId": "DI_lAHOB_sFhs4BpSjOzgLktWE",
       "issueNumber": null,
       "url": null,
-      "githubFieldValues": {}
+      "githubFieldValues": {},
+      "parentMacroId": "macro_mw0sdbzt_hpgq6"
     },
     {
       "id": "TEST-20000",
@@ -433,7 +434,8 @@
       "url": "https://github.com/ulisesMonte/ciam-ops-hybrid-test/issues/17",
       "githubFieldValues": {
         "Track / Journey": "Identity"
-      }
+      },
+      "parentMacroId": "macro_mw0sdbzt_hpgq6"
     },
     {
       "id": "TEST-T2",
@@ -694,5 +696,53 @@
   "availableRepositories": [
     "ulisesMonte/ciam-ops-hybrid-test"
   ],
-  "issueRepository": "ulisesMonte/ciam-ops-hybrid-test"
+  "issueRepository": "ulisesMonte/ciam-ops-hybrid-test",
+  "macroTasks": [
+    {
+      "id": "macro_mw0sdbzt_hpgq6",
+      "title": "Definicion de fluijso",
+      "quarter": "Q4",
+      "year": 2026,
+      "stages": [
+        {
+          "id": "stg_mw0sdbzu_133b6",
+          "name": "Etapa 1",
+          "objective": "",
+          "dueDate": "2026-10-24",
+          "done": false,
+          "doneAt": null
+        },
+        {
+          "id": "stg_mw0sdbzu_h2spo",
+          "name": "Etapa 2",
+          "objective": "",
+          "dueDate": "2026-11-16",
+          "done": false,
+          "doneAt": null
+        },
+        {
+          "id": "stg_mw0sdbzu_7bov9",
+          "name": "Etapa 3",
+          "objective": "",
+          "dueDate": "2026-12-08",
+          "done": false,
+          "doneAt": null
+        },
+        {
+          "id": "stg_mw0sdbzu_kjz71",
+          "name": "Etapa 4",
+          "objective": "",
+          "dueDate": "2026-12-31",
+          "done": false,
+          "doneAt": null
+        }
+      ],
+      "EstadoOperativo": "a tiempo",
+      "generalTaskIds": [
+        "TTT1",
+        "TEST-2222"
+      ],
+      "createdAt": "2026-11-03T14:31:36.186Z"
+    }
+  ]
 }

@@ -13,6 +13,7 @@ import { taskFieldValueForParent } from "@/lib/taskParent";
 import { asStringList } from "@/lib/fieldValueCoerce";
 import { CalendarView } from "./CalendarView";
 import { HierarchyTable } from "./HierarchyTable";
+import { MacroObjectivesPanel } from "./MacroObjectivesPanel";
 import { RakkauNotice } from "./RakkauNotice";
 import { SprintPanel } from "./SprintPanel";
 
@@ -23,9 +24,10 @@ interface ProjectsResponse {
   hasToken: boolean;
 }
 
-type TabId = "tareas" | "sprints" | "calendario";
+type TabId = "objetivos" | "tareas" | "sprints" | "calendario";
 
 const TABS: Array<{ id: TabId; label: string }> = [
+  { id: "objetivos", label: "Objetivos Q" },
   { id: "tareas", label: "Tareas" },
   { id: "sprints", label: "Sprints" },
   { id: "calendario", label: "Calendario" },
@@ -426,11 +428,16 @@ export function OpsDashboard() {
           },
         };
       });
+      const macroTasks = (project.macroTasks ?? []).map((m) => ({
+        ...m,
+        generalTaskIds: (m.generalTaskIds ?? []).filter((id) => id !== taskId),
+      }));
       return {
         ...project,
         generalTasks: project.generalTasks.filter((t) => t.id !== taskId),
         items,
         fields,
+        macroTasks,
         dirty: true,
       };
     });
@@ -768,6 +775,16 @@ export function OpsDashboard() {
               </button>
             ))}
           </nav>
+
+          {tab === "objetivos" && (
+            <section aria-label="Objetivos del quarter">
+              <MacroObjectivesPanel
+                project={project}
+                onUpdate={onUpdateProject}
+                onPatchGeneralTask={onPatchGeneralTask}
+              />
+            </section>
+          )}
 
           {tab === "tareas" && (
             <section aria-label="Tareas y subtareas">

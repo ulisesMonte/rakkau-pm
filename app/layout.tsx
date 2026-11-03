@@ -1,17 +1,10 @@
 import type { Metadata } from "next";
-import { Outfit, Source_Serif_4 } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 
-/** Misma familia que el wordmark (`public/rakkau-wordmark.svg`). */
-const outfit = Outfit({
+const nunito = Nunito({
   subsets: ["latin"],
-  variable: "--font-outfit",
-  display: "swap",
-});
-
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  variable: "--font-source-serif",
+  variable: "--font-nunito",
   display: "swap",
 });
 
@@ -28,9 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${outfit.variable} ${sourceSerif.variable}`}>
-        {children}
-      </body>
+      <body className={nunito.variable}>{children}</body>
     </html>
   );
 }

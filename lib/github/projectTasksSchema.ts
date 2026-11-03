@@ -257,8 +257,12 @@ export function mergeTasksAfterPush(
     items,
     sprints: pushed.sprints?.length ? pushed.sprints : remote.sprints,
     currentQuarter: pushed.currentQuarter ?? remote.currentQuarter,
+    macroTasks: pushed.macroTasks ?? remote.macroTasks,
     links: pushed.links ?? remote.links,
     people: remote.people?.length ? remote.people : pushed.people,
+    issueRepository: pushed.issueRepository ?? remote.issueRepository,
+    availableRepositories:
+      pushed.availableRepositories ?? remote.availableRepositories,
     tasksSchemaVersion: PROJECT_TASKS_SCHEMA_VERSION,
   });
 }
