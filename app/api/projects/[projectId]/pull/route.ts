@@ -84,7 +84,6 @@ export async function POST(request: Request, ctx: Ctx) {
       pulled.sprints = existing.sprints ?? pulled.sprints;
       pulled.links = existing.links ?? pulled.links;
       pulled.currentQuarter = existing.currentQuarter ?? pulled.currentQuarter;
-      pulled.macroTasks = existing.macroTasks ?? pulled.macroTasks;
       pulled.availableRepositories = uniqueRepositorySlugs(
         pulled.availableRepositories,
         existing.availableRepositories,

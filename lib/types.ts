@@ -70,8 +70,6 @@ export interface GeneralTask {
   EstadoOperativo?: EstadoOperativoValue;
   /** Status nativo GitHub Projects (Todo / Done / …) */
   Status?: string;
-  /** Macro / objetivo de Q al que pertenece (local). */
-  parentMacroId?: string | null;
   /** ProjectV2Item id en GitHub (fila del project). */
   githubProjectItemNodeId?: string | null;
   /** Issue / DraftIssue id (contenido). */
@@ -113,42 +111,6 @@ export const SPRINT_COLOR_PRESETS = [
 export interface CurrentQuarter {
   quarter: QuarterKey;
   year: number;
-}
-
-/**
- * Objetivo de una etapa dentro de un macro de Q.
- * Persistido en JSON local (no es columna GitHub por fila de etapa).
- */
-export interface StageObjective {
-  id: string;
-  /** Etiqueta corta (ej. Discovery, Entrega). */
-  name: string;
-  /** Objetivo concreto a cumplir en esta etapa. */
-  objective: string;
-  /** Vencimiento ISO YYYY-MM-DD (anclado al Q). */
-  dueDate: string;
-  /** Si el objetivo de la etapa se cumplió. */
-  done: boolean;
-  doneAt?: string | null;
-  notes?: string;
-}
-
-/**
- * Tarea macro: nivel por encima de las tareas generales.
- * Agrupa objetivos por etapas a lo largo del Quarter.
- */
-export interface MacroTask {
-  id: string;
-  title: string;
-  description?: string;
-  quarter: QuarterKey;
-  year: number;
-  stages: StageObjective[];
-  EstadoOperativo?: EstadoOperativoValue;
-  Responsable?: ResponsableValue;
-  /** generalTask.id vinculados a este macro. */
-  generalTaskIds?: string[];
-  createdAt?: string;
 }
 
 export interface ItemFieldValues {
@@ -218,11 +180,6 @@ export interface ProjectDocument {
   generalTasks: GeneralTask[];
   items: ProjectItem[];
   links: ProjectLinks;
-  /**
-   * Macros / objetivos de Q con etapas (local-first).
-   * Se conservan en pull; no se pisan desde GitHub.
-   */
-  macroTasks?: MacroTask[];
   /** Sprints locales (también push a fields Sprint/Quarter si existen) */
   sprints?: Sprint[];
   currentQuarter?: CurrentQuarter;
