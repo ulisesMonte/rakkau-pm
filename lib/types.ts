@@ -47,6 +47,9 @@ export type BlockedValue = YesNoValue;
 /** Quién lleva la tarea general: Rakkau o el cliente. */
 export type ResponsableValue = "rakkau" | "cliente" | "";
 
+/** Estado operativo de la tarea general (distinto del Status nativo de GitHub). */
+export type EstadoOperativoValue = "a tiempo" | "impactado" | "pausado" | "";
+
 /** Iniciativa / ID de negocio (opciones del field Task). */
 export interface GeneralTask {
   id: string;
@@ -63,6 +66,9 @@ export interface GeneralTask {
   BlockedReason?: string;
   /** Responsable del issue / tarea general → GitHub Responsable */
   Responsable?: ResponsableValue;
+  /** Salud operativa → GitHub EstadoOperativo */
+  EstadoOperativo?: EstadoOperativoValue;
+  /** Status nativo GitHub Projects (Todo / Done / …) */
   Status?: string;
   /** ProjectV2Item id en GitHub (fila del project). */
   githubProjectItemNodeId?: string | null;
@@ -124,6 +130,8 @@ export interface ItemFieldValues {
   DueDate?: string;
   /** Responsable → GitHub Responsable (SINGLE_SELECT) */
   Responsable?: ResponsableValue | string;
+  /** Estado operativo (tarea general) → GitHub EstadoOperativo */
+  EstadoOperativo?: EstadoOperativoValue | string;
   /** Logins asignados (espejo local; también en item.assignees) */
   Assignees?: string | string[];
   [key: string]: string | string[] | undefined;
@@ -231,6 +239,7 @@ export const CANONICAL_FIELDS = {
   Quarter: "Quarter",
   DueDate: "DueDate",
   Responsable: "Responsable",
+  EstadoOperativo: "EstadoOperativo",
 } as const;
 
 export const YES_NO_OPTIONS: FieldOption[] = [
@@ -241,6 +250,12 @@ export const YES_NO_OPTIONS: FieldOption[] = [
 export const RESPONSABLE_OPTIONS: FieldOption[] = [
   { id: "opt-resp-rakkau", name: "rakkau", color: "PURPLE", description: "Equipo Rakkau" },
   { id: "opt-resp-cliente", name: "cliente", color: "BLUE", description: "Cliente" },
+];
+
+export const ESTADO_OPERATIVO_OPTIONS: FieldOption[] = [
+  { id: "opt-eo-atiempo", name: "a tiempo", color: "GREEN", description: "Dentro de plan" },
+  { id: "opt-eo-impactado", name: "impactado", color: "ORANGE", description: "Con desvío / bloqueo" },
+  { id: "opt-eo-pausado", name: "pausado", color: "GRAY", description: "En pausa" },
 ];
 
 /** @deprecated use YES_NO_OPTIONS */

@@ -16,6 +16,7 @@ import type {
 import {
   BLOCKED_OPTIONS,
   CANONICAL_FIELDS,
+  ESTADO_OPERATIVO_OPTIONS,
   RESPONSABLE_OPTIONS,
   YES_NO_OPTIONS,
   currentCalendarQuarter,
@@ -988,6 +989,7 @@ function projectItemFromGeneralTask(task: GeneralTask): ProjectItem | null {
       Quarter: task.Quarter,
       DueDate: task.DueDate,
       Responsable: task.Responsable,
+      EstadoOperativo: task.EstadoOperativo,
       Assignees: task.assignees,
       Title: task.title,
     },
@@ -1439,6 +1441,16 @@ export async function pushProject(
       }
     }
 
+    const estadoOpField = byName(CANONICAL_FIELDS.EstadoOperativo);
+    if (estadoOpField && !estadoOpField.pendingCreate && fv.EstadoOperativo) {
+      const optId = findOptionId(estadoOpField, String(fv.EstadoOperativo));
+      if (optId) {
+        await safeUpdateFieldValues(next.projectId, item.nodeId, estadoOpField, {
+          singleSelectOptionId: optId,
+        });
+      }
+    }
+
     // Push custom (non-canonical) field values
     const canonicalSet = new Set(Object.values(CANONICAL_FIELDS));
     for (const field of next.fields) {
@@ -1594,6 +1606,17 @@ export function ensureCanonicalFields(
         name: CANONICAL_FIELDS.Responsable,
         dataType: "SINGLE_SELECT",
         options: RESPONSABLE_OPTIONS,
+        pendingCreate: true,
+      });
+    }
+  }
+  if (!names.has(CANONICAL_FIELDS.EstadoOperativo)) {
+    if (addPendingStubs) {
+      next.fields.push({
+        id: `local_estado_op_${Date.now()}`,
+        name: CANONICAL_FIELDS.EstadoOperativo,
+        dataType: "SINGLE_SELECT",
+        options: ESTADO_OPERATIVO_OPTIONS,
         pendingCreate: true,
       });
     }

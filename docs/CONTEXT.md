@@ -64,6 +64,8 @@ Prueba E2E: baseline en GitHub → pull → editar campos → push → pull veri
 | Dependencia | `HasDependency`, `DependsOn` | props `GeneralTask` |
 | Planificación | `Sprint`, `Quarter`, `DueDate` | props `GeneralTask` |
 | Responsable | `Responsable` | props `GeneralTask` (`rakkau` \| `cliente`) |
+| Estado operativo | `EstadoOperativo` | props `GeneralTask` (`a tiempo` \| `impactado` \| `pausado`) — distinto del Status nativo GH |
+| Avance % | (derivado) | subtareas cerradas / total (`lib/taskProgress.ts`) |
 | Bloqueo | `Blocked`, `BlockedReason` | props; bloqueo también vía Status «Bloqueado» |
 | Custom (ej.) | `Track / Journey` | `GeneralTask.githubFieldValues["Track / Journey"]` |
 

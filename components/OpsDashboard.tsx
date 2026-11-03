@@ -283,6 +283,7 @@ export function OpsDashboard() {
         Blocked: "No",
         BlockedReason: "",
         Responsable: "",
+        EstadoOperativo: "a tiempo",
         assignees: [],
         Sprint: "",
         Quarter: project.currentQuarter?.quarter ?? "",

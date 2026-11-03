@@ -16,13 +16,14 @@ import type {
 import {
   BLOCKED_OPTIONS,
   CANONICAL_FIELDS,
+  ESTADO_OPERATIVO_OPTIONS,
   RESPONSABLE_OPTIONS,
   QUARTER_OPTIONS,
   YES_NO_OPTIONS,
 } from "@/lib/types";
 
 /** Incrementar cuando cambie semántica de campos canónicos o bindings. */
-export const PROJECT_FIELDS_SCHEMA_VERSION = 2;
+export const PROJECT_FIELDS_SCHEMA_VERSION = 3;
 
 export type CanonicalFieldKey =
   (typeof CANONICAL_FIELDS)[keyof typeof CANONICAL_FIELDS];
@@ -95,6 +96,12 @@ export const CANONICAL_FIELD_DEFINITIONS: readonly CanonicalFieldDefinition[] =
       githubFieldName: CANONICAL_FIELDS.Responsable,
       dataType: "SINGLE_SELECT",
       singleSelectOptions: RESPONSABLE_OPTIONS,
+    },
+    {
+      key: "EstadoOperativo",
+      githubFieldName: CANONICAL_FIELDS.EstadoOperativo,
+      dataType: "SINGLE_SELECT",
+      singleSelectOptions: ESTADO_OPERATIVO_OPTIONS,
     },
   ] as const;
 

@@ -30,6 +30,9 @@ export function applyItemFieldValuesToGeneralTask(
   if (typeof fv.Responsable === "string") {
     next.Responsable = fv.Responsable as GeneralTask["Responsable"];
   }
+  if (typeof fv.EstadoOperativo === "string") {
+    next.EstadoOperativo = fv.EstadoOperativo as GeneralTask["EstadoOperativo"];
+  }
 
   const assignees = asStringList(fv.Assignees);
   if (assignees.length) next.assignees = assignees;

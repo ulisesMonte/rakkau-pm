@@ -17,6 +17,11 @@ import {
   taskStatusDisplay,
 } from "@/lib/taskStatus";
 import {
+  formatProgressPercent,
+  progressForGeneralTask,
+  type GeneralTaskProgress,
+} from "@/lib/taskProgress";
+import {
   parentTaskOptions,
   resolveItemParentTaskId,
 } from "@/lib/taskParent";
@@ -831,7 +836,9 @@ export function HierarchyTable({
           <thead>
             <tr>
               <th>Tarea / Subtarea</th>
-              <th>Estado</th>
+              <th title="Tareas: estado operativo · Subtareas: Status GitHub">
+                Estado
+              </th>
               <th>Asignado a</th>
               {ghColumns.map((cf) => (
                 <th key={cf.id} className="rk-th-custom" title={`Campo GitHub · ${cf.dataType}`}>
@@ -906,6 +913,7 @@ export function HierarchyTable({
 
       {viewTarget && (viewingTask || viewingItem) && (
         <ViewPanel
+          project={project}
           task={viewingTask}
           item={viewingItem}
           onClose={() => setViewTarget(null)}
@@ -996,6 +1004,7 @@ function GroupRows({
         <GeneralTaskRow
           task={group.task}
           customFields={customFields}
+          progress={progressForGeneralTask(group.task, project.items)}
           childCount={childCount}
           openChildren={openChildren}
           expanded={expanded}
@@ -1031,10 +1040,49 @@ function GroupRows({
 
 // ─── GeneralTaskRow (read-only) ───────────────────────────────────────────────
 
+function EstadoOperativoChip({ value }: { value?: string }) {
+  const v = (value ?? "").trim().toLowerCase();
+  if (!v) return <span className="rk-muted">—</span>;
+  const cls =
+    v === "a tiempo"
+      ? "rk-eo-atiempo"
+      : v === "impactado"
+        ? "rk-eo-impactado"
+        : v === "pausado"
+          ? "rk-eo-pausado"
+          : "";
+  return <span className={`rk-eo-chip ${cls}`}>{v}</span>;
+}
+
+function ProgressCell({ progress }: { progress: GeneralTaskProgress }) {
+  if (progress.percent == null) {
+    return (
+      <div className="rk-progress" title="Sin subtareas">
+        <span className="rk-progress-label rk-muted">—</span>
+      </div>
+    );
+  }
+  return (
+    <div
+      className="rk-progress"
+      title={`${progress.done} de ${progress.total} subtareas cerradas`}
+    >
+      <div className="rk-progress-track" aria-hidden>
+        <div
+          className="rk-progress-fill"
+          style={{ width: `${progress.percent}%` }}
+        />
+      </div>
+      <span className="rk-progress-label">{formatProgressPercent(progress)}</span>
+    </div>
+  );
+}
+
 function GeneralTaskRow({
   task,
   childCount,
   openChildren,
+  progress,
   customFields,
   expanded,
   onToggleChildren,
@@ -1045,6 +1093,7 @@ function GeneralTaskRow({
   task: GeneralTask;
   childCount: number;
   openChildren: number;
+  progress: GeneralTaskProgress;
   customFields: ProjectField[];
   expanded: boolean;
   onToggleChildren: () => void;
@@ -1054,7 +1103,6 @@ function GeneralTaskRow({
 }) {
   const deps = parseDeps(task.DependsOn);
   const dueCls = dueNearClass(task.DueDate, task.Status);
-  const st = generalTaskStatusDisplay(task);
   const resp = task.Responsable?.trim();
 
   return (
@@ -1090,10 +1138,11 @@ function GeneralTaskRow({
             </span>
           </div>
           <div className="rk-task-cell-title">{task.title}</div>
+          <ProgressCell progress={progress} />
         </div>
       </td>
       <td>
-        <span className={`rk-state ${st.open ? "rk-state-open" : "rk-state-closed"}`}>{st.text}</span>
+        <EstadoOperativoChip value={task.EstadoOperativo} />
       </td>
       <td><AssigneeChips logins={task.assignees ?? []} /></td>
       {customFields.map((cf) => (
@@ -1248,10 +1297,12 @@ function ItemRow({
 // ─── ViewPanel (detail / read-only) ──────────────────────────────────────────
 
 function ViewPanel({
+  project,
   task,
   item,
   onClose,
 }: {
+  project: ProjectDocument;
   task: GeneralTask | null;
   item: ProjectItem | null;
   onClose: () => void;
@@ -1293,6 +1344,10 @@ function ViewPanel({
     (typeof item?.fieldValues.Responsable === "string"
       ? item.fieldValues.Responsable
       : undefined);
+  const estadoOp = task?.EstadoOperativo?.trim();
+  const progress = task
+    ? progressForGeneralTask(task, project.items)
+    : null;
   const parent = itemIsOrphan ? null : (itemTaskVal || null);
 
   return (
@@ -1313,7 +1368,16 @@ function ViewPanel({
         </header>
 
         <div className="rk-view-meta-bar">
-          <span className={`rk-state ${st.open ? "rk-state-open" : "rk-state-closed"}`}>{st.text}</span>
+          {estadoOp ? (
+            <EstadoOperativoChip value={estadoOp} />
+          ) : (
+            <span className={`rk-state ${st.open ? "rk-state-open" : "rk-state-closed"}`}>{st.text}</span>
+          )}
+          {progress && progress.percent != null && (
+            <span className="rk-view-meta-pill">
+              Avance {formatProgressPercent(progress)} ({progress.done}/{progress.total})
+            </span>
+          )}
           {sprint && <span className="rk-view-meta-pill">{sprint}</span>}
           {quarter && <span className="rk-view-meta-pill">{quarter}</span>}
           {responsable && (
@@ -1514,9 +1578,31 @@ function EditPanel({
             />
           </label>
 
+          {isTask && (
+            <label className="rk-label">Estado
+              <select
+                className="rk-select-sm rk-select-status"
+                value={task?.EstadoOperativo ?? ""}
+                onChange={(e) => {
+                  const EstadoOperativo = e.target.value as
+                    | "a tiempo"
+                    | "impactado"
+                    | "pausado"
+                    | "";
+                  patchTask({ EstadoOperativo });
+                }}
+              >
+                <option value="">—</option>
+                <option value="a tiempo">a tiempo</option>
+                <option value="impactado">impactado</option>
+                <option value="pausado">pausado</option>
+              </select>
+            </label>
+          )}
+
           {/* ── Status (GitHub Projects) ──────────────────────────────── */}
           <label className="rk-label">
-            {statusField ? "Status" : "Estado"}
+            {isTask ? "Status GitHub" : statusField ? "Status" : "Estado"}
             {task && statusField ? (
               <select
                 className="rk-select-sm rk-select-status"
