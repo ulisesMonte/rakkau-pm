@@ -42,8 +42,7 @@ El PAT se lee de **`.env.local`** (o `.env`) vía `process.env.GH_TOKEN`. Nunca 
 | Responsable | `Responsable` | SINGLE_SELECT (`rakkau` / `cliente`) — tarea general |
 | Estado | `EstadoOperativo` | SINGLE_SELECT (`a tiempo` / `impactado` / `pausado`) — tarea general |
 | Avance | — | % subtareas cerradas (UI, derivado) |
-| Bloqueada | `Blocked` | SINGLE_SELECT |
-| Motivo | `BlockedReason` | TEXT |
+| Motivo (si Status = Bloqueado) | `BlockedReason` | TEXT — el Sí/No Blocked no se muestra en UI |
 
 El PAT vive solo en `GH_TOKEN` (nunca en JSON). El fixture `PVT_kwDODEMO_*` no hace push real.
 

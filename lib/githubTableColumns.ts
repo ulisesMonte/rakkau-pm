@@ -16,6 +16,9 @@ const HIDDEN_TABLE_FIELD_NAMES = new Set<string>([
   CANONICAL_FIELDS.Task,
   /** Se muestra en la columna Estado de la tarea general. */
   CANONICAL_FIELDS.EstadoOperativo,
+  /** Redundante: el Status GitHub «Bloqueado» ya indica bloqueo. */
+  CANONICAL_FIELDS.Blocked,
+  CANONICAL_FIELDS.BlockedReason,
 ]);
 
 /** Campos de sistema que no se muestran como columnas de tabla. */

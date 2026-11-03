@@ -172,19 +172,11 @@ function GitHubFieldCell({
     const raw = typeof value === "string" ? value : Array.isArray(value) ? value.join(", ") : "";
     return <DepCell deps={parseDeps(raw)} />;
   }
-  if (field.name === CANONICAL_FIELDS.Blocked) {
-    const reason =
-      (item?.fieldValues.BlockedReason ?? task?.BlockedReason ?? "") || undefined;
-    const blocked =
-      value === "Sí" ||
-      taskIsBlocked({
-        Blocked: typeof value === "string" ? value : undefined,
-        Status: item?.fieldValues.Status,
-      });
-    return <BlockedCell blocked={blocked} reason={reason} />;
-  }
-  if (field.name === CANONICAL_FIELDS.BlockedReason) {
-    return <span className="rk-cell-text">{dash(typeof value === "string" ? value : "")}</span>;
+  if (
+    field.name === CANONICAL_FIELDS.Blocked ||
+    field.name === CANONICAL_FIELDS.BlockedReason
+  ) {
+    return null;
   }
   if (field.name === CANONICAL_FIELDS.DueDate) {
     const due = typeof value === "string" ? value : undefined;
@@ -478,12 +470,8 @@ function BlockedCell({ blocked, reason }: { blocked: boolean; reason?: string })
   );
 }
 
-/** Bloqueada por campo Blocked o Status GitHub «Bloqueado». */
-function taskIsBlocked(fields: {
-  Blocked?: string;
-  Status?: string;
-}): boolean {
-  if (fields.Blocked === "Sí") return true;
+/** Bloqueada solo si el Status GitHub es «Bloqueado» (sin campo Blocked Sí/No). */
+function taskIsBlocked(fields: { Status?: string }): boolean {
   return /^bloqueado$/i.test(String(fields.Status ?? "").trim());
 }
 
@@ -569,7 +557,6 @@ export function HierarchyTable({
   const [fAssignee, setFAssignee] = useState("");
   const [fSprint, setFSprint] = useState("");
   const [fQuarter, setFQuarter] = useState("");
-  const [fBlocked, setFBlocked] = useState<"" | "sí" | "no">("");
   const [fDepends, setFDepends] = useState<"" | "sí" | "no">("");
   const [fPadre, setFPadre] = useState("");
   const [fDueSoon, setFDueSoon] = useState(false);
@@ -587,11 +574,10 @@ export function HierarchyTable({
     assignee: fAssignee ? [fAssignee] : [],
     sprint: fSprint ? [fSprint] : [],
     quarter: fQuarter ? [fQuarter] : [],
-    blocked: fBlocked || undefined,
     depends: fDepends || undefined,
     padre: fPadre ? [fPadre] : [],
     dueSoon: fDueSoon || undefined,
-  }), [fText, fEstado, fTipo, fAssignee, fSprint, fQuarter, fBlocked, fDepends, fPadre, fDueSoon]);
+  }), [fText, fEstado, fTipo, fAssignee, fSprint, fQuarter, fDepends, fPadre, fDueSoon]);
 
   const filtering = !isQueryEmpty(filterQuery);
 
@@ -621,7 +607,7 @@ export function HierarchyTable({
 
   function clearFilters() {
     setFText(""); setFEstado(""); setFTipo(""); setFAssignee("");
-    setFSprint(""); setFQuarter(""); setFBlocked(""); setFDepends("");
+    setFSprint(""); setFQuarter(""); setFDepends("");
     setFPadre(""); setFDueSoon(false);
   }
 
@@ -797,13 +783,6 @@ export function HierarchyTable({
               onChange={(e) => setFPadre(e.target.value)}>
               <option value="">Todas</option>
               {options.map((id) => <option key={id} value={id}>{id}</option>)}
-            </select>
-          </label>
-          <label className="rk-label">Bloqueada
-            <select className="rk-select-sm" value={fBlocked}
-              onChange={(e) => setFBlocked(e.target.value as "" | "sí" | "no")}>
-              <option value="">Todas</option>
-              <option value="sí">Sí</option><option value="no">No</option>
             </select>
           </label>
           <label className="rk-label">Con dependencia
@@ -1331,7 +1310,6 @@ function ViewPanel({
       : statusView(undefined);
   const deps = parseDeps(task?.DependsOn ?? item?.fieldValues.DependsOn);
   const blocked = taskIsBlocked({
-    Blocked: task?.Blocked ?? item?.fieldValues.Blocked,
     Status: task?.Status ?? item?.fieldValues.Status,
   });
   const blockReason = task?.BlockedReason ?? item?.fieldValues.BlockedReason ?? "";
@@ -1498,21 +1476,15 @@ function EditPanel({
   const blockReasonVal =
     task?.BlockedReason ?? item?.fieldValues.BlockedReason ?? "";
   const blocked = taskIsBlocked({
-    Blocked: task?.Blocked ?? item?.fieldValues.Blocked,
-    Status: item?.fieldValues.Status,
+    Status: task?.Status ?? item?.fieldValues.Status,
   });
-  const showBlockReason =
-    blocked || (isTask && blockReasonVal.trim().length > 0);
+  const showBlockReason = blocked;
   const statusField = githubStatusField(project);
 
   function patchBlockReason(value: string) {
-    const byStatus = item
-      ? /^bloqueado$/i.test(String(item.fieldValues.Status ?? "").trim())
-      : false;
-    const Blocked = byStatus || value.trim() ? "Sí" : "No";
     const BlockedReason = value;
-    if (task) patchTask({ BlockedReason, Blocked });
-    else patchFields({ BlockedReason, Blocked });
+    if (task) patchTask({ BlockedReason });
+    else patchFields({ BlockedReason });
   }
 
   function patchTask(p: Partial<GeneralTask>) { if (task) onPatchGeneralTask(task.id, p); }
