@@ -156,8 +156,8 @@ textarea {
   color: var(--rk-muted, #94a3b8);
 }
 
-.rk-repo-input {
-  min-width: 220px;
+.rk-repo-select {
+  min-width: 240px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.85rem;
 }

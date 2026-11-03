@@ -642,14 +642,12 @@ export function OpsDashboard() {
 
         <label className="rk-repo-picker">
           <span className="rk-repo-picker-label">Repo de issues</span>
-          <input
-            className="rk-select rk-repo-input"
-            list="rk-issue-repo-options"
+          <select
+            className="rk-select rk-repo-select"
             value={project?.issueRepository ?? ""}
-            disabled={!project || busy}
-            placeholder="owner/repo"
+            disabled={!project || busy || issueRepoOptions.length === 0}
             aria-label="Repo de issues"
-            title="Repositorio donde se crean issues y sub-issues al publicar"
+            title="Repos de GitHub vinculados al Project (issues / sub-issues al publicar)"
             onChange={(e) => {
               const value = e.target.value.trim();
               commitLocal((prev) => ({
@@ -659,17 +657,22 @@ export function OpsDashboard() {
                   new Set([
                     ...(prev.availableRepositories ?? []),
                     ...issueRepoOptions,
-                    ...(value ? [value] : []),
                   ]),
                 ),
               }));
             }}
-          />
-          <datalist id="rk-issue-repo-options">
+          >
+            <option value="">
+              {issueRepoOptions.length
+                ? "Elegí un repo de GitHub…"
+                : "Sin repos (traé el Project)"}
+            </option>
             {issueRepoOptions.map((r) => (
-              <option key={r} value={r} />
+              <option key={r} value={r}>
+                {r}
+              </option>
             ))}
-          </datalist>
+          </select>
         </label>
 
         <button

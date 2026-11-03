@@ -29,7 +29,7 @@ npm test                     # vitest unitario
 ### Repo de issues (dinámico)
 
 - Al **listar / traer** Projects se descubren repos vinculados al Project v2 (y, si hace falta, URLs de ítems / owner).
-- Quedan en `ProjectDocument.availableRepositories` y alimentan el selector **Repo de issues**.
+- Quedan en `ProjectDocument.availableRepositories` y alimentan un **`<select>` de GitHub** («Repo de issues»): solo opciones traídas de GitHub, no texto libre.
 - La elección del usuario vive en `issueRepository` (también espejada en `index.json`).
 - Al **publicar**, `resolveIssueRepositoryId` usa: UI → env fallback → discovery.
 
