@@ -14,6 +14,8 @@ npm run dev
 
 Abrí [http://localhost:3000](http://localhost:3000). Sin token la UI corre offline con el fixture.
 
+**Contexto para dev y agentes:** [`docs/CONTEXT.md`](docs/CONTEXT.md) · pruebas E2E: [`docs/e2e-github-sync-evidence.md`](docs/e2e-github-sync-evidence.md)
+
 El PAT se lee de **`.env.local`** (o `.env`) vía `process.env.GH_TOKEN`. Nunca lo pongas en el JSON ni en el client. Después de cambiar el `.env*`, reiniciá `npm run dev`.
 
 ## Qué ver en la UI

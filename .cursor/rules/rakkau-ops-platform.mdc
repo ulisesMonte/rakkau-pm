@@ -1,0 +1,19 @@
+---
+description: Contexto Rakkau Ops — GitHub Projects v2, JSON local, jerarquía y sync
+alwaysApply: true
+---
+
+# Rakkau Ops Platform
+
+Leé [`docs/CONTEXT.md`](docs/CONTEXT.md) para arquitectura completa. Resumen operativo:
+
+- **Stack:** Next.js 15 App Router, React 19, JSON en `data/projects/`, GraphQL GitHub en `lib/github/graphql.ts`.
+- **Flujo:** pull → editar local (`dirty: true`) → push → `mergeTasksAfterPush` tras re-pull interno.
+- **Jerarquía:** `generalTasks[]` (padres) + `items[]` (subtareas); sub-issues en `GH_ISSUE_REPOSITORY`.
+- **Campos:** canónicos en `CANONICAL_FIELDS` (`lib/types.ts`); custom en `fieldValues` / `githubFieldValues` para padres.
+- **No** poner `GH_TOKEN` en JSON, client ni docs. **No** push a ids `PVT_kwDODEMO*`.
+- **Lab E2E:** `PVT_kwHOB_sFhs4BpSjO`; evidencias en `docs/e2e-github-sync-evidence.md`.
+- **Tests:** `npm test` (vitest). Cambios en sync/jerarquía → actualizar tests en `projectTasksSchema.test.ts` / `projectFieldsSchema.test.ts`.
+- **UI:** español; convenciones de código existentes en `HierarchyTable.tsx` / `OpsDashboard.tsx`.
+
+Al modificar push/pull, verificar: `issueHierarchy.ts`, `generalTaskFields.ts`, `projectTasksSchema.ts`, panel `setCustom` / `onPatchGeneralTask`.

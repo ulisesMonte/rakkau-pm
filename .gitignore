@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+/test-fixtures/e2e-runs/*
+!/test-fixtures/e2e-runs/.gitkeep
 
 # next.js
 /.next/
