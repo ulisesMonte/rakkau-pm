@@ -142,6 +142,26 @@ textarea {
   box-shadow: 0 0 0 3px var(--rk-cyan-soft);
 }
 
+.rk-repo-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 220px;
+}
+
+.rk-repo-picker-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--rk-muted, #94a3b8);
+}
+
+.rk-repo-input {
+  min-width: 220px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+}
+
 .rk-btn {
   display: inline-flex;
   align-items: center;

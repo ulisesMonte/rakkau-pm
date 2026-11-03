@@ -23,8 +23,11 @@ import { itemTitleForSync } from "@/lib/itemTitle";
 import { issueStateFromProjectStatus } from "@/lib/taskStatus";
 import {
   generalTaskBody,
+  inferRepositoriesFromDocument,
+  pickDefaultIssueRepository,
   rebuildProjectHierarchyFromGitHub,
   resolveIssueRepositoryId,
+  uniqueRepositorySlugs,
 } from "@/lib/github/issueHierarchy";
 import {
   canonicalFieldsCreateSpecs,
@@ -130,6 +133,9 @@ query ListProjects($first: Int!) {
         title
         url
         owner { __typename ... on User { login } ... on Organization { login } }
+        repositories(first: 20) {
+          nodes { nameWithOwner }
+        }
       }
     }
   }
@@ -145,6 +151,9 @@ query PullProject($id: ID!) {
       title
       url
       owner { __typename ... on User { login } ... on Organization { login } }
+      repositories(first: 20) {
+        nodes { nameWithOwner }
+      }
       fields(first: 100) {
         nodes {
           __typename
@@ -310,6 +319,7 @@ export async function listProjects(): Promise<GitHubProjectSummary[]> {
           title: string;
           url: string;
           owner: { login?: string };
+          repositories?: { nodes: Array<{ nameWithOwner: string }> };
         }>;
       };
     };
@@ -321,6 +331,9 @@ export async function listProjects(): Promise<GitHubProjectSummary[]> {
     title: n.title,
     url: n.url,
     owner: n.owner?.login ?? data.viewer.login,
+    repositories: uniqueRepositorySlugs(
+      (n.repositories?.nodes ?? []).map((r) => r.nameWithOwner),
+    ),
   }));
 }
 
@@ -403,6 +416,7 @@ export async function pullProject(projectId: string): Promise<ProjectDocument> {
       title: string;
       url: string;
       owner: { login?: string };
+      repositories?: { nodes: Array<{ nameWithOwner: string }> };
       fields: { nodes: RawFieldNode[] };
       items: { nodes: RawItemNode[] };
     } | null;
@@ -416,6 +430,9 @@ export async function pullProject(projectId: string): Promise<ProjectDocument> {
   const rawItems = node.items?.nodes ?? [];
   const items = mapItems(rawItems, fields);
   const owner = node.owner?.login ?? "unknown";
+  const linkedRepos = uniqueRepositorySlugs(
+    (node.repositories?.nodes ?? []).map((r) => r.nameWithOwner),
+  );
 
   const doc: ProjectDocument = {
     projectId: node.id,
@@ -434,8 +451,21 @@ export async function pullProject(projectId: string): Promise<ProjectDocument> {
     sprints: [],
     currentQuarter: currentCalendarQuarter(),
     people: derivePeople(owner, items, rawItems),
+    availableRepositories: linkedRepos,
+    issueRepository: null,
   };
-  return normalizeProjectHierarchy(rebuildProjectHierarchyFromGitHub(doc));
+  const rebuilt = normalizeProjectHierarchy(
+    rebuildProjectHierarchyFromGitHub(doc),
+  );
+  rebuilt.availableRepositories = uniqueRepositorySlugs(
+    linkedRepos,
+    inferRepositoriesFromDocument(rebuilt),
+  );
+  rebuilt.issueRepository = pickDefaultIssueRepository({
+    available: rebuilt.availableRepositories,
+    doc: rebuilt,
+  });
+  return rebuilt;
 }
 
 export interface CreateFieldInput {
@@ -1218,7 +1248,9 @@ export async function pushProject(
     });
   } catch (err) {
     warnings.push(
-      err instanceof Error ? err.message : "Falta GH_ISSUE_REPOSITORY para sub-issues.",
+      err instanceof Error
+        ? err.message
+        : "Falta elegir «Repo de issues» (o GH_ISSUE_REPOSITORY como fallback).",
     );
   }
 

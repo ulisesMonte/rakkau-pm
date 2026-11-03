@@ -7,6 +7,10 @@ import {
   provisionCanonicalFields,
   pullProject,
 } from "@/lib/github/graphql";
+import {
+  pickDefaultIssueRepository,
+  uniqueRepositorySlugs,
+} from "@/lib/github/issueHierarchy";
 import { PROJECT_FIELDS_SCHEMA_VERSION } from "@/lib/github/projectFieldsSchema";
 import { PROJECT_TASKS_SCHEMA_VERSION } from "@/lib/github/projectTasksSchema";
 
@@ -80,6 +84,22 @@ export async function POST(request: Request, ctx: Ctx) {
       pulled.sprints = existing.sprints ?? pulled.sprints;
       pulled.links = existing.links ?? pulled.links;
       pulled.currentQuarter = existing.currentQuarter ?? pulled.currentQuarter;
+      pulled.availableRepositories = uniqueRepositorySlugs(
+        pulled.availableRepositories,
+        existing.availableRepositories,
+        existing.issueRepository,
+      );
+      pulled.issueRepository = pickDefaultIssueRepository({
+        preferred: existing.issueRepository,
+        available: pulled.availableRepositories,
+        doc: pulled,
+      });
+    } else {
+      pulled.issueRepository = pickDefaultIssueRepository({
+        preferred: pulled.issueRepository,
+        available: pulled.availableRepositories,
+        doc: pulled,
+      });
     }
     await writeProject(pulled);
     return NextResponse.json({

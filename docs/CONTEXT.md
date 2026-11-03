@@ -16,7 +16,7 @@ Jerarquía: **tarea general** (iniciativa / ID de negocio) → **subtareas** (is
 
 ```bash
 npm install
-cp .env.example .env.local   # GH_TOKEN, GH_ISSUE_REPOSITORY
+cp .env.example .env.local   # GH_TOKEN; GH_ISSUE_REPOSITORY es fallback opcional
 npm run dev                  # http://localhost:3000
 npm test                     # vitest unitario
 ```
@@ -24,7 +24,14 @@ npm test                     # vitest unitario
 | Variable | Uso |
 |----------|-----|
 | `GH_TOKEN` | PAT classic, scope `project` (+ `repo` si issues privados). **Solo servidor**, nunca en JSON ni client. |
-| `GH_ISSUE_REPOSITORY` | `owner/repo` donde se crean issues y sub-issues al publicar. |
+| `GH_ISSUE_REPOSITORY` | Fallback opcional `owner/repo`. **La UI «Repo de issues»** (persistida en el JSON del project / index) tiene prioridad al publicar. |
+
+### Repo de issues (dinámico)
+
+- Al **listar / traer** Projects se descubren repos vinculados al Project v2 (y, si hace falta, URLs de ítems / owner).
+- Quedan en `ProjectDocument.availableRepositories` y alimentan el selector **Repo de issues**.
+- La elección del usuario vive en `issueRepository` (también espejada en `index.json`).
+- Al **publicar**, `resolveIssueRepositoryId` usa: UI → env fallback → discovery.
 
 Sin token: UI offline con fixtures (`PVT_kwDODEMO_*` no hace push real).
 
@@ -71,7 +78,7 @@ Detalle: [`project-fields-schema.md`](./project-fields-schema.md), [`project-tas
 | Pull / push GraphQL | `lib/github/graphql.ts` |
 | Columnas ↔ GitHub | `lib/github/projectFieldsSchema.ts`, `fieldProvisioning.ts` |
 | Ítems ↔ board | `lib/github/projectTasksSchema.ts` (`mapGitHubProjectItems`, `mergeTasksAfterPush`) |
-| Jerarquía padre/hijo | `lib/github/issueHierarchy.ts` |
+| Jerarquía padre/hijo + repo issues | `lib/github/issueHierarchy.ts` (`discoverIssueRepositories`, `resolveIssueRepositoryId`) |
 | Sync campos padre | `lib/github/generalTaskFields.ts` |
 | Invariantes | `lib/github/projectInvariants.ts` |
 | UI tabla + panel | `components/HierarchyTable.tsx`, `OpsDashboard.tsx` |

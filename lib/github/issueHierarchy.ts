@@ -20,6 +20,28 @@ export function isLocalGeneralStubId(id: string | undefined | null): boolean {
   return id.startsWith("local_general_");
 }
 
+/** Normaliza y dedupea slugs `owner/repo` (case-insensitive). */
+export function uniqueRepositorySlugs(
+  ...groups: Array<string | null | undefined | Iterable<string | null | undefined>>
+): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const group of groups) {
+    if (group == null) continue;
+    const list =
+      typeof group === "string" ? [group] : Array.from(group as Iterable<string | null | undefined>);
+    for (const raw of list) {
+      const clean = raw?.trim();
+      if (!clean || !clean.includes("/")) continue;
+      const key = clean.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push(clean);
+    }
+  }
+  return out;
+}
+
 export function inferRepositoryFromDocument(
   doc: ProjectDocument | undefined,
 ): string | null {
@@ -30,10 +52,52 @@ export function inferRepositoryFromDocument(
   ];
   for (const u of urls) {
     if (!u) continue;
-    const m = u.match(/github\.com\/([^/]+)\/([^/]+?)(?:\/|$)/i);
+    const m = u.match(/github\.com\/([^/]+)\/([^/#?]+?)(?:\/|$)/i);
     if (m) return `${m[1]}/${m[2]}`;
   }
   return null;
+}
+
+export function inferRepositoriesFromDocument(
+  doc: ProjectDocument | undefined,
+): string[] {
+  if (!doc) return [];
+  const found: string[] = [];
+  const urls = [
+    ...doc.items.map((i) => i.url),
+    ...doc.generalTasks.map((g) => g.url),
+  ];
+  for (const u of urls) {
+    if (!u) continue;
+    const m = u.match(/github\.com\/([^/]+)\/([^/#?]+?)(?:\/|$)/i);
+    if (m) found.push(`${m[1]}/${m[2]}`);
+  }
+  return uniqueRepositorySlugs(found);
+}
+
+export function envIssueRepositoryFallback(): string | null {
+  const v = process.env.GH_ISSUE_REPOSITORY?.trim();
+  return v || null;
+}
+
+/**
+ * Elige default de `issueRepository` sin mutar remoto.
+ * Prioridad: selecciÃ³n previa â†’ env â†’ primer disponible â†’ inferido de URLs.
+ */
+export function pickDefaultIssueRepository(opts: {
+  preferred?: string | null;
+  available?: string[];
+  doc?: ProjectDocument;
+}): string | null {
+  const preferred = opts.preferred?.trim();
+  if (preferred) return preferred;
+  const env = envIssueRepositoryFallback();
+  if (env) return env;
+  const available = opts.available?.length
+    ? opts.available
+    : opts.doc?.availableRepositories;
+  if (available?.[0]) return available[0];
+  return inferRepositoryFromDocument(opts.doc);
 }
 
 async function repositoryNodeId(
@@ -51,68 +115,113 @@ async function repositoryNodeId(
   return data.repository?.id ?? null;
 }
 
+/** Repos vinculados al Project v2 en GitHub. */
+export async function fetchProjectLinkedRepositories(
+  gql: <T>(query: string, variables?: Record<string, unknown>) => Promise<T>,
+  projectId: string,
+): Promise<string[]> {
+  type R = {
+    node: {
+      repositories: { nodes: Array<{ nameWithOwner: string }> };
+    } | null;
+  };
+  const data = await gql<R>(
+    `query ProjectRepos($id: ID!) {
+       node(id: $id) {
+         ... on ProjectV2 {
+           repositories(first: 20) {
+             nodes { nameWithOwner }
+           }
+         }
+       }
+     }`,
+    { id: projectId },
+  );
+  return uniqueRepositorySlugs(
+    (data.node?.repositories?.nodes ?? []).map((r) => r.nameWithOwner),
+  );
+}
+
+async function fetchOwnerRepositories(
+  gql: <T>(query: string, variables?: Record<string, unknown>) => Promise<T>,
+  ownerLogin: string,
+): Promise<string[]> {
+  type R = {
+    user: {
+      repositories: { nodes: Array<{ nameWithOwner: string }> };
+    } | null;
+  };
+  const data = await gql<R>(
+    `query OwnerRepos($login: String!) {
+       user(login: $login) {
+         repositories(first: 10, orderBy: { field: UPDATED_AT, direction: DESC }) {
+           nodes { nameWithOwner }
+         }
+       }
+     }`,
+    { login: ownerLogin },
+  );
+  return uniqueRepositorySlugs(
+    (data.user?.repositories?.nodes ?? []).map((r) => r.nameWithOwner),
+  );
+}
+
+/**
+ * Descubre candidatos a repo de issues: seleccion UI, env, vinculados al Project,
+ * URLs de items, y (si hace falta) repos recientes del owner.
+ */
+export async function discoverIssueRepositories(
+  gql: <T>(query: string, variables?: Record<string, unknown>) => Promise<T>,
+  opts?: { projectId?: string; doc?: ProjectDocument },
+): Promise<string[]> {
+  const linked: string[] = [];
+  if (opts?.projectId) {
+    try {
+      linked.push(...(await fetchProjectLinkedRepositories(gql, opts.projectId)));
+    } catch {
+      /* seguir */
+    }
+  }
+
+  const fromItems = inferRepositoriesFromDocument(opts?.doc);
+  let ownerRepos: string[] = [];
+  const known = uniqueRepositorySlugs(
+    opts?.doc?.issueRepository,
+    opts?.doc?.availableRepositories,
+    envIssueRepositoryFallback(),
+    linked,
+    fromItems,
+  );
+
+  if (!known.length) {
+    const owner = opts?.doc?.owner?.trim();
+    if (owner) {
+      try {
+        ownerRepos = await fetchOwnerRepositories(gql, owner);
+      } catch {
+        /* ignore */
+      }
+    }
+  }
+
+  return uniqueRepositorySlugs(known, ownerRepos);
+}
+
+/**
+ * Resuelve el node id del repo donde crear issues/sub-issues.
+ * Prioridad: `doc.issueRepository` (UI) -> `GH_ISSUE_REPOSITORY` -> discovery.
+ */
 export async function resolveIssueRepositoryId(
   gql: <T>(query: string, variables?: Record<string, unknown>) => Promise<T>,
   opts?: { projectId?: string; doc?: ProjectDocument },
 ): Promise<string> {
-  const candidates: string[] = [];
-  const envRepo = process.env.GH_ISSUE_REPOSITORY?.trim();
-  if (envRepo) candidates.push(envRepo);
-  const fromDoc = inferRepositoryFromDocument(opts?.doc);
-  if (fromDoc) candidates.push(fromDoc);
-
-  if (opts?.projectId) {
-    try {
-      type R = {
-        node: {
-          repositories: { nodes: Array<{ id: string; nameWithOwner: string }> };
-        } | null;
-      };
-      const data = await gql<R>(
-        `query ProjectRepos($id: ID!) {
-           node(id: $id) {
-             ... on ProjectV2 {
-               repositories(first: 10) {
-                 nodes { id nameWithOwner }
-               }
-             }
-           }
-         }`,
-        { id: opts.projectId },
-      );
-      for (const repo of data.node?.repositories?.nodes ?? []) {
-        if (repo.nameWithOwner) candidates.push(repo.nameWithOwner);
-      }
-    } catch {
-      /* seguir con otras fuentes */
-    }
-  }
-
-  const owner = opts?.doc?.owner?.trim();
-  if (owner && !candidates.length) {
-    try {
-      type R = {
-        user: {
-          repositories: { nodes: Array<{ nameWithOwner: string }> };
-        } | null;
-      };
-      const data = await gql<R>(
-        `query OwnerRepos($login: String!) {
-           user(login: $login) {
-             repositories(first: 5, orderBy: { field: UPDATED_AT, direction: DESC }) {
-               nodes { nameWithOwner }
-             }
-           }
-         }`,
-        { login: owner },
-      );
-      for (const repo of data.user?.repositories?.nodes ?? []) {
-        if (repo.nameWithOwner) candidates.push(repo.nameWithOwner);
-      }
-    } catch {
-      /* ignore */
-    }
-  }
+  const discovered = await discoverIssueRepositories(gql, opts);
+  const candidates = uniqueRepositorySlugs(
+    opts?.doc?.issueRepository,
+    envIssueRepositoryFallback(),
+    opts?.doc?.availableRepositories,
+    discovered,
+  );
 
   const seen = new Set<string>();
   for (const slug of candidates) {
@@ -126,8 +235,9 @@ export async function resolveIssueRepositoryId(
   }
 
   throw new Error(
-    "No se pudo resolver el repo para issues. En .env.local agregá GH_ISSUE_REPOSITORY=owner/repo " +
-      "(ej. ulisesMonte/ciam-ops-hybrid-test) o vinculá un repo al Project en GitHub.",
+    "No se pudo resolver el repo para issues. Elegi \"Repo de issues\" en la UI " +
+      "(o como fallback GH_ISSUE_REPOSITORY=owner/repo en .env.local) " +
+      "o vincula un repositorio al Project en GitHub.",
   );
 }
 
@@ -154,7 +264,7 @@ export function defaultGeneralTaskFields(
   };
 }
 
-/** Separa filas del project: padres → generalTasks, hijos → items (subtareas). */
+/** Separa filas del project: padres ÔåÆ generalTasks, hijos ÔåÆ items (subtareas). */
 export function rebuildProjectHierarchyFromGitHub(
   doc: ProjectDocument,
 ): ProjectDocument {
@@ -198,7 +308,7 @@ export function rebuildProjectHierarchyFromGitHub(
         g.githubProjectItemNodeId === item.nodeId,
     );
 
-    // Otro draft/ítem distinto con el mismo id de negocio → mostrarlo como subtarea (no perder fila)
+    // Otro draft/├¡tem distinto con el mismo id de negocio ÔåÆ mostrarlo como subtarea (no perder fila)
     if (!gt && rakkauId) {
       const sameBusinessId = next.generalTasks.find((g) => g.id === rakkauId);
       if (

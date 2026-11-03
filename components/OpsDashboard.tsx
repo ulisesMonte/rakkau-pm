@@ -574,6 +574,20 @@ export function OpsDashboard() {
     }
   }
 
+  const remoteRepos =
+    remote?.find((p) => p.id === selectedId)?.repositories ?? [];
+  const issueRepoOptions = Array.from(
+    new Set(
+      [
+        ...(project?.availableRepositories ?? []),
+        ...remoteRepos,
+        project?.issueRepository ?? "",
+      ]
+        .map((r) => r.trim())
+        .filter(Boolean),
+    ),
+  );
+
   return (
     <div className="app-shell">
       <header className="rk-header">
@@ -625,6 +639,38 @@ export function OpsDashboard() {
             </option>
           ))}
         </select>
+
+        <label className="rk-repo-picker">
+          <span className="rk-repo-picker-label">Repo de issues</span>
+          <input
+            className="rk-select rk-repo-input"
+            list="rk-issue-repo-options"
+            value={project?.issueRepository ?? ""}
+            disabled={!project || busy}
+            placeholder="owner/repo"
+            aria-label="Repo de issues"
+            title="Repositorio donde se crean issues y sub-issues al publicar"
+            onChange={(e) => {
+              const value = e.target.value.trim();
+              commitLocal((prev) => ({
+                ...prev,
+                issueRepository: value || null,
+                availableRepositories: Array.from(
+                  new Set([
+                    ...(prev.availableRepositories ?? []),
+                    ...issueRepoOptions,
+                    ...(value ? [value] : []),
+                  ]),
+                ),
+              }));
+            }}
+          />
+          <datalist id="rk-issue-repo-options">
+            {issueRepoOptions.map((r) => (
+              <option key={r} value={r} />
+            ))}
+          </datalist>
+        </label>
 
         <button
           type="button"

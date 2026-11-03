@@ -118,6 +118,7 @@ export async function writeProject(doc: ProjectDocument): Promise<string> {
       path: rel,
       dirty: doc.dirty,
       pulledAt: doc.pulledAt,
+      issueRepository: doc.issueRepository ?? null,
     });
     return rel;
   });

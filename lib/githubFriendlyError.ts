@@ -20,11 +20,12 @@ export function friendlyGitHubError(raw: string): string {
       "Eso impide traer o publicar hasta corregir la app; el JSON local no se pierde."
     );
   }
-  if (/GH_ISSUE_REPOSITORY|repo para issues/i.test(msg)) {
+  if (/GH_ISSUE_REPOSITORY|repo para issues|Repo de issues/i.test(msg)) {
     return (
       "Falta definir en qué repo crear issues/sub-issues. " +
-      "Agregá en .env.local: GH_ISSUE_REPOSITORY=owner/repo (ej. ulisesMonte/mi-repo), reiniciá el server, " +
-      "o vinculá un repositorio al Project en GitHub (Settings del project)."
+      "Elegí «Repo de issues» en la barra del project (se guarda en el JSON). " +
+      "Como fallback podés setear GH_ISSUE_REPOSITORY=owner/repo en .env.local, " +
+      "o vinculá un repositorio al Project en GitHub."
     );
   }
   if (/could not resolve to a node/i.test(msg)) {

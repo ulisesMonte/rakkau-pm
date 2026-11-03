@@ -170,6 +170,16 @@ export interface ProjectDocument {
   currentQuarter?: CurrentQuarter;
   /** Personas conocidas para asignar (union de assignees + owner) */
   people?: ProjectPerson[];
+  /**
+   * Repo `owner/name` elegido en la UI para crear issues / sub-issues al publicar.
+   * Tiene prioridad sobre `GH_ISSUE_REPOSITORY` del entorno.
+   */
+  issueRepository?: string | null;
+  /**
+   * Repos descubiertos (vinculados al Project, ítems, owner).
+   * Alimentan el selector «Repo de issues».
+   */
+  availableRepositories?: string[];
   /** Versión del esquema de columnas (`PROJECT_FIELDS_SCHEMA_VERSION`). */
   fieldsSchemaVersion?: number;
   /** Versión del esquema de tasks (`PROJECT_TASKS_SCHEMA_VERSION`). */
@@ -184,6 +194,8 @@ export interface IndexEntry {
   path: string;
   dirty: boolean;
   pulledAt: string | null;
+  /** Espejo del `issueRepository` del JSON del project. */
+  issueRepository?: string | null;
 }
 
 export interface ProjectsIndex {
@@ -197,6 +209,8 @@ export interface GitHubProjectSummary {
   title: string;
   url: string;
   owner: string;
+  /** Repos vinculados al Project v2 (si la API los devolvió). */
+  repositories?: string[];
 }
 
 /** Canonical custom field names for v1 */
