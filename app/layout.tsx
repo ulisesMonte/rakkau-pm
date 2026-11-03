@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Figtree, Source_Serif_4 } from "next/font/google";
+import { Outfit, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 
-const figtree = Figtree({
+/** Misma familia que el wordmark (`public/rakkau-wordmark.svg`). */
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-figtree",
+  variable: "--font-outfit",
   display: "swap",
 });
 
@@ -27,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${figtree.variable} ${sourceSerif.variable}`}>
+      <body className={`${outfit.variable} ${sourceSerif.variable}`}>
         {children}
       </body>
     </html>

@@ -19,7 +19,8 @@
   --rk-text-dim: #6e7c8c;
   --rk-ok: #3fb950;
   --rk-warn: #d29922;
-  --rk-font-display: var(--font-figtree), "Figtree", sans-serif;
+  /* Títulos / UI: Outfit como el wordmark del logo Rakkau */
+  --rk-font-display: var(--font-outfit), "Outfit", "Sora", system-ui, sans-serif;
   --rk-font-body: var(--font-source-serif), "Source Serif 4", Georgia, serif;
   --rk-radius: 8px;
   --rk-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -446,12 +447,12 @@ textarea {
 }
 
 .rk-project-title {
-  font-family: var(--rk-font-body);
+  font-family: var(--rk-font-display);
   font-weight: 600;
   font-size: 1.45rem;
   margin: 0 0 0.45rem;
   color: var(--rk-text);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.04em;
 }
 
 .rk-section-head,
@@ -465,11 +466,12 @@ textarea {
 }
 
 .rk-section-title {
-  font-family: var(--rk-font-body);
+  font-family: var(--rk-font-display);
   font-size: 1.15rem;
   font-weight: 600;
   margin: 0 0 0.2rem;
   color: var(--rk-text);
+  letter-spacing: -0.03em;
 }
 
 .rk-section-sub {
