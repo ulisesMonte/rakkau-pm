@@ -8,6 +8,12 @@ export const PINNED_GITHUB_FIELD_NAMES = new Set([
   "Assignees",
 ]);
 
+/**
+ * Canónicos que no van como columna: el ID Task ya se muestra en el nombre
+ * de la tarea general / jerarquía.
+ */
+const HIDDEN_TABLE_FIELD_NAMES = new Set<string>([CANONICAL_FIELDS.Task]);
+
 /** Campos de sistema que no se muestran como columnas de tabla. */
 const SKIP_TABLE_DATA_TYPES = new Set<string>([
   "LABELS",
@@ -45,6 +51,7 @@ export function githubTableColumns(project: ProjectDocument): ProjectField[] {
   return project.fields.filter(
     (f) =>
       !PINNED_GITHUB_FIELD_NAMES.has(f.name) &&
+      !HIDDEN_TABLE_FIELD_NAMES.has(f.name) &&
       !SKIP_TABLE_DATA_TYPES.has(f.dataType),
   );
 }

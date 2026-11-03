@@ -946,10 +946,7 @@ textarea {
   );
 }
 .rk-row-child .rk-td-actions {
-  background: var(--rk-bg-row);
-}
-.rk-row-child:nth-child(even) .rk-td-actions {
-  background: var(--rk-bg-row-alt);
+  background: rgba(15, 23, 42, 0.92);
 }
 
 .rk-icon-btn {
@@ -1206,11 +1203,23 @@ textarea {
 }
 
 .rk-row-child {
-  background: var(--rk-bg-row);
+  background: rgba(15, 23, 42, 0.35);
 }
 
-.rk-row-child:nth-child(even) {
-  background: var(--rk-bg-row-alt);
+.rk-row-child td {
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+  border-bottom-color: rgba(148, 163, 184, 0.08);
+  font-weight: 500;
+}
+
+.rk-row-child-last td {
+  border-bottom-color: var(--rk-border-strong);
+  padding-bottom: 0.75rem;
+}
+
+.rk-row-parent-open td {
+  border-bottom-color: transparent;
 }
 
 .rk-row-has-dep {
@@ -1232,8 +1241,136 @@ textarea {
   font-style: italic;
 }
 
+.rk-row-sub-empty td {
+  padding-top: 0.35rem;
+  padding-bottom: 0.65rem;
+}
+
+.rk-sub-empty {
+  font-size: 0.78rem;
+  color: var(--rk-text-dim);
+}
+
 .rk-child-indent {
-  padding-left: 1.1rem !important;
+  padding-left: 0.75rem !important;
+}
+
+.rk-sub-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.65rem;
+  min-height: 2.1rem;
+}
+
+.rk-tree-rail {
+  position: relative;
+  flex: 0 0 0.85rem;
+  margin-left: 0.55rem;
+}
+
+.rk-tree-rail::before {
+  content: "";
+  position: absolute;
+  left: 0.35rem;
+  top: -0.55rem;
+  bottom: -0.55rem;
+  width: 1px;
+  background: rgba(45, 212, 191, 0.28);
+}
+
+.rk-tree-rail::after {
+  content: "";
+  position: absolute;
+  left: 0.35rem;
+  top: 50%;
+  width: 0.55rem;
+  height: 1px;
+  background: rgba(45, 212, 191, 0.35);
+}
+
+.rk-tree-rail-last::before {
+  bottom: 50%;
+}
+
+.rk-task-cell-sub {
+  flex: 1;
+  min-width: 0;
+  gap: 0.1rem;
+}
+
+.rk-sub-title {
+  font-weight: 500;
+  font-size: 0.82rem;
+  color: var(--rk-text-muted, #cbd5e1);
+}
+
+.rk-sub-issue {
+  font-size: 0.72rem;
+  font-weight: 650;
+  color: var(--rk-cyan);
+  letter-spacing: 0.02em;
+}
+
+.rk-sub-issue-draft {
+  color: var(--rk-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.65rem;
+}
+
+.rk-state-sub {
+  font-size: 0.75rem;
+  opacity: 0.92;
+}
+
+.rk-tree-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-right: 0.15rem;
+  padding: 0;
+  border: 1px solid rgba(45, 212, 191, 0.25);
+  border-radius: 6px;
+  background: rgba(45, 212, 191, 0.08);
+  color: var(--rk-cyan);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s var(--rk-ease), border-color 0.15s var(--rk-ease);
+}
+
+.rk-tree-toggle:hover {
+  background: rgba(45, 212, 191, 0.16);
+  border-color: rgba(45, 212, 191, 0.45);
+}
+
+.rk-tree-chevron {
+  display: inline-block;
+  font-size: 0.7rem;
+  line-height: 1;
+  transform: rotate(0deg);
+  transition: transform 0.15s var(--rk-ease);
+}
+
+.rk-tree-chevron-open {
+  transform: rotate(90deg);
+}
+
+.rk-parent-count {
+  margin-left: auto;
+}
+
+.rk-parent-resp {
+  text-transform: lowercase;
+  padding: 0.08rem 0.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(148, 163, 184, 0.08);
+}
+
+.rk-task-cell-parent .rk-task-cell-head {
+  width: 100%;
 }
 
 .rk-badge {

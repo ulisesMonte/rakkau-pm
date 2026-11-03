@@ -969,6 +969,15 @@ function GroupRows({
   onDeleteTask: (id: string) => void;
   onDeleteItem: (nodeId: string) => void;
 }) {
+  const [expanded, setExpanded] = useState(true);
+  const childCount =
+    project.items.filter((i) => resolveItemParentTaskId(i) === group.task.id)
+      .length || group.children.length;
+  const openChildren = group.children.filter((c) => {
+    const st = String(c.fieldValues.Status ?? c.state ?? "").toLowerCase();
+    return st !== "closed" && st !== "done" && st !== "cerrado";
+  }).length;
+
   return (
     <>
       {group.contextOnly ? (
@@ -987,29 +996,33 @@ function GroupRows({
         <GeneralTaskRow
           task={group.task}
           customFields={customFields}
-          childCount={
-            project.items.filter(
-              (i) => resolveItemParentTaskId(i) === group.task.id,
-            ).length || group.children.length
-          }
+          childCount={childCount}
+          openChildren={openChildren}
+          expanded={expanded}
+          onToggleChildren={() => setExpanded((v) => !v)}
           onEdit={() => onEditTask(group.task.id)}
           onView={() => onViewTask(group.task.id)}
           onDelete={() => onDeleteTask(group.task.id)}
         />
       )}
-      {group.children.map((item) => (
-        <ItemRow
-          key={item.nodeId}
-          item={item}
-          customFields={customFields}
-          onEdit={() => onEditItem(item.nodeId)}
-          onView={() => onViewItem(item.nodeId)}
-          onDelete={() => onDeleteItem(item.nodeId)}
-        />
-      ))}
-      {!group.contextOnly && group.children.length === 0 && (
-        <tr className="rk-row-child rk-row-empty">
-          <td className="rk-child-indent" colSpan={totalCols(customFields)}>Sin subtareas</td>
+      {expanded &&
+        group.children.map((item, idx) => (
+          <ItemRow
+            key={item.nodeId}
+            item={item}
+            customFields={customFields}
+            treeIndex={idx}
+            treeLast={idx === group.children.length - 1}
+            onEdit={() => onEditItem(item.nodeId)}
+            onView={() => onViewItem(item.nodeId)}
+            onDelete={() => onDeleteItem(item.nodeId)}
+          />
+        ))}
+      {expanded && !group.contextOnly && group.children.length === 0 && (
+        <tr className="rk-row-child rk-row-empty rk-row-sub-empty">
+          <td className="rk-child-indent" colSpan={totalCols(customFields)}>
+            <span className="rk-sub-empty">Sin subtareas aún</span>
+          </td>
         </tr>
       )}
     </>
@@ -1021,14 +1034,20 @@ function GroupRows({
 function GeneralTaskRow({
   task,
   childCount,
+  openChildren,
   customFields,
+  expanded,
+  onToggleChildren,
   onEdit,
   onView,
   onDelete,
 }: {
   task: GeneralTask;
   childCount: number;
+  openChildren: number;
   customFields: ProjectField[];
+  expanded: boolean;
+  onToggleChildren: () => void;
   onEdit: () => void;
   onView: () => void;
   onDelete: () => void;
@@ -1036,15 +1055,39 @@ function GeneralTaskRow({
   const deps = parseDeps(task.DependsOn);
   const dueCls = dueNearClass(task.DueDate, task.Status);
   const st = generalTaskStatusDisplay(task);
+  const resp = task.Responsable?.trim();
 
   return (
-    <tr className={`rk-row-parent rk-row-readonly${deps.length ? " rk-row-has-dep" : ""}${dueCls}`}>
+    <tr
+      className={`rk-row-parent rk-row-readonly${deps.length ? " rk-row-has-dep" : ""}${dueCls}${expanded && childCount ? " rk-row-parent-open" : ""}`}
+    >
       <td>
-        <div className="rk-task-cell">
+        <div className="rk-task-cell rk-task-cell-parent">
           <div className="rk-task-cell-head">
+            <button
+              type="button"
+              className="rk-tree-toggle"
+              onClick={onToggleChildren}
+              aria-expanded={expanded}
+              aria-label={
+                expanded ? "Ocultar subtareas" : "Mostrar subtareas"
+              }
+              title={expanded ? "Ocultar subtareas" : "Mostrar subtareas"}
+            >
+              <span className={`rk-tree-chevron${expanded ? " rk-tree-chevron-open" : ""}`} aria-hidden>
+                ▸
+              </span>
+            </button>
             <span className="rk-badge rk-badge-general">Tarea</span>
             <span className="rk-parent-id">{task.id}</span>
-            <span className="rk-parent-meta">{childCount} subtarea{childCount === 1 ? "" : "s"}</span>
+            {resp ? (
+              <span className="rk-parent-meta rk-parent-resp">{resp}</span>
+            ) : null}
+            <span className="rk-parent-meta rk-parent-count">
+              {childCount === 0
+                ? "sin subtareas"
+                : `${openChildren}/${childCount} abiertas`}
+            </span>
           </div>
           <div className="rk-task-cell-title">{task.title}</div>
         </div>
@@ -1075,12 +1118,16 @@ function GeneralTaskRow({
 function ItemRow({
   item,
   customFields,
+  treeIndex = 0,
+  treeLast = true,
   onEdit,
   onView,
   onDelete,
 }: {
   item: ProjectItem;
   customFields: ProjectField[];
+  treeIndex?: number;
+  treeLast?: boolean;
   onEdit: () => void;
   onView: () => void;
   onDelete: () => void;
@@ -1094,11 +1141,9 @@ function ItemRow({
   const taskVal = Array.isArray(item.fieldValues.Task)
     ? item.fieldValues.Task[0] ?? "" : item.fieldValues.Task ?? "";
   const st = itemStatusDisplay(item);
-  // Ítems sin tarea padre se tratan visualmente como Tareas principales
   const isOrphan = !taskVal;
 
   if (isOrphan) {
-    // ─── Vista de TAREA (ítem sin padre) ──────────────────────────
     return (
       <tr className={`rk-row-parent rk-row-readonly${deps.length ? " rk-row-has-dep" : ""}${dueCls}`}>
         <td>
@@ -1144,30 +1189,43 @@ function ItemRow({
     );
   }
 
-  // ─── Vista de SUBTAREA (ítem con padre) ─────────────────────────
+  const title = itemDisplayTitle(item);
+
   return (
-    <tr className={`rk-row-child rk-row-readonly${deps.length ? " rk-row-has-dep" : ""}${dueCls}`}>
+    <tr
+      className={`rk-row-child rk-row-readonly${deps.length ? " rk-row-has-dep" : ""}${dueCls}${treeLast ? " rk-row-child-last" : ""}`}
+      data-tree-index={treeIndex}
+    >
       <td className="rk-child-indent">
-        <div className="rk-task-cell">
-          <div className="rk-task-cell-head">
-            <span className="rk-badge rk-badge-sub">Subtarea</span>
-            {item.number != null && (
-              <span className="rk-parent-id">#{item.number}</span>
-            )}
-          </div>
-          <div className="rk-task-cell-title">
-            {item.url ? (
-              <a className="rk-title-link" href={item.url} target="_blank" rel="noreferrer">
-                {itemDisplayTitle(item)}
-              </a>
-            ) : (
-              <span className="rk-title-link">{itemDisplayTitle(item)}</span>
-            )}
+        <div className="rk-sub-row">
+          <span
+            className={`rk-tree-rail${treeLast ? " rk-tree-rail-last" : ""}`}
+            aria-hidden
+          />
+          <div className="rk-task-cell rk-task-cell-sub">
+            <div className="rk-task-cell-head">
+              {item.number != null ? (
+                <span className="rk-sub-issue">#{item.number}</span>
+              ) : (
+                <span className="rk-sub-issue rk-sub-issue-draft">borrador</span>
+              )}
+            </div>
+            <div className="rk-task-cell-title rk-sub-title">
+              {item.url ? (
+                <a className="rk-title-link" href={item.url} target="_blank" rel="noreferrer">
+                  {title}
+                </a>
+              ) : (
+                <span className="rk-title-link">{title}</span>
+              )}
+            </div>
           </div>
         </div>
       </td>
       <td>
-        <span className={`rk-state ${st.open ? "rk-state-open" : "rk-state-closed"}`}>{st.text}</span>
+        <span className={`rk-state rk-state-sub ${st.open ? "rk-state-open" : "rk-state-closed"}`}>
+          {st.text}
+        </span>
       </td>
       <td><AssigneeChips logins={item.assignees ?? []} /></td>
       {customFields.map((cf) => (
@@ -1179,9 +1237,9 @@ function ItemRow({
         onEdit={onEdit}
         onView={onView}
         onDelete={onDelete}
-        editLabel={`Editar subtarea ${itemDisplayTitle(item)}`}
-        viewLabel={`Ver detalle de subtarea ${itemDisplayTitle(item)}`}
-        deleteLabel={`Eliminar subtarea ${itemDisplayTitle(item)}`}
+        editLabel={`Editar subtarea ${title}`}
+        viewLabel={`Ver detalle de subtarea ${title}`}
+        deleteLabel={`Eliminar subtarea ${title}`}
       />
     </tr>
   );
