@@ -99,6 +99,8 @@ export function columnFieldValue(
       return task.Quarter;
     case CANONICAL_FIELDS.DueDate:
       return task.DueDate;
+    case CANONICAL_FIELDS.Responsable:
+      return task.Responsable;
     default:
       return task.githubFieldValues?.[field.name];
   }

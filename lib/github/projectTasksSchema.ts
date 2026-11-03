@@ -190,6 +190,7 @@ function mergeGeneralTaskPlanning(remote: GeneralTask, local: GeneralTask): Gene
     Sprint: local.Sprint ?? remote.Sprint,
     Quarter: local.Quarter ?? remote.Quarter,
     DueDate: local.DueDate ?? remote.DueDate,
+    Responsable: local.Responsable ?? remote.Responsable,
     assignees: local.assignees?.length ? local.assignees : remote.assignees,
     id: local.id || remote.id,
     ...(githubFieldValues ? { githubFieldValues } : {}),

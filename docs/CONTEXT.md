@@ -63,6 +63,7 @@ Prueba E2E: baseline en GitHub → pull → editar campos → push → pull veri
 | ID iniciativa | `Task` | `GeneralTask.id` + column Task |
 | Dependencia | `HasDependency`, `DependsOn` | props `GeneralTask` |
 | Planificación | `Sprint`, `Quarter`, `DueDate` | props `GeneralTask` |
+| Responsable | `Responsable` | props `GeneralTask` (`rakkau` \| `cliente`) |
 | Bloqueo | `Blocked`, `BlockedReason` | props; bloqueo también vía Status «Bloqueado» |
 | Custom (ej.) | `Track / Journey` | `GeneralTask.githubFieldValues["Track / Journey"]` |
 

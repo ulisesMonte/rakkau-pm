@@ -16,12 +16,13 @@ import type {
 import {
   BLOCKED_OPTIONS,
   CANONICAL_FIELDS,
+  RESPONSABLE_OPTIONS,
   QUARTER_OPTIONS,
   YES_NO_OPTIONS,
 } from "@/lib/types";
 
 /** Incrementar cuando cambie semántica de campos canónicos o bindings. */
-export const PROJECT_FIELDS_SCHEMA_VERSION = 1;
+export const PROJECT_FIELDS_SCHEMA_VERSION = 2;
 
 export type CanonicalFieldKey =
   (typeof CANONICAL_FIELDS)[keyof typeof CANONICAL_FIELDS];
@@ -88,6 +89,12 @@ export const CANONICAL_FIELD_DEFINITIONS: readonly CanonicalFieldDefinition[] =
       key: "DueDate",
       githubFieldName: CANONICAL_FIELDS.DueDate,
       dataType: "DATE",
+    },
+    {
+      key: "Responsable",
+      githubFieldName: CANONICAL_FIELDS.Responsable,
+      dataType: "SINGLE_SELECT",
+      singleSelectOptions: RESPONSABLE_OPTIONS,
     },
   ] as const;
 

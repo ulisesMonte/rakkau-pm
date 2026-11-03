@@ -44,6 +44,9 @@ export type YesNoValue = "Sí" | "No" | "";
 /** @deprecated Prefer YesNoValue — alias for Blocked */
 export type BlockedValue = YesNoValue;
 
+/** Quién lleva la tarea general: Rakkau o el cliente. */
+export type ResponsableValue = "rakkau" | "cliente" | "";
+
 /** Iniciativa / ID de negocio (opciones del field Task). */
 export interface GeneralTask {
   id: string;
@@ -58,6 +61,8 @@ export interface GeneralTask {
   Quarter?: string;
   Blocked?: YesNoValue;
   BlockedReason?: string;
+  /** Responsable del issue / tarea general → GitHub Responsable */
+  Responsable?: ResponsableValue;
   Status?: string;
   /** ProjectV2Item id en GitHub (fila del project). */
   githubProjectItemNodeId?: string | null;
@@ -117,6 +122,8 @@ export interface ItemFieldValues {
   Quarter?: string;
   /** Vencimiento ISO YYYY-MM-DD → GitHub DueDate (DATE) */
   DueDate?: string;
+  /** Responsable → GitHub Responsable (SINGLE_SELECT) */
+  Responsable?: ResponsableValue | string;
   /** Logins asignados (espejo local; también en item.assignees) */
   Assignees?: string | string[];
   [key: string]: string | string[] | undefined;
@@ -223,11 +230,17 @@ export const CANONICAL_FIELDS = {
   Sprint: "Sprint",
   Quarter: "Quarter",
   DueDate: "DueDate",
+  Responsable: "Responsable",
 } as const;
 
 export const YES_NO_OPTIONS: FieldOption[] = [
   { id: "opt-yes", name: "Sí", color: "RED" },
   { id: "opt-no", name: "No", color: "GREEN" },
+];
+
+export const RESPONSABLE_OPTIONS: FieldOption[] = [
+  { id: "opt-resp-rakkau", name: "rakkau", color: "PURPLE", description: "Equipo Rakkau" },
+  { id: "opt-resp-cliente", name: "cliente", color: "BLUE", description: "Cliente" },
 ];
 
 /** @deprecated use YES_NO_OPTIONS */

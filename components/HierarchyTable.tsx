@@ -1230,6 +1230,11 @@ function ViewPanel({
   const due = task?.DueDate ?? item?.fieldValues.DueDate;
   const sprint = task?.Sprint ?? item?.fieldValues.Sprint;
   const quarter = task?.Quarter ?? item?.fieldValues.Quarter;
+  const responsable =
+    task?.Responsable ??
+    (typeof item?.fieldValues.Responsable === "string"
+      ? item.fieldValues.Responsable
+      : undefined);
   const parent = itemIsOrphan ? null : (itemTaskVal || null);
 
   return (
@@ -1253,6 +1258,9 @@ function ViewPanel({
           <span className={`rk-state ${st.open ? "rk-state-open" : "rk-state-closed"}`}>{st.text}</span>
           {sprint && <span className="rk-view-meta-pill">{sprint}</span>}
           {quarter && <span className="rk-view-meta-pill">{quarter}</span>}
+          {responsable && (
+            <span className="rk-view-meta-pill">Responsable · {responsable}</span>
+          )}
           {due && <span className="rk-view-meta-pill">Vence {formatDue(due)}</span>}
           {parent && <span className="rk-view-meta-pill">↑ {parent}</span>}
         </div>
@@ -1570,6 +1578,26 @@ function EditPanel({
                 if (task) patchTask({ DueDate }); else patchFields({ DueDate });
               }} />
           </label>
+
+          {isTask && (
+            <label className="rk-label">Responsable
+              <select
+                className="rk-select-sm"
+                value={task?.Responsable ?? ""}
+                onChange={(e) => {
+                  const Responsable = e.target.value as
+                    | "rakkau"
+                    | "cliente"
+                    | "";
+                  patchTask({ Responsable });
+                }}
+              >
+                <option value="">—</option>
+                <option value="rakkau">rakkau</option>
+                <option value="cliente">cliente</option>
+              </select>
+            </label>
+          )}
 
           <label className="rk-label">¿Tiene dependencia?
             <select className="rk-select-sm"

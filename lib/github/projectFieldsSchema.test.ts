@@ -75,6 +75,7 @@ describe("projectFieldsSchema", () => {
 
   it("canonicalKeyForFieldName", () => {
     expect(canonicalKeyForFieldName("DueDate")).toBe("DueDate");
+    expect(canonicalKeyForFieldName("Responsable")).toBe("Responsable");
     expect(canonicalKeyForFieldName("Status")).toBeUndefined();
   });
 });

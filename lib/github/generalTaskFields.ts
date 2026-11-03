@@ -27,6 +27,9 @@ export function applyItemFieldValuesToGeneralTask(
   if (typeof fv.Sprint === "string") next.Sprint = fv.Sprint;
   if (typeof fv.Quarter === "string") next.Quarter = fv.Quarter;
   if (typeof fv.DueDate === "string") next.DueDate = fv.DueDate;
+  if (typeof fv.Responsable === "string") {
+    next.Responsable = fv.Responsable as GeneralTask["Responsable"];
+  }
 
   const assignees = asStringList(fv.Assignees);
   if (assignees.length) next.assignees = assignees;

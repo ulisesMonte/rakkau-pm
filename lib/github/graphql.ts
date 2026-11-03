@@ -16,6 +16,7 @@ import type {
 import {
   BLOCKED_OPTIONS,
   CANONICAL_FIELDS,
+  RESPONSABLE_OPTIONS,
   YES_NO_OPTIONS,
   currentCalendarQuarter,
 } from "@/lib/types";
@@ -986,6 +987,7 @@ function projectItemFromGeneralTask(task: GeneralTask): ProjectItem | null {
       Sprint: task.Sprint,
       Quarter: task.Quarter,
       DueDate: task.DueDate,
+      Responsable: task.Responsable,
       Assignees: task.assignees,
       Title: task.title,
     },
@@ -1427,6 +1429,16 @@ export async function pushProject(
       });
     }
 
+    const responsableField = byName(CANONICAL_FIELDS.Responsable);
+    if (responsableField && !responsableField.pendingCreate && fv.Responsable) {
+      const optId = findOptionId(responsableField, String(fv.Responsable));
+      if (optId) {
+        await safeUpdateFieldValues(next.projectId, item.nodeId, responsableField, {
+          singleSelectOptionId: optId,
+        });
+      }
+    }
+
     // Push custom (non-canonical) field values
     const canonicalSet = new Set(Object.values(CANONICAL_FIELDS));
     for (const field of next.fields) {
@@ -1571,6 +1583,17 @@ export function ensureCanonicalFields(
         id: `local_due_${Date.now()}`,
         name: CANONICAL_FIELDS.DueDate,
         dataType: "DATE",
+        pendingCreate: true,
+      });
+    }
+  }
+  if (!names.has(CANONICAL_FIELDS.Responsable)) {
+    if (addPendingStubs) {
+      next.fields.push({
+        id: `local_responsable_${Date.now()}`,
+        name: CANONICAL_FIELDS.Responsable,
+        dataType: "SINGLE_SELECT",
+        options: RESPONSABLE_OPTIONS,
         pendingCreate: true,
       });
     }

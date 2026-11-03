@@ -282,6 +282,7 @@ export function OpsDashboard() {
         DependsOn: "",
         Blocked: "No",
         BlockedReason: "",
+        Responsable: "",
         assignees: [],
         Sprint: "",
         Quarter: project.currentQuarter?.quarter ?? "",

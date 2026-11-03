@@ -39,6 +39,7 @@ El PAT se lee de **`.env.local`** (o `.env`) vía `process.env.GH_TOKEN`. Nunca 
 | Sprint | `Sprint` | TEXT |
 | Quarter | `Quarter` | SINGLE_SELECT / TEXT |
 | Vence | `DueDate` | DATE |
+| Responsable | `Responsable` | SINGLE_SELECT (`rakkau` / `cliente`) — tarea general |
 | Bloqueada | `Blocked` | SINGLE_SELECT |
 | Motivo | `BlockedReason` | TEXT |
 

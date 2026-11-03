@@ -254,6 +254,7 @@ export function defaultGeneralTaskFields(
     DependsOn: "",
     Blocked: "No",
     BlockedReason: "",
+    Responsable: "",
     assignees: [],
     Sprint: "",
     Quarter: doc.currentQuarter?.quarter ?? "",
