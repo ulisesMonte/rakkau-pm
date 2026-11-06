@@ -14,6 +14,9 @@
   --rk-magenta: #e879a9;
   --rk-magenta-dim: #db2777;
   --rk-magenta-soft: rgba(232, 121, 169, 0.14);
+  /* Responsable cliente — sky, distinto del cyan Rakkau */
+  --rk-cliente: #38bdf8;
+  --rk-cliente-soft: rgba(56, 189, 248, 0.16);
   --rk-text: #e6edf3;
   --rk-text-muted: #9ba8b8;
   --rk-text-dim: #6e7c8c;
@@ -1266,6 +1269,78 @@ textarea {
   box-shadow: inset 3px 0 0 var(--rk-cyan);
 }
 
+/* Dependencia (-D): misma paleta cyan/navy Rakkau, un poco más marcada */
+.rk-row-is-dep,
+.rk-row-is-dep > td {
+  background: rgba(45, 212, 191, 0.12) !important;
+}
+
+.rk-row-is-dep {
+  box-shadow: inset 3px 0 0 var(--rk-cyan);
+}
+
+.rk-row-is-dep .rk-task-cell-title,
+.rk-row-is-dep .rk-title-link,
+.rk-title-is-dep {
+  color: var(--rk-text);
+  font-weight: 650;
+}
+
+.rk-row-is-dep .rk-title-link:hover {
+  color: var(--rk-cyan);
+}
+
+.rk-row-is-dep .rk-parent-id {
+  color: var(--rk-cyan-dim);
+}
+
+.rk-row-is-dep .rk-badge-general {
+  background: var(--rk-navy-soft);
+  color: var(--rk-cyan);
+  border-color: rgba(45, 212, 191, 0.35);
+}
+
+.rk-row-is-dep .rk-parent-meta {
+  color: var(--rk-text-muted);
+}
+
+/* Responsable = cliente → fila con tinte sky (distinto de Rakkau/cyan) */
+.rk-row-resp-cliente {
+  background: linear-gradient(
+    90deg,
+    var(--rk-cliente-soft),
+    rgba(56, 189, 248, 0.04) 42%,
+    transparent 70%
+  ) !important;
+  box-shadow: inset 3px 0 0 var(--rk-cliente);
+}
+
+.rk-row-resp-cliente.rk-row-is-dep,
+.rk-row-resp-cliente.rk-row-is-dep > td {
+  /* Dep (cyan) + cliente (borde sky) */
+  background: rgba(45, 212, 191, 0.12) !important;
+  box-shadow:
+    inset 3px 0 0 var(--rk-cyan),
+    inset 6px 0 0 var(--rk-cliente);
+}
+
+.rk-row-resp-cliente .rk-badge-general {
+  background: rgba(56, 189, 248, 0.14);
+  color: #7dd3fc;
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.rk-row-resp-cliente .rk-task-cell-title,
+.rk-row-resp-cliente .rk-title-link,
+.rk-row-resp-cliente.rk-row-is-dep .rk-task-cell-title,
+.rk-row-resp-cliente.rk-row-is-dep .rk-title-link {
+  color: var(--rk-text);
+}
+
+.rk-row-resp-cliente .rk-parent-id {
+  color: var(--rk-cliente);
+}
+
 /* Urgencia: solo si falta 1 día (o vence hoy) */
 .rk-row-due-soon {
   box-shadow: inset 3px 0 0 #fb7185;
@@ -1274,6 +1349,22 @@ textarea {
     rgba(251, 113, 133, 0.14),
     transparent 32%
   ) !important;
+}
+
+.rk-row-due-soon.rk-row-resp-cliente {
+  /* urgencia gana el borde; se mantiene wash cliente debajo */
+  background: linear-gradient(
+    90deg,
+    rgba(251, 113, 133, 0.16),
+    var(--rk-cliente-soft) 28%,
+    transparent 55%
+  ) !important;
+}
+
+.rk-row-due-soon.rk-row-is-dep,
+.rk-row-due-soon.rk-row-is-dep > td {
+  background: rgba(45, 212, 191, 0.14) !important;
+  box-shadow: inset 3px 0 0 #fb7185;
 }
 
 .rk-row-empty td {
@@ -1412,10 +1503,51 @@ textarea {
 
 .rk-parent-resp {
   text-transform: lowercase;
-  padding: 0.08rem 0.4rem;
-  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
   border: 1px solid rgba(148, 163, 184, 0.25);
   background: rgba(148, 163, 184, 0.08);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.rk-parent-resp-rakkau {
+  border-color: rgba(45, 212, 191, 0.4);
+  background: rgba(45, 212, 191, 0.14);
+  color: var(--rk-cyan);
+}
+
+.rk-parent-resp-cliente {
+  border-color: rgba(56, 189, 248, 0.45);
+  background: rgba(56, 189, 248, 0.16);
+  color: #7dd3fc;
+}
+
+.rk-title-resp {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(148, 163, 184, 0.08);
+  color: var(--rk-text-muted);
+}
+
+.rk-title-resp.rk-parent-resp-rakkau {
+  border-color: rgba(45, 212, 191, 0.4);
+  background: rgba(45, 212, 191, 0.14);
+  color: var(--rk-cyan);
+}
+
+.rk-title-resp.rk-parent-resp-cliente {
+  border-color: rgba(56, 189, 248, 0.45);
+  background: rgba(56, 189, 248, 0.16);
+  color: #7dd3fc;
 }
 
 .rk-task-cell-parent .rk-task-cell-head {
@@ -1700,6 +1832,7 @@ textarea {
   color: var(--rk-text-muted);
   border: 1px solid var(--rk-border);
 }
+
 
 .rk-title-link {
   color: var(--rk-text);

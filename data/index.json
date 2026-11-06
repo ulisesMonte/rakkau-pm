@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T17:31:10.818Z",
+  "updatedAt": "2026-11-06T17:27:24.180Z",
   "projects": [
     {
       "projectId": "PVT_kwDODEMO_rakkau_ops",
@@ -16,8 +16,8 @@
       "title": "CIAM Ops Hybrid Test",
       "owner": "ulisesMonte",
       "path": "data/projects/PVT_kwHOB_sFhs4BpSjO.json",
-      "dirty": true,
-      "pulledAt": "2026-11-03T12:32:22.585Z",
+      "dirty": false,
+      "pulledAt": "2026-11-06T17:27:24.165Z",
       "issueRepository": "ulisesMonte/ciam-ops-hybrid-test"
     },
     {

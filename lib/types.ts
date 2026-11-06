@@ -90,6 +90,11 @@ export interface GeneralTask {
   BlockedReason?: string;
   /** Responsable del issue / tarea general → GitHub Responsable */
   Responsable?: ResponsableValue;
+  /**
+   * Rol dependencia detectado por sufijo de título `-D` (Traer → JSON local).
+   * También se refleja en HasDependency = "Sí" para filtros existentes.
+   */
+  isDependency?: boolean;
   /** Salud operativa → GitHub EstadoOperativo */
   EstadoOperativo?: EstadoOperativoValue;
   /** Status nativo GitHub Projects (Todo / Done / …) */
@@ -240,6 +245,11 @@ export interface ProjectItem {
   labels?: IssueLabel[];
   /** Tipo de issue (Task / Bug / Feature). */
   issueType?: IssueTypeRef | null;
+  /**
+   * Rol dependencia: título termina en `-D` (parseado en Traer / map local).
+   * VIEW_ONLY-safe; HasDependency se setea a "Sí" en el mismo paso.
+   */
+  isDependency?: boolean;
   blockedBy?: string[];
   blocks?: string[];
 }

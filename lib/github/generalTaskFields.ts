@@ -1,6 +1,8 @@
 import type { GeneralTask, ItemFieldValues } from "@/lib/types";
 import { CANONICAL_FIELDS } from "@/lib/types";
 import { asStringList } from "@/lib/fieldValueCoerce";
+import { titleMarksDependency } from "@/lib/dependencyTitle";
+import { normalizeResponsableValue } from "@/lib/responsable";
 
 const RESERVED_EXTRA_KEYS = new Set<string>([
   ...Object.values(CANONICAL_FIELDS),
@@ -28,7 +30,11 @@ export function applyItemFieldValuesToGeneralTask(
   if (typeof fv.Quarter === "string") next.Quarter = fv.Quarter;
   if (typeof fv.DueDate === "string") next.DueDate = fv.DueDate;
   if (typeof fv.Responsable === "string") {
-    next.Responsable = fv.Responsable as GeneralTask["Responsable"];
+    next.Responsable = normalizeResponsableValue(fv.Responsable);
+  }
+  if (titleMarksDependency(next.title)) {
+    next.isDependency = true;
+    if (next.HasDependency !== "Sí") next.HasDependency = "Sí";
   }
   if (typeof fv.EstadoOperativo === "string") {
     next.EstadoOperativo = fv.EstadoOperativo as GeneralTask["EstadoOperativo"];

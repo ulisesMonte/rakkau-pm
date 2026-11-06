@@ -9,6 +9,7 @@ import type {
   ProjectDocument,
   ProjectField,
   ProjectItem,
+  ResponsableValue,
 } from "@/lib/types";
 import { CANONICAL_FIELDS } from "@/lib/types";
 import { canonicalKeyForFieldName } from "@/lib/github/projectFieldsSchema";
@@ -51,8 +52,30 @@ import {
   issueTypeToneClass,
   labelChipStyle,
 } from "@/lib/issueMeta";
+import { titleMarksDependency } from "@/lib/dependencyTitle";
+import { normalizeResponsableValue } from "@/lib/responsable";
 import { RakkauConfirmDialog } from "./RakkauConfirmDialog";
 import { RakkauNotice } from "./RakkauNotice";
+
+/** Badge Dep: sufijo `-D` o flag local isDependency. */
+function showsDepBadge(opts: {
+  title?: string | null;
+  isDependency?: boolean | null;
+}): boolean {
+  return Boolean(opts.isDependency) || titleMarksDependency(opts.title);
+}
+
+/** Responsable canónico desde props o githubFieldValues. */
+function resolveResponsable(
+  raw: string | null | undefined,
+  githubFieldValues?: { Responsable?: string | string[] },
+): Exclude<ResponsableValue, ""> | "" {
+  const fromTop = normalizeResponsableValue(raw);
+  if (fromTop) return fromTop;
+  const fv = githubFieldValues?.Responsable;
+  const fromFv = Array.isArray(fv) ? fv[0] : fv;
+  return normalizeResponsableValue(fromFv);
+}
 
 interface HierarchyTableProps {
   project: ProjectDocument;
@@ -566,9 +589,27 @@ function AssigneeChips({ logins }: { logins: string[] }) {
   return (
     <div className="rk-dep-chips">
       {logins.map((a) => (
-        <span key={a} className="rk-chip rk-chip-readonly">@{a}</span>
+        <span key={a} className="rk-chip rk-chip-readonly">
+          @{a}
+        </span>
       ))}
     </div>
+  );
+}
+
+function ResponsableCell({
+  value,
+}: {
+  value: Exclude<ResponsableValue, ""> | "";
+}) {
+  if (!value) return <span className="rk-muted">—</span>;
+  return (
+    <span
+      className={`rk-title-resp rk-parent-resp-${value}`}
+      title="Responsable"
+    >
+      {value}
+    </span>
   );
 }
 
@@ -763,6 +804,7 @@ export function HierarchyTable({
   const [fSprint, setFSprint] = useState("");
   const [fQuarter, setFQuarter] = useState("");
   const [fDepends, setFDepends] = useState<"" | "sí" | "no">("");
+  const [fResponsable, setFResponsable] = useState<"" | "rakkau" | "cliente">("");
   const [fPadre, setFPadre] = useState("");
   const [fDueSoon, setFDueSoon] = useState(false);
   const [fLabel, setFLabel] = useState("");
@@ -789,12 +831,13 @@ export function HierarchyTable({
     sprint: fSprint ? [fSprint] : [],
     quarter: fQuarter ? [fQuarter] : [],
     depends: fDepends || undefined,
+    responsable: fResponsable ? [fResponsable] : [],
     padre: fPadre ? [fPadre] : [],
     dueSoon: fDueSoon || undefined,
     label: fLabel ? [fLabel] : [],
     scope: fScope ? [fScope] : [],
     issueType: fIssueType ? [fIssueType] : [],
-  }), [fText, fEstado, fTipo, fAssignee, fSprint, fQuarter, fDepends, fPadre, fDueSoon, fLabel, fScope, fIssueType]);
+  }), [fText, fEstado, fTipo, fAssignee, fSprint, fQuarter, fDepends, fResponsable, fPadre, fDueSoon, fLabel, fScope, fIssueType]);
 
   const filtering = !isQueryEmpty(filterQuery);
 
@@ -883,7 +926,7 @@ export function HierarchyTable({
 
   function clearFilters() {
     setFText(""); setFEstado(""); setFTipo(""); setFAssignee("");
-    setFSprint(""); setFQuarter(""); setFDepends("");
+    setFSprint(""); setFQuarter(""); setFDepends(""); setFResponsable("");
     setFPadre(""); setFDueSoon(false);
     setFLabel(""); setFScope(""); setFIssueType("");
   }
@@ -1079,6 +1122,33 @@ export function HierarchyTable({
                   ))}
                 </select>
               </label>
+              <label className="rk-label">Responsable
+                <select
+                  className="rk-select-sm"
+                  value={fResponsable}
+                  onChange={(e) =>
+                    setFResponsable(e.target.value as "" | "rakkau" | "cliente")
+                  }
+                  aria-label="Filtrar por responsable"
+                >
+                  <option value="">Todos</option>
+                  <option value="rakkau">rakkau</option>
+                  <option value="cliente">cliente</option>
+                </select>
+              </label>
+              <label className="rk-label">Dependencia
+                <select
+                  className="rk-select-sm"
+                  value={fDepends}
+                  onChange={(e) => setFDepends(e.target.value as "" | "sí" | "no")}
+                  aria-label="Filtrar por dependencia (-D / -d)"
+                  title="Solo títulos con sufijo -D / -d"
+                >
+                  <option value="">Todas</option>
+                  <option value="sí">Dep</option>
+                  <option value="no">Sin Dep</option>
+                </select>
+              </label>
             </>
           )}
           {!viewOnly && (
@@ -1103,6 +1173,19 @@ export function HierarchyTable({
                   onChange={(e) => setFPadre(e.target.value)}>
                   <option value="">Todas</option>
                   {options.map((id) => <option key={id} value={id}>{id}</option>)}
+                </select>
+              </label>
+              <label className="rk-label">Responsable
+                <select
+                  className="rk-select-sm"
+                  value={fResponsable}
+                  onChange={(e) =>
+                    setFResponsable(e.target.value as "" | "rakkau" | "cliente")
+                  }
+                >
+                  <option value="">Todos</option>
+                  <option value="rakkau">rakkau</option>
+                  <option value="cliente">cliente</option>
                 </select>
               </label>
               <label className="rk-label">Con dependencia
@@ -1145,6 +1228,7 @@ export function HierarchyTable({
                   <th title="Labels del issue (cualquier etiqueta del repo)">Labels</th>
                   <th title="Status de GitHub Projects (bloqueo = Bloqueado)">Status</th>
                   <th title="Salud operativa de la tarea general">Estado op.</th>
+                  <th title="Responsable: rakkau | cliente">Responsable</th>
                   <th title="Subtareas cerradas / total">Avance</th>
                   <th>Asignados</th>
                   <th>Vence</th>
@@ -1653,7 +1737,11 @@ function GeneralTaskRow({
 }) {
   const deps = parseDeps(task.DependsOn);
   const dueCls = dueNearClass(task.DueDate, task.Status);
-  const resp = task.Responsable?.trim();
+  const resp = resolveResponsable(task.Responsable, task.githubFieldValues);
+  const isDep = showsDepBadge({
+    title: task.title,
+    isDependency: task.isDependency,
+  });
   const st = generalTaskStatusDisplay(task);
   const blocked = taskIsBlocked({ Status: task.Status });
 
@@ -1687,9 +1775,6 @@ function GeneralTaskRow({
         ) : !/^parent-/i.test(task.id) ? (
           <span className="rk-parent-id">{task.id}</span>
         ) : null}
-        {!viewOnly && resp ? (
-          <span className="rk-parent-meta rk-parent-resp">{resp}</span>
-        ) : null}
         {!viewOnly && task.parentMacroId ? (
           <span className="rk-parent-meta rk-parent-resp" title="Vinculada a un macro de Objetivos Q">
             macro
@@ -1710,8 +1795,10 @@ function GeneralTaskRow({
 
   return (
     <tr
-      className={`rk-row-parent rk-row-readonly${deps.length ? " rk-row-has-dep" : ""}${dueCls}${expanded && childCount ? " rk-row-parent-open" : ""}${blocked ? " rk-row-blocked" : ""}${depth > 0 ? " rk-row-nested" : ""}`}
+      className={`rk-row-parent rk-row-readonly${deps.length || isDep ? " rk-row-has-dep" : ""}${isDep ? " rk-row-is-dep" : ""}${dueCls}${expanded && childCount ? " rk-row-parent-open" : ""}${blocked ? " rk-row-blocked" : ""}${depth > 0 ? " rk-row-nested" : ""}${resp === "cliente" ? " rk-row-resp-cliente" : ""}`}
       data-depth={depth}
+      data-dependency={isDep ? "true" : undefined}
+      data-responsable={resp || undefined}
     >
       <td>{titleCell}</td>
       {viewOnly ? (
@@ -1731,6 +1818,9 @@ function GeneralTaskRow({
           </td>
           <td>
             <EstadoOperativoChip value={task.EstadoOperativo} />
+          </td>
+          <td>
+            <ResponsableCell value={resp} />
           </td>
           <td>
             <ProgressCell
@@ -1823,6 +1913,15 @@ function ItemRow({
   const blocked = taskIsBlocked({ Status: item.fieldValues.Status });
   const isOrphan = !taskVal && !item.parentIssueContentId;
   const title = itemDisplayTitle(item);
+  const isDep = showsDepBadge({
+    title: item.title,
+    isDependency: item.isDependency,
+  });
+  const itemResp = resolveResponsable(
+    typeof item.fieldValues.Responsable === "string"
+      ? item.fieldValues.Responsable
+      : "",
+  );
   const due = item.fieldValues.DueDate;
   const showLeafDetail = !hasChildren || expanded;
 
@@ -1842,6 +1941,13 @@ function ItemRow({
         )}
       </td>
       <td><span className="rk-muted">—</span></td>
+      <td>
+        {isOrphan ? (
+          <ResponsableCell value={itemResp} />
+        ) : (
+          <span className="rk-muted">—</span>
+        )}
+      </td>
       <td>
         {hasChildren && nestedProgress ? (
           <ProgressCell progress={nestedProgress} compact showFraction />
@@ -1882,7 +1988,11 @@ function ItemRow({
 
   if (isOrphan) {
     return (
-      <tr className={`rk-row-parent rk-row-readonly${deps.length ? " rk-row-has-dep" : ""}${dueCls}${blocked ? " rk-row-blocked" : ""}`}>
+      <tr
+        className={`rk-row-parent rk-row-readonly${deps.length || isDep ? " rk-row-has-dep" : ""}${isDep ? " rk-row-is-dep" : ""}${dueCls}${blocked ? " rk-row-blocked" : ""}${itemResp === "cliente" ? " rk-row-resp-cliente" : ""}`}
+        data-dependency={isDep ? "true" : undefined}
+        data-responsable={itemResp || undefined}
+      >
         <td>
           <div className="rk-task-cell">
             <div className="rk-task-cell-head">
@@ -1921,9 +2031,10 @@ function ItemRow({
 
   return (
     <tr
-      className={`rk-row-child rk-row-readonly${deps.length ? " rk-row-has-dep" : ""}${dueCls}${treeLast ? " rk-row-child-last" : ""}${blocked ? " rk-row-blocked" : ""}${hasChildren ? " rk-row-mid-parent" : ""}${expanded && hasChildren ? " rk-row-parent-open" : ""}`}
+      className={`rk-row-child rk-row-readonly${deps.length || isDep ? " rk-row-has-dep" : ""}${isDep ? " rk-row-is-dep" : ""}${dueCls}${treeLast ? " rk-row-child-last" : ""}${blocked ? " rk-row-blocked" : ""}${hasChildren ? " rk-row-mid-parent" : ""}${expanded && hasChildren ? " rk-row-parent-open" : ""}`}
       data-tree-index={treeIndex}
       data-depth={depth}
+      data-dependency={isDep ? "true" : undefined}
     >
       <td
         className="rk-child-indent"
@@ -2036,11 +2147,16 @@ function ViewPanel({
   const due = task?.DueDate ?? item?.fieldValues.DueDate;
   const sprint = task?.Sprint ?? item?.fieldValues.Sprint;
   const quarter = task?.Quarter ?? item?.fieldValues.Quarter;
-  const responsable =
+  const responsable = normalizeResponsableValue(
     task?.Responsable ??
-    (typeof item?.fieldValues.Responsable === "string"
-      ? item.fieldValues.Responsable
-      : undefined);
+      (typeof item?.fieldValues.Responsable === "string"
+        ? item.fieldValues.Responsable
+        : undefined),
+  );
+  const viewIsDep = showsDepBadge({
+    title: task?.title ?? item?.title,
+    isDependency: task?.isDependency ?? item?.isDependency,
+  });
   const estadoOp = task?.EstadoOperativo?.trim();
   const progress = task
     ? progressForGeneralTask(task, project.items)
@@ -2059,7 +2175,9 @@ function ViewPanel({
         <header className="rk-edit-panel-head">
           <div>
             <p className="rk-edit-kicker">{kicker}</p>
-            <h3 className="rk-edit-title">{title}</h3>
+            <h3 className={`rk-edit-title${viewIsDep ? " rk-title-is-dep" : ""}`}>
+              {title}
+            </h3>
           </div>
           <button type="button" className="rk-btn rk-btn-ghost" onClick={onClose}>Cerrar</button>
         </header>
@@ -2077,9 +2195,11 @@ function ViewPanel({
           )}
           {sprint && <span className="rk-view-meta-pill">{sprint}</span>}
           {quarter && <span className="rk-view-meta-pill">{quarter}</span>}
-          {responsable && (
-            <span className="rk-view-meta-pill">Responsable · {responsable}</span>
-          )}
+          {responsable ? (
+            <span className={`rk-view-meta-pill rk-parent-resp-${responsable}`}>
+              Responsable · {responsable}
+            </span>
+          ) : null}
           {due && <span className="rk-view-meta-pill">Vence {formatDue(due)}</span>}
           {parent && <span className="rk-view-meta-pill">↑ {parent}</span>}
         </div>

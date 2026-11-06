@@ -1,5 +1,7 @@
-import type { GeneralTask, ProjectItem } from "@/lib/types";
+import type { GeneralTask, ProjectItem, ResponsableValue } from "@/lib/types";
+import { isDependencyRole } from "@/lib/dependencyTitle";
 import { itemDisplayTitle } from "@/lib/itemTitle";
+import { normalizeResponsableValue } from "@/lib/responsable";
 import { isActiveTaskStatus } from "@/lib/taskStatus";
 
 export type TaskFilterQuery = {
@@ -11,6 +13,8 @@ export type TaskFilterQuery = {
   quarter: string[];
   blocked?: "sí" | "no";
   depends?: "sí" | "no";
+  /** Responsable de tarea general: rakkau | cliente */
+  responsable: Array<Exclude<ResponsableValue, "">>;
   padre: string[];
   dueSoon?: boolean;
   /** Nombres de labels GitHub. */
@@ -52,6 +56,7 @@ export function parseFilterQuery(input: string): TaskFilterQuery {
     assignee: [],
     sprint: [],
     quarter: [],
+    responsable: [],
     padre: [],
     label: [],
     scope: [],
@@ -109,6 +114,12 @@ export function parseFilterQuery(input: string): TaskFilterQuery {
           if (yn) q.depends = yn;
           break;
         }
+        case "responsable":
+        case "resp": {
+          const r = normalizeResponsableValue(val);
+          if (r) q.responsable.push(r);
+          break;
+        }
         case "padre":
         case "task":
         case "parent":
@@ -157,6 +168,7 @@ export function serializeFilterQuery(q: TaskFilterQuery): string {
   for (const qq of q.quarter) parts.push(`q:${qq}`);
   if (q.blocked) parts.push(`blocked:${q.blocked}`);
   if (q.depends) parts.push(`depends:${q.depends}`);
+  for (const r of q.responsable) parts.push(`responsable:${r}`);
   for (const p of q.padre) parts.push(`padre:${p}`);
   for (const l of q.label) {
     parts.push(l.includes(" ") ? `label:"${l}"` : `label:${l}`);
@@ -226,8 +238,16 @@ export function generalTaskMatches(
   if (q.is === "closed" && isOpenState(task.Status)) return false;
   if (q.blocked === "sí" && !isBlockedField(task.Blocked, task.Status)) return false;
   if (q.blocked === "no" && isBlockedField(task.Blocked, task.Status)) return false;
-  if (q.depends === "sí" && task.HasDependency !== "Sí") return false;
-  if (q.depends === "no" && task.HasDependency === "Sí") return false;
+  const taskDep = isDependencyRole({
+    title: task.title,
+    isDependency: task.isDependency,
+  });
+  if (q.depends === "sí" && !taskDep) return false;
+  if (q.depends === "no" && taskDep) return false;
+  if (q.responsable.length) {
+    const resp = normalizeResponsableValue(task.Responsable);
+    if (!resp || !q.responsable.includes(resp)) return false;
+  }
   if (q.assignee.length) {
     const set = new Set((task.assignees ?? []).map(norm));
     if (!q.assignee.every((a) => set.has(norm(a)))) return false;
@@ -273,10 +293,20 @@ export function subtaskMatches(
     isBlockedField(item.fieldValues.Blocked, item.fieldValues.Status)
   )
     return false;
-  if (q.depends === "sí" && item.fieldValues.HasDependency !== "Sí")
-    return false;
-  if (q.depends === "no" && item.fieldValues.HasDependency === "Sí")
-    return false;
+  const itemDep = isDependencyRole({
+    title: item.title,
+    isDependency: item.isDependency,
+  });
+  if (q.depends === "sí" && !itemDep) return false;
+  if (q.depends === "no" && itemDep) return false;
+  if (q.responsable.length) {
+    const resp = normalizeResponsableValue(
+      typeof item.fieldValues.Responsable === "string"
+        ? item.fieldValues.Responsable
+        : "",
+    );
+    if (!resp || !q.responsable.includes(resp)) return false;
+  }
   if (q.assignee.length) {
     const set = new Set((item.assignees ?? []).map(norm));
     if (!q.assignee.every((a) => set.has(norm(a)))) return false;
@@ -314,6 +344,7 @@ export function isQueryEmpty(q: TaskFilterQuery): boolean {
     q.assignee.length === 0 &&
     q.sprint.length === 0 &&
     q.quarter.length === 0 &&
+    q.responsable.length === 0 &&
     q.padre.length === 0 &&
     q.label.length === 0 &&
     q.scope.length === 0 &&

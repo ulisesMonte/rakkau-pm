@@ -93,6 +93,65 @@ describe("projectTasksSchema", () => {
     expect(parent?.issueType?.name).toBe("Feature");
   });
 
+  it("marks title -D as dependencia (isDependency + HasDependency)", () => {
+    const items = mapGitHubProjectItems([
+      {
+        id: "PVTI_dep",
+        content: {
+          __typename: "Issue",
+          id: "I_dep",
+          number: 42,
+          title: "crear bc box kubernets -D",
+          state: "OPEN",
+        },
+        fieldValues: {
+          nodes: [
+            {
+              __typename: "ProjectV2ItemFieldSingleSelectValue",
+              name: "fcliente",
+              field: { name: "Responsable" },
+            },
+          ],
+        },
+      },
+      {
+        id: "PVTI_plain",
+        content: {
+          __typename: "Issue",
+          id: "I_plain",
+          number: 43,
+          title: "tarea normal",
+          state: "OPEN",
+        },
+        fieldValues: {
+          nodes: [
+            {
+              __typename: "ProjectV2ItemFieldSingleSelectValue",
+              name: "rakkau",
+              field: { name: "Responsable" },
+            },
+          ],
+        },
+      },
+    ]);
+    const dep = items.find((i) => i.number === 42);
+    const plain = items.find((i) => i.number === 43);
+    expect(dep?.isDependency).toBe(true);
+    expect(dep?.fieldValues.HasDependency).toBe("Sí");
+    expect(dep?.fieldValues.Responsable).toBe("cliente");
+    expect(plain?.isDependency).toBeUndefined();
+    expect(plain?.fieldValues.HasDependency).toBeUndefined();
+    expect(plain?.fieldValues.Responsable).toBe("rakkau");
+
+    const doc = baseDoc();
+    doc.items = items;
+    const rebuilt = rebuildProjectHierarchyFromGitHub(doc);
+    const gtDep = rebuilt.generalTasks.find((g) => g.issueNumber === 42);
+    expect(gtDep?.isDependency).toBe(true);
+    expect(gtDep?.HasDependency).toBe("Sí");
+    expect(gtDep?.Responsable).toBe("cliente");
+  });
+
   it("maps N-level parents (mid-level keeps parentIssueContentId)", () => {
     const items = mapGitHubProjectItems([
       {

@@ -361,6 +361,7 @@ export function rebuildProjectHierarchyFromGitHub(
     gt.subIssuesSummary = item.subIssuesSummary ?? gt.subIssuesSummary ?? null;
     gt.labels = item.labels?.length ? item.labels : gt.labels;
     gt.issueType = item.issueType ?? gt.issueType ?? null;
+    if (item.isDependency) gt.isDependency = true;
     Object.assign(gt, applyItemFieldValuesToGeneralTask(gt, item.fieldValues));
     if (gt.githubContentNodeId) generalByContent.set(gt.githubContentNodeId, gt);
   }

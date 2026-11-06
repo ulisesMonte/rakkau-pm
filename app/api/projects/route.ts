@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { listLocalProjects, readIndex, writeIndex } from "@/lib/fs/store";
-import { hasToken, listProjects, GitHubGraphQLError } from "@/lib/github/graphql";
+import {
+  hasToken,
+  listPersonalProjectsOnly,
+  listProjects,
+  GitHubGraphQLError,
+} from "@/lib/github/graphql";
 import type { ProjectsIndex } from "@/lib/types";
 
 /** GET — local index + optional remote list when GH_TOKEN is set */
@@ -10,6 +15,7 @@ export async function GET(request: Request) {
 
   const local = await listLocalProjects();
   const index = await readIndex();
+  const personalOnly = listPersonalProjectsOnly();
 
   let remoteProjects = null;
   let remoteError: string | null = null;
@@ -37,6 +43,8 @@ export async function GET(request: Request) {
     remote: remoteProjects,
     remoteError,
     hasToken: hasToken(),
+    /** TEMP: GH_PROJECTS_PERSONAL_ONLY — selector sin orgs. */
+    personalProjectsOnly: personalOnly,
   });
 }
 

@@ -47,6 +47,8 @@ import {
   type GitHubProjectItemNode,
 } from "@/lib/github/projectTasksSchema";
 import { asStringList } from "@/lib/fieldValueCoerce";
+import { titleMarksDependency } from "@/lib/dependencyTitle";
+import { normalizeResponsableValue } from "@/lib/responsable";
 
 const GITHUB_GRAPHQL = "https://api.github.com/graphql";
 
@@ -433,6 +435,18 @@ function mapProjectSummary(
   };
 }
 
+/**
+ * TEMP: si `GH_PROJECTS_PERSONAL_ONLY=true`, el selector solo lista Projects
+ * del viewer (user), sin orgs (p. ej. rakkau). Abrir por URL / owner/nº sigue OK.
+ * Sacá el flag o ponelo en false para volver al listado completo.
+ */
+export function listPersonalProjectsOnly(): boolean {
+  const v = String(process.env.GH_PROJECTS_PERSONAL_ONLY ?? "")
+    .trim()
+    .toLowerCase();
+  return v === "1" || v === "true" || v === "yes";
+}
+
 export async function listProjects(): Promise<GitHubProjectSummary[]> {
   type ViewerR = {
     viewer: {
@@ -452,6 +466,7 @@ export async function listProjects(): Promise<GitHubProjectSummary[]> {
   };
 
   const byId = new Map<string, GitHubProjectSummary>();
+  const personalOnly = listPersonalProjectsOnly();
 
   const viewerData = await gql<ViewerR>(LIST_VIEWER_PROJECTS, { first: 40 });
   for (const n of viewerData.viewer.projectsV2.nodes ?? []) {
@@ -459,17 +474,20 @@ export async function listProjects(): Promise<GitHubProjectSummary[]> {
   }
 
   // Orgs aparte: sin read:org no tumba los Projects propios del viewer.
-  try {
-    const orgData = await gql<OrgR>(LIST_ORG_PROJECTS, { first: 40 });
-    for (const org of orgData.viewer.organizations?.nodes ?? []) {
-      for (const n of org.projectsV2?.nodes ?? []) {
-        if (!byId.has(n.id)) {
-          byId.set(n.id, mapProjectSummary(n, org.login));
+  // TEMP: saltear orgs (rakkau, etc.) cuando GH_PROJECTS_PERSONAL_ONLY=true.
+  if (!personalOnly) {
+    try {
+      const orgData = await gql<OrgR>(LIST_ORG_PROJECTS, { first: 40 });
+      for (const org of orgData.viewer.organizations?.nodes ?? []) {
+        for (const n of org.projectsV2?.nodes ?? []) {
+          if (!byId.has(n.id)) {
+            byId.set(n.id, mapProjectSummary(n, org.login));
+          }
         }
       }
+    } catch {
+      /* token sin read:org u orgs inaccesibles — seguir con los propios */
     }
-  } catch {
-    /* token sin read:org u orgs inaccesibles — seguir con los propios */
   }
 
   return Array.from(byId.values()).sort((a, b) =>
@@ -1868,7 +1886,7 @@ export function ensureCanonicalFields(
   if (!next.currentQuarter) next.currentQuarter = currentCalendarQuarter();
   if (!next.people) next.people = next.owner ? [{ login: next.owner }] : [];
 
-  // Backfill HasDependency from DependsOn for older fixtures
+  // Backfill HasDependency from DependsOn / título `-D` for older fixtures
   for (const item of next.items) {
     if (!Array.isArray(item.assignees)) {
       const fromFv = item.fieldValues.Assignees;
@@ -1880,6 +1898,25 @@ export function ensureCanonicalFields(
       item.fieldValues.DependsOn.trim()
     ) {
       item.fieldValues.HasDependency = "Sí";
+    }
+    if (titleMarksDependency(item.title)) {
+      item.isDependency = true;
+      if (item.fieldValues.HasDependency !== "Sí") {
+        item.fieldValues.HasDependency = "Sí";
+      }
+    }
+    if (typeof item.fieldValues.Responsable === "string") {
+      const resp = normalizeResponsableValue(item.fieldValues.Responsable);
+      item.fieldValues.Responsable = resp;
+    }
+  }
+  for (const gt of next.generalTasks) {
+    if (titleMarksDependency(gt.title) || gt.isDependency) {
+      gt.isDependency = true;
+      if (gt.HasDependency !== "Sí") gt.HasDependency = "Sí";
+    }
+    if (gt.Responsable != null) {
+      gt.Responsable = normalizeResponsableValue(gt.Responsable);
     }
   }
 

@@ -12,6 +12,7 @@ import type {
   ProjectItem,
 } from "@/lib/types";
 import { asStringList, firstTaskId } from "@/lib/fieldValueCoerce";
+import { titleMarksDependency } from "@/lib/dependencyTitle";
 import {
   applyItemFieldValuesToGeneralTask,
   mergeGeneralTaskGithubFieldValues,
@@ -21,6 +22,7 @@ import {
   parseRakkauTaskIdFromBody,
 } from "@/lib/github/issueHierarchy";
 import { normalizeProjectHierarchy } from "@/lib/github/projectInvariants";
+import { normalizeResponsableValue } from "@/lib/responsable";
 
 export const PROJECT_TASKS_SCHEMA_VERSION = 1;
 
@@ -204,6 +206,9 @@ export function mapGitHubProjectItems(
     ) {
       fieldValues.HasDependency = "Sí";
     }
+    if (typeof fieldValues.Responsable === "string") {
+      fieldValues.Responsable = normalizeResponsableValue(fieldValues.Responsable);
+    }
     const parentTaskId = firstTaskId(fieldValues.Task);
     const content = n.content;
     let contentType: ProjectItem["contentType"] = "Unknown";
@@ -223,6 +228,10 @@ export function mapGitHubProjectItems(
     if (fromTitleField && !fieldValues.Title) fieldValues.Title = fromTitleField;
     if (resolvedTitle !== "(sin título)" && !fieldValues.Title) {
       fieldValues.Title = resolvedTitle;
+    }
+    const isDependency = titleMarksDependency(resolvedTitle);
+    if (isDependency && fieldValues.HasDependency !== "Sí") {
+      fieldValues.HasDependency = "Sí";
     }
     if (content?.body) fieldValues[INTERNAL_BODY_KEY] = content.body;
 
@@ -277,6 +286,7 @@ export function mapGitHubProjectItems(
       subIssuesSummary,
       labels: mapMergedLabels(content, n.fieldValues?.nodes ?? []),
       issueType: mapIssueType(content),
+      isDependency: isDependency || undefined,
       assignees,
       blockedBy: [],
       blocks: [],
@@ -312,12 +322,15 @@ function mergeGeneralTaskPlanning(remote: GeneralTask, local: GeneralTask): Gene
     Status: local.Status ?? remote.Status,
     HasDependency: local.HasDependency ?? remote.HasDependency,
     DependsOn: local.DependsOn ?? remote.DependsOn,
+    isDependency: local.isDependency ?? remote.isDependency,
     Blocked: local.Blocked ?? remote.Blocked,
     BlockedReason: local.BlockedReason ?? remote.BlockedReason,
     Sprint: local.Sprint ?? remote.Sprint,
     Quarter: local.Quarter ?? remote.Quarter,
     DueDate: local.DueDate ?? remote.DueDate,
-    Responsable: local.Responsable ?? remote.Responsable,
+    Responsable: normalizeResponsableValue(
+      local.Responsable ?? remote.Responsable,
+    ),
     EstadoOperativo: local.EstadoOperativo ?? remote.EstadoOperativo,
     assignees: local.assignees?.length ? local.assignees : remote.assignees,
     id: local.id || remote.id,

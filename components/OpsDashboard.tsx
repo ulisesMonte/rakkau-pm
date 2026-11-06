@@ -24,6 +24,8 @@ interface ProjectsResponse {
   remote: GitHubProjectSummary[] | null;
   remoteError: string | null;
   hasToken: boolean;
+  /** TEMP: GH_PROJECTS_PERSONAL_ONLY — sin Projects de orgs. */
+  personalProjectsOnly?: boolean;
 }
 
 type TabId = "objetivos" | "tareas" | "sprints" | "calendario";
@@ -43,6 +45,7 @@ export function OpsDashboard() {
   const [local, setLocal] = useState<IndexEntry[]>([]);
   const [remote, setRemote] = useState<GitHubProjectSummary[] | null>(null);
   const [hasToken, setHasToken] = useState(false);
+  const [personalOnly, setPersonalOnly] = useState(false);
   const [selectedId, setSelectedId] = useState<string>("");
   const [project, setProject] = useState<ProjectDocument | null>(null);
   const [busy, setBusy] = useState(false);
@@ -83,12 +86,15 @@ export function OpsDashboard() {
     const res = await fetch("/api/projects?remote=1");
     const data = (await res.json()) as ProjectsResponse;
     const localList = data.local ?? [];
+    const personalProjectsOnly = Boolean(data.personalProjectsOnly);
     setLocal(localList);
     setHasToken(data.hasToken);
+    setPersonalOnly(personalProjectsOnly);
     if (data.remoteError) setMessage(data.remoteError);
 
     // Conservar Projects abiertos por URL/id que no vienen en el listado del viewer
     // (compartidos sin ser owner) y los ya bajados en local.
+    // TEMP personalOnly: no mezclar locales de orgs (rakkau); sí conservar Traer por URL.
     setRemote((prevOpened) => {
       const listed = data.remote;
       if (listed === null) return prevOpened;
@@ -96,16 +102,18 @@ export function OpsDashboard() {
       for (const p of prevOpened ?? []) {
         if (!byId.has(p.id)) byId.set(p.id, p);
       }
-      for (const loc of localList) {
-        if (!byId.has(loc.projectId) && !loc.projectId.includes("DEMO")) {
-          byId.set(loc.projectId, {
-            id: loc.projectId,
-            number: loc.number,
-            title: loc.title,
-            url: "",
-            owner: loc.owner,
-            repositories: [],
-          });
+      if (!personalProjectsOnly) {
+        for (const loc of localList) {
+          if (!byId.has(loc.projectId) && !loc.projectId.includes("DEMO")) {
+            byId.set(loc.projectId, {
+              id: loc.projectId,
+              number: loc.number,
+              title: loc.title,
+              url: "",
+              owner: loc.owner,
+              repositories: [],
+            });
+          }
         }
       }
       return Array.from(byId.values()).sort((a, b) =>
@@ -712,6 +720,14 @@ export function OpsDashboard() {
               title="NEXT_PUBLIC_VIEW_ONLY — sin mutaciones a GitHub ni JSON"
             >
               Solo lectura
+            </span>
+          ) : null}
+          {personalOnly ? (
+            <span
+              className="rk-pill rk-pill-dirty"
+              title="TEMP: GH_PROJECTS_PERSONAL_ONLY — sin Projects de orgs (rakkau). Sacá el flag para volver."
+            >
+              Solo personales
             </span>
           ) : null}
           <span
