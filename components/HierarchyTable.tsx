@@ -19,6 +19,7 @@ import {
   type TaskFilterQuery,
 } from "@/lib/taskFilters";
 import {
+  isExternalResponsable,
   itemDisplayTitle,
   titleNomenclatureRowClasses,
 } from "@/lib/itemTitle";
@@ -270,10 +271,21 @@ function CustomFieldCell({ field, value }: { field: ProjectField; value: string 
   }
   const raw = Array.isArray(value) ? value[0] : value;
   if (field.dataType === "SINGLE_SELECT") {
-    const opt = field.options?.find((o) => o.name === raw);
+    const opt = field.options?.find(
+      (o) => o.name.toLowerCase() === String(raw).toLowerCase(),
+    );
     const color = opt?.color?.toLowerCase() ?? "gray";
+    const externalResp =
+      field.name === CANONICAL_FIELDS.Responsable &&
+      isExternalResponsable(String(raw));
     return (
-      <span className={`rk-chip rk-chip-custom rk-chip-custom--${color}`}>{raw}</span>
+      <span
+        className={`rk-chip rk-chip-custom rk-chip-custom--${color}${
+          externalResp ? " rk-chip-resp-external" : ""
+        }`}
+      >
+        {raw}
+      </span>
     );
   }
   if (field.dataType === "DATE") {
@@ -1691,7 +1703,13 @@ function GeneralTaskRow({
           <span className="rk-parent-id">{task.id}</span>
         ) : null}
         {!viewOnly && resp ? (
-          <span className="rk-parent-meta rk-parent-resp">{resp}</span>
+          <span
+            className={`rk-parent-meta rk-parent-resp${
+              isExternalResponsable(resp) ? " rk-parent-resp-external" : ""
+            }`}
+          >
+            {resp}
+          </span>
         ) : null}
         {!viewOnly && task.parentMacroId ? (
           <span className="rk-parent-meta rk-parent-resp" title="Vinculada a un macro de Objetivos Q">

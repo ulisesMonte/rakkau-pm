@@ -1262,40 +1262,71 @@ textarea {
   border-bottom-color: transparent;
 }
 
-/* Dependencia por nomenclatura título `-D`: wash cyan (paleta Rakkau). */
-.rk-row-has-dep {
-  box-shadow: inset 3px 0 0 var(--rk-cyan);
-  background: linear-gradient(
-    90deg,
-    var(--rk-cyan-soft),
-    transparent 38%
-  ) !important;
-}
-
+/*
+ * Washes van en `td` (no en `tr`): `.rk-table tbody td` pinta fondo opaco
+ * y tapa cualquier background del tr.
+ */
 .rk-row-has-dep .rk-task-cell-title,
 .rk-row-has-dep .rk-title-link {
   color: var(--rk-text);
 }
 
-/* Responsable ≠ rakkau (cliente / externo): tint sky. */
-.rk-row-resp-external {
-  box-shadow: inset 3px 0 0 #38bdf8;
-  background: linear-gradient(
+/* Dependencia por nomenclatura título `-D`: wash cyan (paleta Rakkau). */
+.rk-table tbody tr.rk-row-has-dep > td {
+  background-color: var(--rk-bg-row) !important;
+  background-image: linear-gradient(
     90deg,
-    rgba(56, 189, 248, 0.16),
-    transparent 38%
+    rgba(45, 212, 191, 0.28),
+    transparent 45%
   ) !important;
 }
 
-/* `-D` + Responsable externo: mezcla ámbar (warn) + sky. */
-.rk-row-has-dep.rk-row-resp-external {
-  box-shadow: inset 3px 0 0 #38bdf8, inset 6px 0 0 var(--rk-warn);
-  background: linear-gradient(
+.rk-table tbody tr.rk-row-has-dep:nth-child(even) > td {
+  background-color: var(--rk-bg-row-alt) !important;
+}
+
+.rk-table tbody tr.rk-row-has-dep > td:first-child {
+  box-shadow: inset 3px 0 0 var(--rk-cyan);
+}
+
+/* Responsable ≠ rakkau (cliente / externo): tint sky. */
+.rk-table tbody tr.rk-row-resp-external > td {
+  background-color: var(--rk-bg-row) !important;
+  background-image: linear-gradient(
     90deg,
-    rgba(210, 153, 34, 0.14),
-    rgba(56, 189, 248, 0.14) 28%,
-    transparent 48%
+    rgba(56, 189, 248, 0.28),
+    transparent 45%
   ) !important;
+}
+
+.rk-table tbody tr.rk-row-resp-external:nth-child(even) > td {
+  background-color: var(--rk-bg-row-alt) !important;
+}
+
+.rk-table tbody tr.rk-row-resp-external > td:first-child {
+  box-shadow: inset 3px 0 0 #38bdf8;
+}
+
+/* `-D` + Responsable externo: mezcla ámbar (warn) + sky. */
+.rk-table tbody tr.rk-row-has-dep.rk-row-resp-external > td {
+  background-image: linear-gradient(
+    90deg,
+    rgba(210, 153, 34, 0.24),
+    rgba(56, 189, 248, 0.22) 32%,
+    transparent 55%
+  ) !important;
+}
+
+.rk-table tbody tr.rk-row-has-dep.rk-row-resp-external > td:first-child {
+  box-shadow: inset 3px 0 0 #38bdf8, inset 6px 0 0 var(--rk-warn);
+}
+
+/* Chip Responsable externo (cliente) más legible en grilla. */
+.rk-chip-resp-external,
+.rk-parent-resp.rk-parent-resp-external {
+  background: rgba(56, 189, 248, 0.18) !important;
+  color: #7dd3fc !important;
+  border-color: rgba(56, 189, 248, 0.45) !important;
 }
 
 /* Urgencia: solo si falta 1 día (o vence hoy) */
