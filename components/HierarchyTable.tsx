@@ -1668,6 +1668,7 @@ function GeneralTaskRow({
 }) {
   const dueCls = dueNearClass(task.DueDate, task.Status);
   const resp = task.Responsable?.trim();
+  const external = isExternalResponsable(task.Responsable);
   const nomenCls = titleNomenclatureRowClasses(task.title, task.Responsable);
   const st = generalTaskStatusDisplay(task);
   const blocked = taskIsBlocked({ Status: task.Status });
@@ -1702,14 +1703,15 @@ function GeneralTaskRow({
         ) : !/^parent-/i.test(task.id) ? (
           <span className="rk-parent-id">{task.id}</span>
         ) : null}
-        {!viewOnly && resp ? (
+        {external ? (
           <span
-            className={`rk-parent-meta rk-parent-resp${
-              isExternalResponsable(resp) ? " rk-parent-resp-external" : ""
-            }`}
+            className="rk-badge-de-otro"
+            title={`Responsable: ${resp || "no rakkau"} — tarea de otro (no del equipo Rakkau)`}
           >
-            {resp}
+            de otro{resp ? ` · ${resp}` : ""}
           </span>
+        ) : !viewOnly && resp ? (
+          <span className="rk-parent-meta rk-parent-resp">{resp}</span>
         ) : null}
         {!viewOnly && task.parentMacroId ? (
           <span className="rk-parent-meta rk-parent-resp" title="Vinculada a un macro de Objetivos Q">
@@ -1906,6 +1908,7 @@ function ItemRow({
   );
 
   if (isOrphan) {
+    const orphanExternal = isExternalResponsable(itemResp);
     return (
       <tr className={`rk-row-parent rk-row-readonly${nomenCls}${dueCls}${blocked ? " rk-row-blocked" : ""}`}>
         <td>
@@ -1918,6 +1921,14 @@ function ItemRow({
               {item.contentType === "DraftIssue" && (
                 <span className="rk-parent-meta">borrador GH</span>
               )}
+              {orphanExternal ? (
+                <span
+                  className="rk-badge-de-otro"
+                  title={`Responsable: ${itemResp} — tarea de otro (no del equipo Rakkau)`}
+                >
+                  de otro · {itemResp}
+                </span>
+              ) : null}
             </div>
             <div className="rk-task-cell-title">
               {item.url ? (
@@ -1985,6 +1996,14 @@ function ItemRow({
               ) : (
                 <span className="rk-sub-issue rk-sub-issue-draft">borrador</span>
               )}
+              {isExternalResponsable(itemResp) ? (
+                <span
+                  className="rk-badge-de-otro"
+                  title={`Responsable: ${itemResp} — tarea de otro (no del equipo Rakkau)`}
+                >
+                  de otro · {itemResp}
+                </span>
+              ) : null}
               {hasChildren && nestedProgress && nestedProgress.percent != null ? (
                 <span className="rk-parent-meta rk-parent-count">
                   {nestedProgress.done}/{nestedProgress.total} hechas

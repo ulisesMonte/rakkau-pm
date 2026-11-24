@@ -19,6 +19,9 @@
   --rk-text-dim: #6e7c8c;
   --rk-ok: #3fb950;
   --rk-warn: #d29922;
+  /* Tarea de otro (Responsable ≠ rakkau): carril distinto al cyan Rakkau */
+  --rk-external: #c084fc;
+  --rk-external-soft: rgba(192, 132, 252, 0.2);
   /* UI / títulos: Nunito */
   --rk-font-display: var(--font-nunito), "Nunito", system-ui, sans-serif;
   --rk-font-body: var(--font-nunito), "Nunito", system-ui, sans-serif;
@@ -1289,13 +1292,16 @@ textarea {
   box-shadow: inset 3px 0 0 var(--rk-cyan);
 }
 
-/* Responsable ≠ rakkau (cliente / externo): tint sky. */
+/*
+ * Responsable ≠ rakkau = tarea de otro (no es del equipo Rakkau).
+ * Carril violeta + borde punteado: se lee como “ajena”, no como highlight genérico.
+ */
 .rk-table tbody tr.rk-row-resp-external > td {
   background-color: var(--rk-bg-row) !important;
   background-image: linear-gradient(
     90deg,
-    rgba(56, 189, 248, 0.28),
-    transparent 45%
+    var(--rk-external-soft),
+    transparent 48%
   ) !important;
 }
 
@@ -1304,29 +1310,51 @@ textarea {
 }
 
 .rk-table tbody tr.rk-row-resp-external > td:first-child {
-  box-shadow: inset 3px 0 0 #38bdf8;
+  box-shadow: inset 3px 0 0 var(--rk-external);
 }
 
-/* `-D` + Responsable externo: mezcla ámbar (warn) + sky. */
+.rk-table tbody tr.rk-row-resp-external .rk-task-cell-title,
+.rk-table tbody tr.rk-row-resp-external .rk-title-link,
+.rk-table tbody tr.rk-row-resp-external .rk-sub-title {
+  color: #d4c4f0;
+  font-weight: 550;
+  font-style: italic;
+}
+
+/* `-D` (cyan) + de otro (violeta): dos carriles. */
 .rk-table tbody tr.rk-row-has-dep.rk-row-resp-external > td {
   background-image: linear-gradient(
     90deg,
-    rgba(210, 153, 34, 0.24),
-    rgba(56, 189, 248, 0.22) 32%,
-    transparent 55%
+    rgba(45, 212, 191, 0.2),
+    var(--rk-external-soft) 34%,
+    transparent 58%
   ) !important;
 }
 
 .rk-table tbody tr.rk-row-has-dep.rk-row-resp-external > td:first-child {
-  box-shadow: inset 3px 0 0 #38bdf8, inset 6px 0 0 var(--rk-warn);
+  box-shadow: inset 3px 0 0 var(--rk-external), inset 7px 0 0 var(--rk-cyan);
 }
 
-/* Chip Responsable externo (cliente) más legible en grilla. */
+/* Chip / meta: marca “de otro”. */
 .rk-chip-resp-external,
-.rk-parent-resp.rk-parent-resp-external {
-  background: rgba(56, 189, 248, 0.18) !important;
-  color: #7dd3fc !important;
-  border-color: rgba(56, 189, 248, 0.45) !important;
+.rk-parent-resp.rk-parent-resp-external,
+.rk-badge-de-otro {
+  background: rgba(192, 132, 252, 0.16) !important;
+  color: #e9d5ff !important;
+  border: 1px dashed rgba(192, 132, 252, 0.55) !important;
+}
+
+.rk-badge-de-otro {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.08rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  margin-left: 0.35rem;
 }
 
 /* Urgencia: solo si falta 1 día (o vence hoy) */
