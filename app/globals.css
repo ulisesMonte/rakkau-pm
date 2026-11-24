@@ -1335,26 +1335,28 @@ textarea {
   box-shadow: inset 3px 0 0 var(--rk-external), inset 7px 0 0 var(--rk-cyan);
 }
 
-/* Chip / meta: marca “de otro”. */
-.rk-chip-resp-external,
-.rk-parent-resp.rk-parent-resp-external,
-.rk-badge-de-otro {
-  background: rgba(192, 132, 252, 0.16) !important;
-  color: #e9d5ff !important;
-  border: 1px dashed rgba(192, 132, 252, 0.55) !important;
-}
-
-.rk-badge-de-otro {
+/* Columna Responsable */
+.rk-chip-resp {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.08rem 0.45rem;
+  padding: 0.12rem 0.5rem;
   border-radius: 999px;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 650;
-  letter-spacing: 0.02em;
   text-transform: lowercase;
-  margin-left: 0.35rem;
+  border: 1px solid transparent;
+}
+
+.rk-chip-resp-rakkau {
+  background: rgba(45, 212, 191, 0.12);
+  color: var(--rk-cyan);
+  border-color: rgba(45, 212, 191, 0.35);
+}
+
+.rk-chip-resp-external {
+  background: rgba(192, 132, 252, 0.16) !important;
+  color: #e9d5ff !important;
+  border-color: rgba(192, 132, 252, 0.5) !important;
 }
 
 /* Urgencia: solo si falta 1 día (o vence hoy) */
@@ -1649,13 +1651,15 @@ textarea {
 .rk-table-progress th:nth-child(5),
 .rk-table-progress td:nth-child(5) { min-width: 7.5rem; }
 .rk-table-progress th:nth-child(6),
-.rk-table-progress td:nth-child(6) { min-width: 8rem; }
+.rk-table-progress td:nth-child(6) { min-width: 6.5rem; white-space: nowrap; } /* Responsable */
 .rk-table-progress th:nth-child(7),
-.rk-table-progress td:nth-child(7) { min-width: 7rem; }
+.rk-table-progress td:nth-child(7) { min-width: 8rem; }
 .rk-table-progress th:nth-child(8),
-.rk-table-progress td:nth-child(8) { min-width: 6rem; white-space: nowrap; }
+.rk-table-progress td:nth-child(8) { min-width: 7rem; }
 .rk-table-progress th:nth-child(9),
-.rk-table-progress td:nth-child(9) { min-width: 3rem; }
+.rk-table-progress td:nth-child(9) { min-width: 6rem; white-space: nowrap; }
+.rk-table-progress th:nth-child(10),
+.rk-table-progress td:nth-child(10) { min-width: 3rem; }
 
 .rk-type-chip {
   display: inline-flex;

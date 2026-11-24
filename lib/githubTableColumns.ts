@@ -16,6 +16,8 @@ const HIDDEN_TABLE_FIELD_NAMES = new Set<string>([
   CANONICAL_FIELDS.Task,
   /** Se muestra en la columna Estado de la tarea general. */
   CANONICAL_FIELDS.EstadoOperativo,
+  /** Columna fija Responsable (no repetir como custom). */
+  CANONICAL_FIELDS.Responsable,
   /** Redundante: el Status GitHub «Bloqueado» ya indica bloqueo. */
   CANONICAL_FIELDS.Blocked,
   CANONICAL_FIELDS.BlockedReason,
@@ -65,7 +67,7 @@ export function githubTableColumns(project: ProjectDocument): ProjectField[] {
 
 /**
  * Layout fijo del visor de progreso (sin dump de fields técnicos).
- * Título · Tipo · Labels · Status · EstadoOperativo · Avance% · Asignados · Vence · (ojo)
+ * Título · Tipo · Labels · Status · EstadoOperativo · Responsable · Avance% · Asignados · Vence · (ojo)
  * Tipo = Issue Type (Task/Bug/Feature). Labels = etiquetas del repo (cualquier set).
  */
 export const VIEWER_PROGRESS_COLUMNS = [
@@ -74,6 +76,7 @@ export const VIEWER_PROGRESS_COLUMNS = [
   "Labels",
   "Status",
   "Estado operativo",
+  "Responsable",
   "Avance",
   "Asignados",
   "Vence",

@@ -1147,8 +1147,8 @@ export function HierarchyTable({
           className={`rk-table${viewOnly ? " rk-table-progress" : ""}`}
           style={{
             minWidth: viewOnly
-              ? "64rem"
-              : `${720 + ghColumns.length * 120}px`,
+              ? "72rem"
+              : `${780 + ghColumns.length * 120}px`,
           }}
         >
           <thead>
@@ -1160,6 +1160,7 @@ export function HierarchyTable({
                   <th title="Labels del issue (cualquier etiqueta del repo)">Labels</th>
                   <th title="Status de GitHub Projects (bloqueo = Bloqueado)">Status</th>
                   <th title="Salud operativa de la tarea general">Estado op.</th>
+                  <th title="Quién lleva la tarea: rakkau o cliente (u otro)">Responsable</th>
                   <th title="Subtareas cerradas / total">Avance</th>
                   <th>Asignados</th>
                   <th>Vence</th>
@@ -1172,6 +1173,9 @@ export function HierarchyTable({
                   <th>Tarea / Subtarea</th>
                   <th title="Tareas: estado operativo · Subtareas: Status GitHub">
                     Estado
+                  </th>
+                  <th title="Quién lleva la tarea: rakkau o cliente (u otro)">
+                    Responsable
                   </th>
                   <th>Asignado a</th>
                   {ghColumns.map((cf) => (
@@ -1600,6 +1604,25 @@ function EstadoOperativoChip({ value }: { value?: string }) {
   );
 }
 
+/** Columna Responsable: valor del field (rakkau / cliente / …), sin badges bajo el título. */
+function ResponsableChip({ value }: { value?: string | null }) {
+  const raw = (value ?? "").trim();
+  if (!raw) return <span className="rk-muted">—</span>;
+  const external = isExternalResponsable(raw);
+  return (
+    <span
+      className={`rk-chip rk-chip-resp${external ? " rk-chip-resp-external" : " rk-chip-resp-rakkau"}`}
+      title={
+        external
+          ? "Responsable externo (tarea de otro)"
+          : "Responsable Rakkau"
+      }
+    >
+      {raw}
+    </span>
+  );
+}
+
 function ProgressCell({
   progress,
   compact = false,
@@ -1667,8 +1690,6 @@ function GeneralTaskRow({
   showProgressFraction?: boolean;
 }) {
   const dueCls = dueNearClass(task.DueDate, task.Status);
-  const resp = task.Responsable?.trim();
-  const external = isExternalResponsable(task.Responsable);
   const nomenCls = titleNomenclatureRowClasses(task.title, task.Responsable);
   const st = generalTaskStatusDisplay(task);
   const blocked = taskIsBlocked({ Status: task.Status });
@@ -1702,16 +1723,6 @@ function GeneralTaskRow({
           <span className="rk-parent-id">#{task.issueNumber}</span>
         ) : !/^parent-/i.test(task.id) ? (
           <span className="rk-parent-id">{task.id}</span>
-        ) : null}
-        {external ? (
-          <span
-            className="rk-badge-de-otro"
-            title={`Responsable: ${resp || "no rakkau"} — tarea de otro (no del equipo Rakkau)`}
-          >
-            de otro{resp ? ` · ${resp}` : ""}
-          </span>
-        ) : !viewOnly && resp ? (
-          <span className="rk-parent-meta rk-parent-resp">{resp}</span>
         ) : null}
         {!viewOnly && task.parentMacroId ? (
           <span className="rk-parent-meta rk-parent-resp" title="Vinculada a un macro de Objetivos Q">
@@ -1756,6 +1767,9 @@ function GeneralTaskRow({
             <EstadoOperativoChip value={task.EstadoOperativo} />
           </td>
           <td>
+            <ResponsableChip value={task.Responsable} />
+          </td>
+          <td>
             <ProgressCell
               progress={progress}
               compact
@@ -1781,6 +1795,9 @@ function GeneralTaskRow({
         <>
           <td>
             <EstadoOperativoChip value={task.EstadoOperativo} />
+          </td>
+          <td>
+            <ResponsableChip value={task.Responsable} />
           </td>
           <td><AssigneeChips logins={task.assignees ?? []} /></td>
           {customFields.map((cf) => (
@@ -1870,6 +1887,9 @@ function ItemRow({
       </td>
       <td><span className="rk-muted">—</span></td>
       <td>
+        <ResponsableChip value={itemResp} />
+      </td>
+      <td>
         {hasChildren && nestedProgress ? (
           <ProgressCell progress={nestedProgress} compact showFraction />
         ) : (
@@ -1898,6 +1918,9 @@ function ItemRow({
           {st.text}
         </span>
       </td>
+      <td>
+        <ResponsableChip value={itemResp} />
+      </td>
       <td><AssigneeChips logins={item.assignees ?? []} /></td>
       {customFields.map((cf) => (
         <td key={cf.id} className="rk-col-custom">
@@ -1908,7 +1931,6 @@ function ItemRow({
   );
 
   if (isOrphan) {
-    const orphanExternal = isExternalResponsable(itemResp);
     return (
       <tr className={`rk-row-parent rk-row-readonly${nomenCls}${dueCls}${blocked ? " rk-row-blocked" : ""}`}>
         <td>
@@ -1921,14 +1943,6 @@ function ItemRow({
               {item.contentType === "DraftIssue" && (
                 <span className="rk-parent-meta">borrador GH</span>
               )}
-              {orphanExternal ? (
-                <span
-                  className="rk-badge-de-otro"
-                  title={`Responsable: ${itemResp} — tarea de otro (no del equipo Rakkau)`}
-                >
-                  de otro · {itemResp}
-                </span>
-              ) : null}
             </div>
             <div className="rk-task-cell-title">
               {item.url ? (
@@ -1996,14 +2010,6 @@ function ItemRow({
               ) : (
                 <span className="rk-sub-issue rk-sub-issue-draft">borrador</span>
               )}
-              {isExternalResponsable(itemResp) ? (
-                <span
-                  className="rk-badge-de-otro"
-                  title={`Responsable: ${itemResp} — tarea de otro (no del equipo Rakkau)`}
-                >
-                  de otro · {itemResp}
-                </span>
-              ) : null}
               {hasChildren && nestedProgress && nestedProgress.percent != null ? (
                 <span className="rk-parent-meta rk-parent-count">
                   {nestedProgress.done}/{nestedProgress.total} hechas
