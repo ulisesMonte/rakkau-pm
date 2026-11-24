@@ -1,5 +1,5 @@
 import type { GeneralTask, ProjectItem } from "@/lib/types";
-import { itemDisplayTitle } from "@/lib/itemTitle";
+import { isDependencyTitle, itemDisplayTitle } from "@/lib/itemTitle";
 import { isActiveTaskStatus } from "@/lib/taskStatus";
 
 export type TaskFilterQuery = {
@@ -226,8 +226,8 @@ export function generalTaskMatches(
   if (q.is === "closed" && isOpenState(task.Status)) return false;
   if (q.blocked === "sí" && !isBlockedField(task.Blocked, task.Status)) return false;
   if (q.blocked === "no" && isBlockedField(task.Blocked, task.Status)) return false;
-  if (q.depends === "sí" && task.HasDependency !== "Sí") return false;
-  if (q.depends === "no" && task.HasDependency === "Sí") return false;
+  if (q.depends === "sí" && !isDependencyTitle(task.title)) return false;
+  if (q.depends === "no" && isDependencyTitle(task.title)) return false;
   if (q.assignee.length) {
     const set = new Set((task.assignees ?? []).map(norm));
     if (!q.assignee.every((a) => set.has(norm(a)))) return false;
@@ -273,9 +273,9 @@ export function subtaskMatches(
     isBlockedField(item.fieldValues.Blocked, item.fieldValues.Status)
   )
     return false;
-  if (q.depends === "sí" && item.fieldValues.HasDependency !== "Sí")
+  if (q.depends === "sí" && !isDependencyTitle(itemDisplayTitle(item)))
     return false;
-  if (q.depends === "no" && item.fieldValues.HasDependency === "Sí")
+  if (q.depends === "no" && isDependencyTitle(itemDisplayTitle(item)))
     return false;
   if (q.assignee.length) {
     const set = new Set((item.assignees ?? []).map(norm));

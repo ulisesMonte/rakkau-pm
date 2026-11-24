@@ -18,7 +18,10 @@ import {
   subtaskMatches,
   type TaskFilterQuery,
 } from "@/lib/taskFilters";
-import { itemDisplayTitle } from "@/lib/itemTitle";
+import {
+  itemDisplayTitle,
+  titleNomenclatureRowClasses,
+} from "@/lib/itemTitle";
 import {
   isActiveTaskStatus,
   issueStateFromProjectStatus,
@@ -1651,9 +1654,9 @@ function GeneralTaskRow({
   depth?: number;
   showProgressFraction?: boolean;
 }) {
-  const deps = parseDeps(task.DependsOn);
   const dueCls = dueNearClass(task.DueDate, task.Status);
   const resp = task.Responsable?.trim();
+  const nomenCls = titleNomenclatureRowClasses(task.title, task.Responsable);
   const st = generalTaskStatusDisplay(task);
   const blocked = taskIsBlocked({ Status: task.Status });
 
@@ -1710,7 +1713,7 @@ function GeneralTaskRow({
 
   return (
     <tr
-      className={`rk-row-parent rk-row-readonly${deps.length ? " rk-row-has-dep" : ""}${dueCls}${expanded && childCount ? " rk-row-parent-open" : ""}${blocked ? " rk-row-blocked" : ""}${depth > 0 ? " rk-row-nested" : ""}`}
+      className={`rk-row-parent rk-row-readonly${nomenCls}${dueCls}${expanded && childCount ? " rk-row-parent-open" : ""}${blocked ? " rk-row-blocked" : ""}${depth > 0 ? " rk-row-nested" : ""}`}
       data-depth={depth}
     >
       <td>{titleCell}</td>
@@ -1811,7 +1814,6 @@ function ItemRow({
   onView: () => void;
   onDelete: () => void;
 }) {
-  const deps = parseDeps(item.fieldValues.DependsOn);
   const dueCls = dueNearClass(
     item.fieldValues.DueDate,
     item.fieldValues.Status,
@@ -1823,6 +1825,11 @@ function ItemRow({
   const blocked = taskIsBlocked({ Status: item.fieldValues.Status });
   const isOrphan = !taskVal && !item.parentIssueContentId;
   const title = itemDisplayTitle(item);
+  const itemResp =
+    typeof item.fieldValues.Responsable === "string"
+      ? item.fieldValues.Responsable
+      : "";
+  const nomenCls = titleNomenclatureRowClasses(title, itemResp);
   const due = item.fieldValues.DueDate;
   const showLeafDetail = !hasChildren || expanded;
 
@@ -1882,7 +1889,7 @@ function ItemRow({
 
   if (isOrphan) {
     return (
-      <tr className={`rk-row-parent rk-row-readonly${deps.length ? " rk-row-has-dep" : ""}${dueCls}${blocked ? " rk-row-blocked" : ""}`}>
+      <tr className={`rk-row-parent rk-row-readonly${nomenCls}${dueCls}${blocked ? " rk-row-blocked" : ""}`}>
         <td>
           <div className="rk-task-cell">
             <div className="rk-task-cell-head">
@@ -1921,7 +1928,7 @@ function ItemRow({
 
   return (
     <tr
-      className={`rk-row-child rk-row-readonly${deps.length ? " rk-row-has-dep" : ""}${dueCls}${treeLast ? " rk-row-child-last" : ""}${blocked ? " rk-row-blocked" : ""}${hasChildren ? " rk-row-mid-parent" : ""}${expanded && hasChildren ? " rk-row-parent-open" : ""}`}
+      className={`rk-row-child rk-row-readonly${nomenCls}${dueCls}${treeLast ? " rk-row-child-last" : ""}${blocked ? " rk-row-blocked" : ""}${hasChildren ? " rk-row-mid-parent" : ""}${expanded && hasChildren ? " rk-row-parent-open" : ""}`}
       data-tree-index={treeIndex}
       data-depth={depth}
     >

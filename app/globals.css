@@ -1262,8 +1262,40 @@ textarea {
   border-bottom-color: transparent;
 }
 
+/* Dependencia por nomenclatura título `-D`: wash cyan (paleta Rakkau). */
 .rk-row-has-dep {
   box-shadow: inset 3px 0 0 var(--rk-cyan);
+  background: linear-gradient(
+    90deg,
+    var(--rk-cyan-soft),
+    transparent 38%
+  ) !important;
+}
+
+.rk-row-has-dep .rk-task-cell-title,
+.rk-row-has-dep .rk-title-link {
+  color: var(--rk-text);
+}
+
+/* Responsable ≠ rakkau (cliente / externo): tint sky. */
+.rk-row-resp-external {
+  box-shadow: inset 3px 0 0 #38bdf8;
+  background: linear-gradient(
+    90deg,
+    rgba(56, 189, 248, 0.16),
+    transparent 38%
+  ) !important;
+}
+
+/* `-D` + Responsable externo: mezcla ámbar (warn) + sky. */
+.rk-row-has-dep.rk-row-resp-external {
+  box-shadow: inset 3px 0 0 #38bdf8, inset 6px 0 0 var(--rk-warn);
+  background: linear-gradient(
+    90deg,
+    rgba(210, 153, 34, 0.14),
+    rgba(56, 189, 248, 0.14) 28%,
+    transparent 48%
+  ) !important;
 }
 
 /* Urgencia: solo si falta 1 día (o vence hoy) */
