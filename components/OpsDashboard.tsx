@@ -991,6 +991,7 @@ export function OpsDashboard() {
             <SprintPanel
               project={project}
               onUpdate={viewOnly ? () => undefined : onUpdateProject}
+              onPublished={(doc) => setProject(doc)}
             />
           )}
 

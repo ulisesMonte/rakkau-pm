@@ -1,5 +1,5 @@
 import type { GeneralTask, ProjectItem, ResponsableValue } from "@/lib/types";
-import { isDependencyRole } from "@/lib/dependencyTitle";
+import { isBlockedByRelations } from "@/lib/issueRelations";
 import { itemDisplayTitle } from "@/lib/itemTitle";
 import { normalizeResponsableValue } from "@/lib/responsable";
 import { isActiveTaskStatus } from "@/lib/taskStatus";
@@ -12,7 +12,13 @@ export type TaskFilterQuery = {
   sprint: string[];
   quarter: string[];
   blocked?: "sí" | "no";
+  /**
+   * Filtra por relación GitHub Relationships `blockedBy` (no por `-D` ni HasDependency).
+   * Alias de query: depends / dependencia / dep / bloqueada-por.
+   */
   depends?: "sí" | "no";
+  /** Filtra por issues que bloquean a otras (`blocking`). */
+  blocking?: "sí" | "no";
   /** Responsable de tarea general: rakkau | cliente */
   responsable: Array<Exclude<ResponsableValue, "">>;
   padre: string[];
@@ -23,6 +29,8 @@ export type TaskFilterQuery = {
   scope: string[];
   /** Issue type: Task / Bug / Feature. */
   issueType: string[];
+  /** Jira key (exact or substring, case-insensitive). */
+  jira: string[];
 };
 
 const TOKEN_RE =
@@ -61,6 +69,7 @@ export function parseFilterQuery(input: string): TaskFilterQuery {
     label: [],
     scope: [],
     issueType: [],
+    jira: [],
   };
   if (!input.trim()) return q;
 
@@ -109,11 +118,24 @@ export function parseFilterQuery(input: string): TaskFilterQuery {
         }
         case "depends":
         case "dependencia":
-        case "dep": {
+        case "dep":
+        case "bloqueada-por":
+        case "blockedby": {
           const yn = yesNo(val);
           if (yn) q.depends = yn;
           break;
         }
+        case "blocking":
+        case "bloquea": {
+          const yn = yesNo(val);
+          if (yn) q.blocking = yn;
+          break;
+        }
+        case "jira":
+        case "jiraKey":
+        case "ticket":
+          q.jira.push(val.toUpperCase());
+          break;
         case "responsable":
         case "resp": {
           const r = normalizeResponsableValue(val);
@@ -168,6 +190,8 @@ export function serializeFilterQuery(q: TaskFilterQuery): string {
   for (const qq of q.quarter) parts.push(`q:${qq}`);
   if (q.blocked) parts.push(`blocked:${q.blocked}`);
   if (q.depends) parts.push(`depends:${q.depends}`);
+  if (q.blocking) parts.push(`blocking:${q.blocking}`);
+  for (const j of q.jira) parts.push(`jira:${j}`);
   for (const r of q.responsable) parts.push(`responsable:${r}`);
   for (const p of q.padre) parts.push(`padre:${p}`);
   for (const l of q.label) {
@@ -238,12 +262,17 @@ export function generalTaskMatches(
   if (q.is === "closed" && isOpenState(task.Status)) return false;
   if (q.blocked === "sí" && !isBlockedField(task.Blocked, task.Status)) return false;
   if (q.blocked === "no" && isBlockedField(task.Blocked, task.Status)) return false;
-  const taskDep = isDependencyRole({
-    title: task.title,
-    isDependency: task.isDependency,
-  });
-  if (q.depends === "sí" && !taskDep) return false;
-  if (q.depends === "no" && taskDep) return false;
+  const taskBlockedBy = isBlockedByRelations(task.blockedBy);
+  if (q.depends === "sí" && !taskBlockedBy) return false;
+  if (q.depends === "no" && taskBlockedBy) return false;
+  const taskBlocking = (task.blocks?.length ?? 0) > 0;
+  if (q.blocking === "sí" && !taskBlocking) return false;
+  if (q.blocking === "no" && taskBlocking) return false;
+  if (q.jira.length) {
+    const key = (task.jiraKey ?? "").toUpperCase();
+    if (!key || !q.jira.some((j) => key.includes(norm(j).toUpperCase()) || norm(j).toUpperCase().includes(key)))
+      return false;
+  }
   if (q.responsable.length) {
     const resp = normalizeResponsableValue(task.Responsable);
     if (!resp || !q.responsable.includes(resp)) return false;
@@ -293,12 +322,24 @@ export function subtaskMatches(
     isBlockedField(item.fieldValues.Blocked, item.fieldValues.Status)
   )
     return false;
-  const itemDep = isDependencyRole({
-    title: item.title,
-    isDependency: item.isDependency,
-  });
-  if (q.depends === "sí" && !itemDep) return false;
-  if (q.depends === "no" && itemDep) return false;
+  const itemBlockedBy = isBlockedByRelations(item.blockedBy);
+  if (q.depends === "sí" && !itemBlockedBy) return false;
+  if (q.depends === "no" && itemBlockedBy) return false;
+  const itemBlocking = (item.blocks?.length ?? 0) > 0;
+  if (q.blocking === "sí" && !itemBlocking) return false;
+  if (q.blocking === "no" && itemBlocking) return false;
+  if (q.jira.length) {
+    const key = (item.jiraKey ?? "").toUpperCase();
+    if (
+      !key ||
+      !q.jira.some(
+        (j) =>
+          key.includes(norm(j).toUpperCase()) ||
+          norm(j).toUpperCase().includes(key),
+      )
+    )
+      return false;
+  }
   if (q.responsable.length) {
     const resp = normalizeResponsableValue(
       typeof item.fieldValues.Responsable === "string"
@@ -340,6 +381,7 @@ export function isQueryEmpty(q: TaskFilterQuery): boolean {
     !q.type &&
     !q.blocked &&
     !q.depends &&
+    !q.blocking &&
     !q.dueSoon &&
     q.assignee.length === 0 &&
     q.sprint.length === 0 &&
@@ -349,6 +391,7 @@ export function isQueryEmpty(q: TaskFilterQuery): boolean {
     q.label.length === 0 &&
     q.scope.length === 0 &&
     q.issueType.length === 0 &&
+    q.jira.length === 0 &&
     q.text.length === 0
   );
 }

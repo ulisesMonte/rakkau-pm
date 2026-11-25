@@ -11,6 +11,7 @@ import {
   pickDefaultIssueRepository,
   uniqueRepositorySlugs,
 } from "@/lib/github/issueHierarchy";
+import { mergeSprintsFromMilestones } from "@/lib/github/milestones";
 import { PROJECT_FIELDS_SCHEMA_VERSION } from "@/lib/github/projectFieldsSchema";
 import { PROJECT_TASKS_SCHEMA_VERSION } from "@/lib/github/projectTasksSchema";
 import { isViewOnly } from "@/lib/viewOnly";
@@ -90,8 +91,13 @@ export async function POST(request: Request, ctx: Ctx) {
     pulled.fieldsSchemaVersion = PROJECT_FIELDS_SCHEMA_VERSION;
     pulled.tasksSchemaVersion = PROJECT_TASKS_SCHEMA_VERSION;
     if (existing) {
-      pulled.sprints = existing.sprints ?? pulled.sprints;
-      pulled.links = existing.links ?? pulled.links;
+      // Relationships come from Traer (GitHub); do not keep stale local links.
+      // Sprints: merge local planning with milestones rehydrated on pull.
+      pulled.sprints = mergeSprintsFromMilestones(
+        existing.sprints?.length ? existing.sprints : pulled.sprints,
+        pulled.items,
+        pulled.generalTasks,
+      );
       pulled.currentQuarter = existing.currentQuarter ?? pulled.currentQuarter;
       pulled.macroTasks = existing.macroTasks ?? pulled.macroTasks;
       pulled.availableRepositories = uniqueRepositorySlugs(

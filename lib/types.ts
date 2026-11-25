@@ -91,10 +91,23 @@ export interface GeneralTask {
   /** Responsable del issue / tarea general → GitHub Responsable */
   Responsable?: ResponsableValue;
   /**
-   * Rol dependencia detectado por sufijo de título `-D` (Traer → JSON local).
-   * También se refleja en HasDependency = "Sí" para filtros existentes.
+   * @deprecated Prefer GitHub Relationships `blockedBy`. Legacy: título `-D`.
+   * Kept for fixtures / migration; UI filters use `blockedBy`.
    */
   isDependency?: boolean;
+  /**
+   * Content node IDs of issues that block this one (GitHub Relationships).
+   */
+  blockedBy?: string[];
+  /** Content node IDs of issues this one blocks. */
+  blocks?: string[];
+  /** Jira key parsed from description/body (e.g. CIAM-42). */
+  jiraKey?: string | null;
+  /** Repo `owner/name` of the underlying Issue (multi-repo milestones). */
+  repository?: string | null;
+  milestoneId?: string | null;
+  milestoneTitle?: string | null;
+  milestoneDueOn?: string | null;
   /** Salud operativa → GitHub EstadoOperativo */
   EstadoOperativo?: EstadoOperativoValue;
   /** Status nativo GitHub Projects (Todo / Done / …) */
@@ -131,6 +144,13 @@ export interface Sprint {
   endDate?: string;
   /** Color de acento en calendario (#RRGGBB) */
   color?: string;
+  /**
+   * Milestone node IDs keyed by `owner/repo` after publish.
+   * Milestones do not cross repos — one per repository of sprint issues.
+   */
+  githubMilestoneIdsByRepo?: Record<string, string>;
+  /** ISO timestamp of last successful milestone publish. */
+  publishedAt?: string | null;
 }
 
 /** Paleta sugerida al crear sprints */
@@ -246,12 +266,23 @@ export interface ProjectItem {
   /** Tipo de issue (Task / Bug / Feature). */
   issueType?: IssueTypeRef | null;
   /**
-   * Rol dependencia: título termina en `-D` (parseado en Traer / map local).
-   * VIEW_ONLY-safe; HasDependency se setea a "Sí" en el mismo paso.
+   * @deprecated Prefer `blockedBy`. Legacy title `-D` flag from Traer.
    */
   isDependency?: boolean;
+  /**
+   * Content node IDs blocking this issue (GitHub Relationships `blockedBy`).
+   * Source of truth for “bloqueada” — not Project fields, not title `-D`.
+   */
   blockedBy?: string[];
+  /** Content node IDs this issue blocks (`blocking`). */
   blocks?: string[];
+  /** Jira key parsed from issue body/description. */
+  jiraKey?: string | null;
+  /** Repo `owner/name` of the Issue content. */
+  repository?: string | null;
+  milestoneId?: string | null;
+  milestoneTitle?: string | null;
+  milestoneDueOn?: string | null;
 }
 
 export interface ProjectLinks {

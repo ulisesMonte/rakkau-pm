@@ -37,9 +37,10 @@ npm test                     # vitest unitario
 
 | Variable | Uso |
 |----------|-----|
-| `GH_TOKEN` | PAT classic. Visor: `read:project` (+ `repo` si issues privados). Edición/push: `project` write. **Solo servidor**, nunca en JSON ni client. |
-| `NEXT_PUBLIC_VIEW_ONLY` | `true` = visor solo lectura (UI + API). |
+| `GH_TOKEN` | PAT classic. Visor: `read:project` (+ `repo` si issues privados). Edición/push: `project` write. Publicar sprint→milestone: `repo`. **Solo servidor**, nunca en JSON ni client. |
+| `NEXT_PUBLIC_VIEW_ONLY` | `true` = visor solo lectura (UI + API). Traer no muta Projects. **Excepción:** `POST …/sprints/:id/publish` (milestones) es mutación explícita y está permitida. |
 | `GH_ISSUE_REPOSITORY` | Fallback opcional `owner/repo`. En edición, **la UI «Repo de issues»** (persistida en el JSON del project / index) tiene prioridad al publicar. |
+| `JIRA_BASE_URL` / `NEXT_PUBLIC_JIRA_BASE_URL` | Base para links `…/browse/KEY`. Sin esto la columna Jira muestra solo el key. |
 
 ### Repo de issues (dinámico)
 
@@ -79,12 +80,15 @@ Jerarquía: **Macro (Objetivos Q)** → tareas generales → subtareas.
 | Negocio | Nombre columna | Dónde en local (tarea general) |
 |---------|----------------|--------------------------------|
 | ID iniciativa | `Task` | `GeneralTask.id` + column Task |
-| Dependencia | `HasDependency`, `DependsOn` | props `GeneralTask` |
+| Dependencia (legacy) | `HasDependency`, `DependsOn`, título `-D` | **Deprecado** como fuente de verdad; se conserva en sync |
+| Blocked by / Blocking | GitHub Issue Relationships | `blockedBy[]` / `blocks[]` + `links` (content node IDs). Filtro «Bloqueada» / wash cyan |
 | Planificación | `Sprint`, `Quarter`, `DueDate` | props `GeneralTask` |
-| Responsable | `Responsable` | props `GeneralTask` (`rakkau` \| `cliente`) |
+| Sprints → Milestones | publish explícito | `POST /api/projects/:id/sprints/:sprintId/publish` crea/actualiza milestone por repo y asigna issues con field Sprint = nombre |
+| Responsable | `Responsable` | props `GeneralTask` (`rakkau` \| `cliente`); `cliente` → wash sky en fila |
 | Estado operativo | `EstadoOperativo` | props `GeneralTask` (`a tiempo` \| `impactado` \| `pausado`) — distinto del Status nativo GH |
 | Avance % | (derivado) | subtareas cerradas / total (`lib/taskProgress.ts`) |
-| Bloqueo | Status «Bloqueado» (+ `BlockedReason` opcional) | Sin columna Blocked Sí/No en UI; el Status alcanza |
+| Bloqueo (Status) | Status «Bloqueado» (+ `BlockedReason` opcional) | Semáforo; distinto de Relationships |
+| Jira | parseado del `body`/descripción | `jiraKey` (+ link si `JIRA_BASE_URL`); columna + filtro en visor |
 | Custom (ej.) | `Track / Journey` | `GeneralTask.githubFieldValues["Track / Journey"]` |
 
 Subtareas: todo en `ProjectItem.fieldValues` keyed por **nombre de columna**.
@@ -128,6 +132,7 @@ Detalle: [`project-fields-schema.md`](./project-fields-schema.md), [`project-tas
 | GET/PUT | `/api/projects/:id` | Lee/guarda JSON; PUT coalesce ~40ms desde UI. **Viewer: PUT → 405** |
 | POST | `/api/projects/:id/pull` | `force: true` sobrescribe local; viewer sin provision |
 | POST | `/api/projects/:id/push` | Rechaza DEMO ids; 401 sin token; **viewer → 405** |
+| POST | `/api/projects/:id/sprints/:sprintId/publish` | Sprint → milestones + assign issues. **Permitido en VIEW_ONLY** (mutación explícita). |
 | POST | `/api/projects/:id/fields` | createField; **viewer → 405** |
 | DELETE | `/api/projects/:id/items/:itemId` | **viewer → 405** |
 

@@ -362,6 +362,19 @@ export function rebuildProjectHierarchyFromGitHub(
     gt.labels = item.labels?.length ? item.labels : gt.labels;
     gt.issueType = item.issueType ?? gt.issueType ?? null;
     if (item.isDependency) gt.isDependency = true;
+    gt.blockedBy = item.blockedBy?.length ? [...item.blockedBy] : gt.blockedBy;
+    gt.blocks = item.blocks?.length ? [...item.blocks] : gt.blocks;
+    gt.jiraKey = item.jiraKey ?? gt.jiraKey ?? null;
+    gt.repository = item.repository ?? gt.repository ?? null;
+    gt.milestoneId = item.milestoneId ?? gt.milestoneId ?? null;
+    gt.milestoneTitle = item.milestoneTitle ?? gt.milestoneTitle ?? null;
+    gt.milestoneDueOn = item.milestoneDueOn ?? gt.milestoneDueOn ?? null;
+    if (bodyText && !gt.description) {
+      // Strip rakkau-task-id line for human description
+      gt.description = bodyText
+        .replace(/^rakkau-task-id:\s*.+\s*$/im, "")
+        .trim();
+    }
     Object.assign(gt, applyItemFieldValuesToGeneralTask(gt, item.fieldValues));
     if (gt.githubContentNodeId) generalByContent.set(gt.githubContentNodeId, gt);
   }

@@ -9,10 +9,13 @@ import type {
   SprintStatus,
 } from "@/lib/types";
 import { SPRINT_COLOR_PRESETS, sprintsRemainingInQuarter } from "@/lib/types";
+import { isViewOnly } from "@/lib/viewOnly";
 
 interface SprintPanelProps {
   project: ProjectDocument;
   onUpdate: (patch: Partial<ProjectDocument>) => void;
+  /** Called after a successful sprint→milestone publish (optional refresh). */
+  onPublished?: (project: ProjectDocument) => void;
 }
 
 const QUARTERS: QuarterKey[] = ["Q1", "Q2", "Q3", "Q4"];
@@ -103,7 +106,12 @@ function ColorPicker({
   );
 }
 
-export function SprintPanel({ project, onUpdate }: SprintPanelProps) {
+export function SprintPanel({
+  project,
+  onUpdate,
+  onPublished,
+}: SprintPanelProps) {
+  const viewOnly = isViewOnly();
   const sprints = project.sprints ?? [];
   const cq = project.currentQuarter;
   const progress = sprintsRemainingInQuarter(sprints, cq);
@@ -119,6 +127,51 @@ export function SprintPanel({ project, onUpdate }: SprintPanelProps) {
     nextPresetColor(sprints),
   );
   const [formError, setFormError] = useState<string | null>(null);
+  const [publishBusy, setPublishBusy] = useState<string | null>(null);
+  const [publishMsg, setPublishMsg] = useState<string | null>(null);
+
+  async function publishSprint(sprint: Sprint) {
+    setPublishMsg(null);
+    setPublishBusy(sprint.id);
+    try {
+      const res = await fetch(
+        `/api/projects/${encodeURIComponent(project.projectId)}/sprints/${encodeURIComponent(sprint.id)}/publish`,
+        { method: "POST" },
+      );
+      const data = (await res.json()) as {
+        ok?: boolean;
+        error?: string;
+        message?: string;
+        project?: ProjectDocument;
+        milestones?: Array<{ title: string; number: number; repository?: string | null }>;
+        warnings?: string[];
+      };
+      if (!res.ok || !data.ok) {
+        setPublishMsg(data.error || data.message || "No se pudo publicar el sprint");
+        return;
+      }
+      if (data.project) {
+        onUpdate({
+          sprints: data.project.sprints,
+          dirty: data.project.dirty,
+        });
+        onPublished?.(data.project);
+      }
+      const n = data.milestones?.length ?? 0;
+      const warn = data.warnings?.length
+        ? ` · avisos: ${data.warnings.slice(0, 2).join("; ")}`
+        : "";
+      setPublishMsg(
+        n
+          ? `Milestone(s) listos (${n})${warn}`
+          : `Publicado sin issues asignadas${warn}`,
+      );
+    } catch (e) {
+      setPublishMsg(e instanceof Error ? e.message : "Error de red");
+    } finally {
+      setPublishBusy(null);
+    }
+  }
 
   const inferred = useMemo(
     () => (draftStart ? quarterFromDate(draftStart) : null),
@@ -256,79 +309,89 @@ export function SprintPanel({ project, onUpdate }: SprintPanelProps) {
               }
             />
           </label>
-          <button
-            type="button"
-            className="rk-btn rk-btn-ghost"
-            onClick={addQuickSprint}
-            title="Crea el siguiente sprint del Q actual (14 días desde el último)"
-          >
-            + Rápido
-          </button>
+          {!viewOnly && (
+            <button
+              type="button"
+              className="rk-btn rk-btn-ghost"
+              onClick={addQuickSprint}
+              title="Crea el siguiente sprint del Q actual (14 días desde el último)"
+            >
+              + Rápido
+            </button>
+          )}
         </div>
       </div>
 
-      <div className="rk-sprint-create" aria-label="Crear sprint por fechas">
-        <p className="rk-sprint-create-hint">
-          Crear por fechas
-          {inferred
-            ? ` · se asigna a ${inferred.quarter} ${inferred.year}`
-            : ""}
-        </p>
-        <label className="rk-label">
-          Nombre
-          <input
-            className="rk-input"
-            value={draftName}
-            onChange={(e) => setDraftName(e.target.value)}
-            placeholder="Sprint 5 (opcional)"
-          />
-        </label>
-        <label className="rk-label">
-          Inicio
-          <input
-            className="rk-input rk-input-date"
-            type="date"
-            value={draftStart}
-            onChange={(e) => {
-              const start = e.target.value;
-              setDraftStart(start);
-              if (start && (!draftEnd || draftEnd < start)) {
-                setDraftEnd(addDays(start, 13));
-              }
-            }}
-          />
-        </label>
-        <label className="rk-label">
-          Fin
-          <input
-            className="rk-input rk-input-date"
-            type="date"
-            value={draftEnd}
-            min={draftStart || undefined}
-            onChange={(e) => setDraftEnd(e.target.value)}
-          />
-        </label>
-        <ColorPicker
-          label="Color"
-          value={draftColor}
-          onChange={setDraftColor}
-        />
-        <button
-          type="button"
-          className="rk-btn rk-btn-primary"
-          onClick={createSprintByDates}
-        >
-          Crear sprint
-        </button>
-        {formError && (
-          <p
-            className="rk-sprint-create-hint"
-            style={{ color: "var(--rk-magenta)" }}
-          >
-            {formError}
+      {!viewOnly && (
+        <div className="rk-sprint-create" aria-label="Crear sprint por fechas">
+          <p className="rk-sprint-create-hint">
+            Crear por fechas
+            {inferred
+              ? ` · se asigna a ${inferred.quarter} ${inferred.year}`
+              : ""}
           </p>
-        )}
-      </div>
+          <label className="rk-label">
+            Nombre
+            <input
+              className="rk-input"
+              value={draftName}
+              onChange={(e) => setDraftName(e.target.value)}
+              placeholder="Sprint 5 (opcional)"
+            />
+          </label>
+          <label className="rk-label">
+            Inicio
+            <input
+              className="rk-input rk-input-date"
+              type="date"
+              value={draftStart}
+              onChange={(e) => {
+                const start = e.target.value;
+                setDraftStart(start);
+                if (start && (!draftEnd || draftEnd < start)) {
+                  setDraftEnd(addDays(start, 13));
+                }
+              }}
+            />
+          </label>
+          <label className="rk-label">
+            Fin
+            <input
+              className="rk-input rk-input-date"
+              type="date"
+              value={draftEnd}
+              min={draftStart || undefined}
+              onChange={(e) => setDraftEnd(e.target.value)}
+            />
+          </label>
+          <ColorPicker
+            label="Color"
+            value={draftColor}
+            onChange={setDraftColor}
+          />
+          <button
+            type="button"
+            className="rk-btn rk-btn-primary"
+            onClick={createSprintByDates}
+          >
+            Crear sprint
+          </button>
+          {formError && (
+            <p
+              className="rk-sprint-create-hint"
+              style={{ color: "var(--rk-magenta)" }}
+            >
+              {formError}
+            </p>
+          )}
+        </div>
+      )}
+
+      {publishMsg && (
+        <p className="rk-sprint-create-hint" role="status">
+          {publishMsg}
+        </p>
+      )}
 
       <div className="rk-q-progress" role="status">
         <div className="rk-q-progress-meta">
@@ -362,6 +425,7 @@ export function SprintPanel({ project, onUpdate }: SprintPanelProps) {
               onChange={(e) => patchSprint(s.id, { color: e.target.value })}
               aria-label={`Color ${s.name}`}
               title="Color del sprint en el calendario"
+              disabled={viewOnly}
             />
             <input
               className="rk-input"
@@ -369,6 +433,7 @@ export function SprintPanel({ project, onUpdate }: SprintPanelProps) {
               onChange={(e) => patchSprint(s.id, { name: e.target.value })}
               aria-label="Nombre del sprint"
               title={formatRange(s.startDate, s.endDate)}
+              readOnly={viewOnly}
             />
             <select
               className="rk-select-sm"
@@ -377,6 +442,7 @@ export function SprintPanel({ project, onUpdate }: SprintPanelProps) {
                 patchSprint(s.id, { quarter: e.target.value as QuarterKey })
               }
               aria-label="Quarter del sprint"
+              disabled={viewOnly}
             >
               {QUARTERS.map((q) => (
                 <option key={q} value={q}>
@@ -394,6 +460,7 @@ export function SprintPanel({ project, onUpdate }: SprintPanelProps) {
                 })
               }
               aria-label="Año del sprint"
+              readOnly={viewOnly}
             />
             <label className="rk-label" style={{ margin: 0 }}>
               Inicio
@@ -405,6 +472,7 @@ export function SprintPanel({ project, onUpdate }: SprintPanelProps) {
                   patchSprint(s.id, { startDate: e.target.value || undefined })
                 }
                 aria-label={`Inicio ${s.name}`}
+                readOnly={viewOnly}
               />
             </label>
             <label className="rk-label" style={{ margin: 0 }}>
@@ -418,6 +486,7 @@ export function SprintPanel({ project, onUpdate }: SprintPanelProps) {
                   patchSprint(s.id, { endDate: e.target.value || undefined })
                 }
                 aria-label={`Fin ${s.name}`}
+                readOnly={viewOnly}
               />
             </label>
             <select
@@ -427,6 +496,7 @@ export function SprintPanel({ project, onUpdate }: SprintPanelProps) {
                 patchSprint(s.id, { status: e.target.value as SprintStatus })
               }
               aria-label="Estado del sprint"
+              disabled={viewOnly}
             >
               {STATUSES.map((st) => (
                 <option key={st} value={st}>
@@ -436,13 +506,29 @@ export function SprintPanel({ project, onUpdate }: SprintPanelProps) {
             </select>
             <button
               type="button"
-              className="rk-btn-icon"
-              onClick={() => removeSprint(s.id)}
-              title="Quitar sprint"
-              aria-label="Quitar sprint"
+              className="rk-btn rk-btn-ghost"
+              disabled={publishBusy === s.id}
+              onClick={() => void publishSprint(s)}
+              title="Crear/actualizar milestone(s) en GitHub y asignar issues del sprint"
             >
-              ×
+              {publishBusy === s.id ? "Publicando…" : "Publicar milestone"}
             </button>
+            {s.publishedAt ? (
+              <span className="rk-sprint-create-hint" title={s.publishedAt}>
+                OK
+              </span>
+            ) : null}
+            {!viewOnly && (
+              <button
+                type="button"
+                className="rk-btn-icon"
+                onClick={() => removeSprint(s.id)}
+                title="Quitar sprint"
+                aria-label="Quitar sprint"
+              >
+                ×
+              </button>
+            )}
           </li>
         ))}
       </ul>

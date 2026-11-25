@@ -53,16 +53,63 @@ import {
   labelChipStyle,
 } from "@/lib/issueMeta";
 import { titleMarksDependency } from "@/lib/dependencyTitle";
+import {
+  contentIdLookup,
+  formatRelationLabels,
+  isBlockedByRelations,
+} from "@/lib/issueRelations";
+import { jiraBrowseUrlWithBase } from "@/lib/jiraKey";
 import { normalizeResponsableValue } from "@/lib/responsable";
 import { RakkauConfirmDialog } from "./RakkauConfirmDialog";
 import { RakkauNotice } from "./RakkauNotice";
 
-/** Badge Dep: sufijo `-D` o flag local isDependency. */
-function showsDepBadge(opts: {
+const JIRA_BASE =
+  (typeof process !== "undefined" &&
+    process.env.NEXT_PUBLIC_JIRA_BASE_URL?.trim()) ||
+  "";
+
+/** Relación GitHub blockedBy (fuente de verdad). Legacy `-D` solo como hint visual. */
+function showsBlockedBy(opts: {
+  blockedBy?: string[] | null;
   title?: string | null;
   isDependency?: boolean | null;
 }): boolean {
+  if (isBlockedByRelations(opts.blockedBy)) return true;
+  // Legacy wash only — filters use blockedBy
   return Boolean(opts.isDependency) || titleMarksDependency(opts.title);
+}
+
+/** @deprecated Prefer showsBlockedBy */
+function showsDepBadge(opts: {
+  title?: string | null;
+  isDependency?: boolean | null;
+  blockedBy?: string[] | null;
+}): boolean {
+  return showsBlockedBy(opts);
+}
+
+function JiraCell({ jiraKey }: { jiraKey?: string | null }) {
+  const key = (jiraKey ?? "").trim();
+  if (!key) return <span className="rk-muted">—</span>;
+  const href = jiraBrowseUrlWithBase(key, JIRA_BASE);
+  if (href) {
+    return (
+      <a
+        className="rk-jira-link"
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        title={href}
+      >
+        {key}
+      </a>
+    );
+  }
+  return (
+    <span className="rk-jira-key" title="Seteá NEXT_PUBLIC_JIRA_BASE_URL para link">
+      {key}
+    </span>
+  );
 }
 
 /** Responsable canónico desde props o githubFieldValues. */
@@ -804,6 +851,8 @@ export function HierarchyTable({
   const [fSprint, setFSprint] = useState("");
   const [fQuarter, setFQuarter] = useState("");
   const [fDepends, setFDepends] = useState<"" | "sí" | "no">("");
+  const [fBlocking, setFBlocking] = useState<"" | "sí" | "no">("");
+  const [fJira, setFJira] = useState("");
   const [fResponsable, setFResponsable] = useState<"" | "rakkau" | "cliente">("");
   const [fPadre, setFPadre] = useState("");
   const [fDueSoon, setFDueSoon] = useState(false);
@@ -831,13 +880,15 @@ export function HierarchyTable({
     sprint: fSprint ? [fSprint] : [],
     quarter: fQuarter ? [fQuarter] : [],
     depends: fDepends || undefined,
+    blocking: fBlocking || undefined,
+    jira: fJira.trim() ? [fJira.trim()] : [],
     responsable: fResponsable ? [fResponsable] : [],
     padre: fPadre ? [fPadre] : [],
     dueSoon: fDueSoon || undefined,
     label: fLabel ? [fLabel] : [],
     scope: fScope ? [fScope] : [],
     issueType: fIssueType ? [fIssueType] : [],
-  }), [fText, fEstado, fTipo, fAssignee, fSprint, fQuarter, fDepends, fResponsable, fPadre, fDueSoon, fLabel, fScope, fIssueType]);
+  }), [fText, fEstado, fTipo, fAssignee, fSprint, fQuarter, fDepends, fBlocking, fJira, fResponsable, fPadre, fDueSoon, fLabel, fScope, fIssueType]);
 
   const filtering = !isQueryEmpty(filterQuery);
 
@@ -926,7 +977,8 @@ export function HierarchyTable({
 
   function clearFilters() {
     setFText(""); setFEstado(""); setFTipo(""); setFAssignee("");
-    setFSprint(""); setFQuarter(""); setFDepends(""); setFResponsable("");
+    setFSprint(""); setFQuarter(""); setFDepends(""); setFBlocking("");
+    setFJira(""); setFResponsable("");
     setFPadre(""); setFDueSoon(false);
     setFLabel(""); setFScope(""); setFIssueType("");
   }
@@ -1136,18 +1188,39 @@ export function HierarchyTable({
                   <option value="cliente">cliente</option>
                 </select>
               </label>
-              <label className="rk-label">Dependencia
+              <label className="rk-label">Bloqueada
                 <select
                   className="rk-select-sm"
                   value={fDepends}
                   onChange={(e) => setFDepends(e.target.value as "" | "sí" | "no")}
-                  aria-label="Filtrar por dependencia (-D / -d)"
-                  title="Solo títulos con sufijo -D / -d"
+                  aria-label="Filtrar por relación Blocked by de GitHub"
+                  title="GitHub Relationships → Blocked by"
                 >
                   <option value="">Todas</option>
-                  <option value="sí">Dep</option>
-                  <option value="no">Sin Dep</option>
+                  <option value="sí">Sí</option>
+                  <option value="no">No</option>
                 </select>
+              </label>
+              <label className="rk-label">Bloquea a
+                <select
+                  className="rk-select-sm"
+                  value={fBlocking}
+                  onChange={(e) => setFBlocking(e.target.value as "" | "sí" | "no")}
+                  aria-label="Filtrar por issues que bloquean a otras"
+                >
+                  <option value="">Todas</option>
+                  <option value="sí">Sí</option>
+                  <option value="no">No</option>
+                </select>
+              </label>
+              <label className="rk-label">Jira
+                <input
+                  className="rk-input rk-input-sm"
+                  value={fJira}
+                  onChange={(e) => setFJira(e.target.value)}
+                  placeholder="CIAM-42"
+                  aria-label="Filtrar por key Jira"
+                />
               </label>
             </>
           )}
@@ -1188,12 +1261,22 @@ export function HierarchyTable({
                   <option value="cliente">cliente</option>
                 </select>
               </label>
-              <label className="rk-label">Con dependencia
+              <label className="rk-label">Bloqueada
                 <select className="rk-select-sm" value={fDepends}
-                  onChange={(e) => setFDepends(e.target.value as "" | "sí" | "no")}>
+                  onChange={(e) => setFDepends(e.target.value as "" | "sí" | "no")}
+                  title="GitHub Relationships → Blocked by"
+                >
                   <option value="">Todas</option>
                   <option value="sí">Sí</option><option value="no">No</option>
                 </select>
+              </label>
+              <label className="rk-label">Jira
+                <input
+                  className="rk-input rk-input-sm"
+                  value={fJira}
+                  onChange={(e) => setFJira(e.target.value)}
+                  placeholder="CIAM-42"
+                />
               </label>
             </>
           )}
@@ -1232,6 +1315,7 @@ export function HierarchyTable({
                   <th title="Subtareas cerradas / total">Avance</th>
                   <th>Asignados</th>
                   <th>Vence</th>
+                  <th title="ID Jira parseado de la descripción del issue">Jira</th>
                   <th className="rk-th-actions">
                     <span className="rk-muted" title="Solo lectura">·</span>
                   </th>
@@ -1738,10 +1822,12 @@ function GeneralTaskRow({
   const deps = parseDeps(task.DependsOn);
   const dueCls = dueNearClass(task.DueDate, task.Status);
   const resp = resolveResponsable(task.Responsable, task.githubFieldValues);
-  const isDep = showsDepBadge({
+  const isDep = showsBlockedBy({
+    blockedBy: task.blockedBy,
     title: task.title,
     isDependency: task.isDependency,
   });
+  const relBlocked = isBlockedByRelations(task.blockedBy);
   const st = generalTaskStatusDisplay(task);
   const blocked = taskIsBlocked({ Status: task.Status });
 
@@ -1795,9 +1881,10 @@ function GeneralTaskRow({
 
   return (
     <tr
-      className={`rk-row-parent rk-row-readonly${deps.length || isDep ? " rk-row-has-dep" : ""}${isDep ? " rk-row-is-dep" : ""}${dueCls}${expanded && childCount ? " rk-row-parent-open" : ""}${blocked ? " rk-row-blocked" : ""}${depth > 0 ? " rk-row-nested" : ""}${resp === "cliente" ? " rk-row-resp-cliente" : ""}`}
+      className={`rk-row-parent rk-row-readonly${deps.length || isDep ? " rk-row-has-dep" : ""}${isDep ? " rk-row-is-dep" : ""}${relBlocked ? " rk-row-rel-blocked" : ""}${dueCls}${expanded && childCount ? " rk-row-parent-open" : ""}${blocked ? " rk-row-blocked" : ""}${depth > 0 ? " rk-row-nested" : ""}${resp === "cliente" ? " rk-row-resp-cliente" : ""}`}
       data-depth={depth}
       data-dependency={isDep ? "true" : undefined}
+      data-blocked-by={relBlocked ? "true" : undefined}
       data-responsable={resp || undefined}
     >
       <td>{titleCell}</td>
@@ -1839,6 +1926,13 @@ function GeneralTaskRow({
           <td>
             {expanded || childCount === 0 ? (
               <DueCell due={task.DueDate} accentClass={dueCls} />
+            ) : (
+              <span className="rk-muted">·</span>
+            )}
+          </td>
+          <td>
+            {expanded || childCount === 0 ? (
+              <JiraCell jiraKey={task.jiraKey} />
             ) : (
               <span className="rk-muted">·</span>
             )}
@@ -1913,10 +2007,12 @@ function ItemRow({
   const blocked = taskIsBlocked({ Status: item.fieldValues.Status });
   const isOrphan = !taskVal && !item.parentIssueContentId;
   const title = itemDisplayTitle(item);
-  const isDep = showsDepBadge({
+  const isDep = showsBlockedBy({
+    blockedBy: item.blockedBy,
     title: item.title,
     isDependency: item.isDependency,
   });
+  const relBlocked = isBlockedByRelations(item.blockedBy);
   const itemResp = resolveResponsable(
     typeof item.fieldValues.Responsable === "string"
       ? item.fieldValues.Responsable
@@ -1969,6 +2065,13 @@ function ItemRow({
           <span className="rk-muted">·</span>
         )}
       </td>
+      <td>
+        {showLeafDetail ? (
+          <JiraCell jiraKey={item.jiraKey} />
+        ) : (
+          <span className="rk-muted">·</span>
+        )}
+      </td>
     </>
   ) : (
     <>
@@ -1989,8 +2092,9 @@ function ItemRow({
   if (isOrphan) {
     return (
       <tr
-        className={`rk-row-parent rk-row-readonly${deps.length || isDep ? " rk-row-has-dep" : ""}${isDep ? " rk-row-is-dep" : ""}${dueCls}${blocked ? " rk-row-blocked" : ""}${itemResp === "cliente" ? " rk-row-resp-cliente" : ""}`}
+        className={`rk-row-parent rk-row-readonly${deps.length || isDep ? " rk-row-has-dep" : ""}${isDep ? " rk-row-is-dep" : ""}${relBlocked ? " rk-row-rel-blocked" : ""}${dueCls}${blocked ? " rk-row-blocked" : ""}${itemResp === "cliente" ? " rk-row-resp-cliente" : ""}`}
         data-dependency={isDep ? "true" : undefined}
+        data-blocked-by={relBlocked ? "true" : undefined}
         data-responsable={itemResp || undefined}
       >
         <td>
@@ -2031,10 +2135,11 @@ function ItemRow({
 
   return (
     <tr
-      className={`rk-row-child rk-row-readonly${deps.length || isDep ? " rk-row-has-dep" : ""}${isDep ? " rk-row-is-dep" : ""}${dueCls}${treeLast ? " rk-row-child-last" : ""}${blocked ? " rk-row-blocked" : ""}${hasChildren ? " rk-row-mid-parent" : ""}${expanded && hasChildren ? " rk-row-parent-open" : ""}`}
+      className={`rk-row-child rk-row-readonly${deps.length || isDep ? " rk-row-has-dep" : ""}${isDep ? " rk-row-is-dep" : ""}${relBlocked ? " rk-row-rel-blocked" : ""}${dueCls}${treeLast ? " rk-row-child-last" : ""}${blocked ? " rk-row-blocked" : ""}${hasChildren ? " rk-row-mid-parent" : ""}${expanded && hasChildren ? " rk-row-parent-open" : ""}${itemResp === "cliente" ? " rk-row-resp-cliente" : ""}`}
       data-tree-index={treeIndex}
       data-depth={depth}
       data-dependency={isDep ? "true" : undefined}
+      data-blocked-by={relBlocked ? "true" : undefined}
     >
       <td
         className="rk-child-indent"
@@ -2153,15 +2258,22 @@ function ViewPanel({
         ? item.fieldValues.Responsable
         : undefined),
   );
-  const viewIsDep = showsDepBadge({
+  const blockedByIds = task?.blockedBy ?? item?.blockedBy ?? [];
+  const blocksIds = task?.blocks ?? item?.blocks ?? [];
+  const viewIsDep = showsBlockedBy({
+    blockedBy: blockedByIds,
     title: task?.title ?? item?.title,
     isDependency: task?.isDependency ?? item?.isDependency,
   });
+  const jiraKey = task?.jiraKey ?? item?.jiraKey ?? null;
   const estadoOp = task?.EstadoOperativo?.trim();
   const progress = task
     ? progressForGeneralTask(task, project.items)
     : null;
   const parent = itemIsOrphan ? null : (itemTaskVal || null);
+  const relLookup = contentIdLookup(project.items, project.generalTasks);
+  const blockedByLabels = formatRelationLabels(blockedByIds, relLookup);
+  const blocksLabels = formatRelationLabels(blocksIds, relLookup);
 
   return (
     <div className="rk-edit-overlay" role="presentation" onClick={onClose}>
@@ -2217,24 +2329,40 @@ function ViewPanel({
 
         <div className="rk-view-section">
           <p className="rk-view-section-label">
-            <span className={deps.length ? "rk-view-label-accent" : ""}>
-              Dependencias
+            <span className={blockedByLabels.length ? "rk-view-label-accent" : ""}>
+              Bloqueada por
             </span>
           </p>
-          {deps.length === 0 ? (
-            <p className="rk-view-empty">Sin dependencias registradas</p>
+          {blockedByLabels.length === 0 ? (
+            <p className="rk-view-empty">
+              Sin relación Blocked by en GitHub
+              {deps.length
+                ? ` (DependsOn legacy: ${deps.join(", ")})`
+                : ""}
+            </p>
           ) : (
-            <>
-              <div className="rk-dep-chips" style={{ marginBottom: "0.45rem" }}>
-                {deps.map((d) => (
-                  <span key={d} className="rk-chip rk-chip-dep">{d}</span>
-                ))}
-              </div>
-              <p className="rk-view-empty rk-view-hint">
-                Esta tarea depende de las anteriores para avanzar.
-              </p>
-            </>
+            <div className="rk-dep-chips">
+              {blockedByLabels.map((d) => (
+                <span key={d} className="rk-chip rk-chip-dep">{d}</span>
+              ))}
+            </div>
           )}
+        </div>
+
+        {blocksLabels.length > 0 && (
+          <div className="rk-view-section">
+            <p className="rk-view-section-label">Bloquea a</p>
+            <div className="rk-dep-chips">
+              {blocksLabels.map((d) => (
+                <span key={d} className="rk-chip rk-chip-dep">{d}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="rk-view-section">
+          <p className="rk-view-section-label">Jira</p>
+          <JiraCell jiraKey={jiraKey} />
         </div>
 
         <div className="rk-view-section">

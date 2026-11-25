@@ -1,6 +1,7 @@
 /**
- * Dependencias por sufijo de título `-D` / `-d` (convención Rakkau).
- * Ej.: "crear bc box kubernets -D" o "… -d" → dependencia.
+ * @deprecated Legacy title suffix `-D` / `-d`.
+ * Source of truth for bloqueos is GitHub Relationships (`blockedBy` / `blocking`)
+ * — see `lib/issueRelations.ts`. Kept for fixtures and migration only.
  */
 
 /** Título (trim) termina en `-D` o `-d`, con espacio opcional antes del sufijo. */
@@ -11,8 +12,8 @@ export function titleMarksDependency(title: string | null | undefined): boolean 
 }
 
 /**
- * Rol dependencia Rakkau: sufijo `-D`/`-d` o flag local `isDependency`.
- * (No usa solo HasDependency: ese campo también se llena por DependsOn y ensucia el filtro Dep.)
+ * @deprecated Prefer `isBlockedByRelations` from `lib/issueRelations`.
+ * Legacy: sufijo `-D`/`-d` o flag local `isDependency`.
  */
 export function isDependencyRole(opts: {
   title?: string | null;

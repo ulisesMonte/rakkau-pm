@@ -10,6 +10,7 @@ import type {
   ProjectDocument,
   ProjectField,
   ProjectItem,
+  ProjectLinks,
 } from "@/lib/types";
 import { asStringList, firstTaskId } from "@/lib/fieldValueCoerce";
 import { titleMarksDependency } from "@/lib/dependencyTitle";
@@ -22,6 +23,7 @@ import {
   parseRakkauTaskIdFromBody,
 } from "@/lib/github/issueHierarchy";
 import { normalizeProjectHierarchy } from "@/lib/github/projectInvariants";
+import { parseJiraKeyFromText } from "@/lib/jiraKey";
 import { normalizeResponsableValue } from "@/lib/responsable";
 
 export const PROJECT_TASKS_SCHEMA_VERSION = 1;
@@ -34,6 +36,13 @@ export type GitHubSubIssuesSummary = {
   percentCompleted?: number | null;
 };
 
+export type GitHubRelationNode = {
+  id: string;
+  number?: number | null;
+  title?: string | null;
+  url?: string | null;
+};
+
 export type GitHubProjectItemContent = {
   __typename?: string;
   id?: string;
@@ -42,6 +51,14 @@ export type GitHubProjectItemContent = {
   url?: string;
   state?: string;
   body?: string;
+  repository?: { id?: string; nameWithOwner?: string | null } | null;
+  milestone?: {
+    id?: string;
+    number?: number | null;
+    title?: string | null;
+    dueOn?: string | null;
+    state?: string | null;
+  } | null;
   assignees?: { nodes?: Array<{ login?: string; name?: string | null; avatarUrl?: string | null }> };
   labels?: {
     nodes?: Array<{
@@ -59,9 +76,28 @@ export type GitHubProjectItemContent = {
   } | null;
   /** Padre inmediato (Issue.parent) — preferido para árbol N-nivel. */
   parent?: { id?: string; number?: number | null; title?: string | null } | null;
+  /** GitHub Issue Relationships (Blocked by). */
+  blockedBy?: { nodes?: GitHubRelationNode[] } | null;
+  /** GitHub Issue Relationships (Blocking). */
+  blocking?: { nodes?: GitHubRelationNode[] } | null;
   subIssuesSummary?: GitHubSubIssuesSummary | null;
   subIssues?: { nodes?: Array<{ id: string }> };
 };
+
+/** Aggregate per-item blockedBy/blocks into ProjectDocument.links. */
+export function buildProjectLinksFromItems(
+  items: Array<Pick<ProjectItem, "contentNodeId" | "nodeId" | "blockedBy" | "blocks">>,
+): ProjectLinks {
+  const blockedBy: Record<string, string[]> = {};
+  const blocks: Record<string, string[]> = {};
+  for (const item of items) {
+    const key = item.contentNodeId || item.nodeId;
+    if (!key) continue;
+    if (item.blockedBy?.length) blockedBy[key] = [...item.blockedBy];
+    if (item.blocks?.length) blocks[key] = [...item.blocks];
+  }
+  return { blockedBy, blocks };
+}
 
 function pushLabel(
   out: IssueLabel[],
@@ -229,11 +265,55 @@ export function mapGitHubProjectItems(
     if (resolvedTitle !== "(sin título)" && !fieldValues.Title) {
       fieldValues.Title = resolvedTitle;
     }
-    const isDependency = titleMarksDependency(resolvedTitle);
-    if (isDependency && fieldValues.HasDependency !== "Sí") {
+    // Legacy `-D` still flagged for migration, but Relationships are source of truth.
+    const isDependencyLegacy = titleMarksDependency(resolvedTitle);
+    if (isDependencyLegacy && fieldValues.HasDependency !== "Sí") {
       fieldValues.HasDependency = "Sí";
     }
     if (content?.body) fieldValues[INTERNAL_BODY_KEY] = content.body;
+
+    const blockedByIds =
+      content?.__typename === "Issue"
+        ? (content.blockedBy?.nodes ?? [])
+            .map((n) => n.id)
+            .filter((id): id is string => Boolean(id))
+        : [];
+    const blockingIds =
+      content?.__typename === "Issue"
+        ? (content.blocking?.nodes ?? [])
+            .map((n) => n.id)
+            .filter((id): id is string => Boolean(id))
+        : [];
+    if (blockedByIds.length && fieldValues.HasDependency !== "Sí") {
+      fieldValues.HasDependency = "Sí";
+    }
+    // Sync DependsOn display from relationship numbers when empty
+    if (
+      blockedByIds.length &&
+      !(typeof fieldValues.DependsOn === "string" && fieldValues.DependsOn.trim())
+    ) {
+      const nums = (content?.blockedBy?.nodes ?? [])
+        .map((n) => (n.number != null ? `#${n.number}` : null))
+        .filter((x): x is string => Boolean(x));
+      if (nums.length) fieldValues.DependsOn = nums.join(", ");
+    }
+
+    const bodyText = content?.body ?? "";
+    const jiraKey = parseJiraKeyFromText(bodyText);
+    const repository =
+      content?.__typename === "Issue"
+        ? content.repository?.nameWithOwner?.trim() || null
+        : null;
+    const milestoneId =
+      content?.__typename === "Issue" ? content.milestone?.id ?? null : null;
+    const milestoneTitle =
+      content?.__typename === "Issue"
+        ? content.milestone?.title?.trim() || null
+        : null;
+    const milestoneDueOn =
+      content?.__typename === "Issue"
+        ? content.milestone?.dueOn ?? null
+        : null;
 
     const summaryRaw = content?.subIssuesSummary;
     const subIssuesSummary =
@@ -286,10 +366,15 @@ export function mapGitHubProjectItems(
       subIssuesSummary,
       labels: mapMergedLabels(content, n.fieldValues?.nodes ?? []),
       issueType: mapIssueType(content),
-      isDependency: isDependency || undefined,
+      isDependency: isDependencyLegacy || undefined,
       assignees,
-      blockedBy: [],
-      blocks: [],
+      blockedBy: blockedByIds,
+      blocks: blockingIds,
+      jiraKey,
+      repository,
+      milestoneId,
+      milestoneTitle,
+      milestoneDueOn,
     };
   });
 

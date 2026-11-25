@@ -41,11 +41,16 @@ import {
 import { ensureAllUiFieldsOnGitHub } from "@/lib/github/fieldProvisioning";
 import { normalizeProjectHierarchy } from "@/lib/github/projectInvariants";
 import {
+  buildProjectLinksFromItems,
   mapGitHubProjectItems,
   mergeTasksAfterPush,
   PROJECT_TASKS_SCHEMA_VERSION,
   type GitHubProjectItemNode,
 } from "@/lib/github/projectTasksSchema";
+import {
+  mergeSprintsFromMilestones,
+  publishSprintAsMilestones,
+} from "@/lib/github/milestones";
 import { asStringList } from "@/lib/fieldValueCoerce";
 import { titleMarksDependency } from "@/lib/dependencyTitle";
 import { normalizeResponsableValue } from "@/lib/responsable";
@@ -199,6 +204,8 @@ query LookupOrgProjectByNumber($owner: String!, $number: Int!) {
 const ISSUE_CONTENT_FIELDS = `
   id
   number title url state body
+  repository { id nameWithOwner }
+  milestone { id number title dueOn state }
   assignees(first: 10) {
     nodes { login name avatarUrl }
   }
@@ -212,6 +219,12 @@ const ISSUE_CONTENT_FIELDS = `
     id
     number
     title
+  }
+  blockedBy(first: 50) {
+    nodes { id number title url }
+  }
+  blocking(first: 50) {
+    nodes { id number title url }
   }
   subIssuesSummary {
     total
@@ -695,6 +708,7 @@ export async function pullProject(projectId: string): Promise<ProjectDocument> {
   const linkedRepos = uniqueRepositorySlugs(
     (node.repositories?.nodes ?? []).map((r) => r.nameWithOwner),
   );
+  const links = buildProjectLinksFromItems(items);
 
   const doc: ProjectDocument = {
     projectId: node.id,
@@ -709,7 +723,7 @@ export async function pullProject(projectId: string): Promise<ProjectDocument> {
     fields,
     generalTasks: [],
     items,
-    links: { blockedBy: {}, blocks: {} },
+    links,
     sprints: [],
     currentQuarter: currentCalendarQuarter(),
     people: derivePeople(owner, items, rawItems),
@@ -718,6 +732,25 @@ export async function pullProject(projectId: string): Promise<ProjectDocument> {
   };
   const rebuilt = normalizeProjectHierarchy(
     rebuildProjectHierarchyFromGitHub(doc),
+  );
+  rebuilt.links = buildProjectLinksFromItems([
+    ...rebuilt.items,
+    // generalTasks carry blockedBy after rebuild; fold into links below
+  ]);
+  // Re-build links including generalTasks content ids
+  const blockedBy: Record<string, string[]> = { ...rebuilt.links.blockedBy };
+  const blocks: Record<string, string[]> = { ...rebuilt.links.blocks };
+  for (const gt of rebuilt.generalTasks) {
+    const key = gt.githubContentNodeId;
+    if (!key) continue;
+    if (gt.blockedBy?.length) blockedBy[key] = gt.blockedBy;
+    if (gt.blocks?.length) blocks[key] = gt.blocks;
+  }
+  rebuilt.links = { blockedBy, blocks };
+  rebuilt.sprints = mergeSprintsFromMilestones(
+    rebuilt.sprints,
+    rebuilt.items,
+    rebuilt.generalTasks,
   );
   rebuilt.availableRepositories = uniqueRepositorySlugs(
     linkedRepos,
@@ -1463,6 +1496,32 @@ async function hydrateItemNodeIdsFromGitHub(next: ProjectDocument): Promise<void
   } catch {
     /* seguir con ids locales */
   }
+}
+
+/**
+ * Explicit mutation: publish one local sprint as GitHub milestones and assign
+ * matching issues. Allowed even when Traer is VIEW_ONLY (separate from push).
+ */
+export async function publishSprintToGitHub(
+  doc: ProjectDocument,
+  sprintId: string,
+): Promise<{
+  document: ProjectDocument;
+  result: Awaited<ReturnType<typeof publishSprintAsMilestones>>;
+}> {
+  const sprint = (doc.sprints ?? []).find((s) => s.id === sprintId);
+  if (!sprint) {
+    throw new GitHubGraphQLError(`Sprint ${sprintId} no encontrado`, 404);
+  }
+  const result = await publishSprintAsMilestones(gql, doc, sprint, {
+    defaultRepository: doc.issueRepository,
+  });
+  const next: ProjectDocument = structuredClone(doc);
+  next.sprints = (next.sprints ?? []).map((s) =>
+    s.id === sprintId ? result.sprint : s,
+  );
+  next.dirty = true;
+  return { document: next, result };
 }
 
 /**

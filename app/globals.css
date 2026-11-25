@@ -1269,13 +1269,16 @@ textarea {
   box-shadow: inset 3px 0 0 var(--rk-cyan);
 }
 
-/* Dependencia (-D): misma paleta cyan/navy Rakkau, un poco más marcada */
+/* Dependencia legacy (-D) / relación blockedBy: wash en td (el fondo de celdas tapa el tr) */
 .rk-row-is-dep,
-.rk-row-is-dep > td {
+.rk-row-is-dep > td,
+.rk-row-rel-blocked,
+.rk-row-rel-blocked > td {
   background: rgba(45, 212, 191, 0.12) !important;
 }
 
-.rk-row-is-dep {
+.rk-row-is-dep,
+.rk-row-rel-blocked {
   box-shadow: inset 3px 0 0 var(--rk-cyan);
 }
 
@@ -1304,24 +1307,42 @@ textarea {
   color: var(--rk-text-muted);
 }
 
-/* Responsable = cliente → fila con tinte sky (distinto de Rakkau/cyan) */
-.rk-row-resp-cliente {
+/* Responsable = cliente → fila con tinte sky (distinto de Rakkau/cyan); paint td */
+.rk-row-resp-cliente,
+.rk-row-resp-cliente > td {
   background: linear-gradient(
     90deg,
     var(--rk-cliente-soft),
     rgba(56, 189, 248, 0.04) 42%,
     transparent 70%
   ) !important;
+}
+
+.rk-row-resp-cliente {
   box-shadow: inset 3px 0 0 var(--rk-cliente);
 }
 
 .rk-row-resp-cliente.rk-row-is-dep,
-.rk-row-resp-cliente.rk-row-is-dep > td {
-  /* Dep (cyan) + cliente (borde sky) */
+.rk-row-resp-cliente.rk-row-is-dep > td,
+.rk-row-resp-cliente.rk-row-rel-blocked,
+.rk-row-resp-cliente.rk-row-rel-blocked > td {
+  /* Dep/blocked (cyan) + cliente (borde sky) */
   background: rgba(45, 212, 191, 0.12) !important;
   box-shadow:
     inset 3px 0 0 var(--rk-cyan),
     inset 6px 0 0 var(--rk-cliente);
+}
+
+.rk-jira-link,
+.rk-jira-key {
+  font-family: var(--rk-font-mono, ui-monospace, monospace);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: var(--rk-cyan);
+}
+
+.rk-jira-link:hover {
+  text-decoration: underline;
 }
 
 .rk-row-resp-cliente .rk-badge-general {

@@ -78,6 +78,7 @@ export const VIEWER_PROGRESS_COLUMNS = [
   "Avance",
   "Asignados",
   "Vence",
+  "Jira",
 ] as const;
 
 /** Incluye la columna de acciones (ojo). */

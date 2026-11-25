@@ -93,7 +93,44 @@ describe("projectTasksSchema", () => {
     expect(parent?.issueType?.name).toBe("Feature");
   });
 
-  it("marks title -D as dependencia (isDependency + HasDependency)", () => {
+  it("maps GitHub blockedBy / blocking relationships and jiraKey from body", () => {
+    const items = mapGitHubProjectItems([
+      {
+        id: "PVTI_blocked",
+        content: {
+          __typename: "Issue",
+          id: "I_blocked",
+          number: 5,
+          title: "Waiting on auth",
+          state: "OPEN",
+          body: "ID JIRA: CIAM-99\nNeeds login first",
+          repository: { nameWithOwner: "acme/ops" },
+          milestone: {
+            id: "M_1",
+            number: 1,
+            title: "Sprint 1",
+            dueOn: "2026-12-01T12:00:00Z",
+          },
+          blockedBy: {
+            nodes: [
+              { id: "I_blocker", number: 4, title: "Auth SSO", url: null },
+            ],
+          },
+          blocking: { nodes: [] },
+        },
+        fieldValues: { nodes: [] },
+      },
+    ]);
+    const row = items[0];
+    expect(row.blockedBy).toEqual(["I_blocker"]);
+    expect(row.jiraKey).toBe("CIAM-99");
+    expect(row.repository).toBe("acme/ops");
+    expect(row.milestoneTitle).toBe("Sprint 1");
+    expect(row.fieldValues.HasDependency).toBe("Sí");
+    expect(row.fieldValues.DependsOn).toContain("#4");
+  });
+
+  it("marks title -D as dependencia legacy (isDependency + HasDependency)", () => {
     const items = mapGitHubProjectItems([
       {
         id: "PVTI_dep",
